@@ -1,0 +1,6 @@
+framework module Trochilus {
+  umbrella header "Trochilus.h"
+
+  export *
+  module * { export * }
+}

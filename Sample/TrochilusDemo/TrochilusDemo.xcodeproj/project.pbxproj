@@ -1,0 +1,643 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D659EF8E20DF3B3200B9AA8B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EF8D20DF3B3200B9AA8B /* AppDelegate.m */; };
+		D659EF9C20DF3B3200B9AA8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EF9B20DF3B3200B9AA8B /* main.m */; };
+		D659EFA620DF3B3200B9AA8B /* TrochilusDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFA520DF3B3200B9AA8B /* TrochilusDemoTests.m */; };
+		D659EFB120DF3B3200B9AA8B /* TrochilusDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFB020DF3B3200B9AA8B /* TrochilusDemoUITests.m */; };
+		D659EFBF20DF3B5500B9AA8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D659EFBE20DF3B5500B9AA8B /* Assets.xcassets */; };
+		D659EFD520DF3B8100B9AA8B /* TWechatMomentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFC820DF3B8100B9AA8B /* TWechatMomentsVC.m */; };
+		D659EFD620DF3B8100B9AA8B /* TWechatFavVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFC920DF3B8100B9AA8B /* TWechatFavVC.m */; };
+		D659EFD720DF3B8100B9AA8B /* TAliPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFCA20DF3B8100B9AA8B /* TAliPayVC.m */; };
+		D659EFD820DF3B8100B9AA8B /* TQZoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFCD20DF3B8100B9AA8B /* TQZoneVC.m */; };
+		D659EFD920DF3B8100B9AA8B /* TSinaWeiBoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFD020DF3B8100B9AA8B /* TSinaWeiBoVC.m */; };
+		D659EFDA20DF3B8100B9AA8B /* TWechatContactsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFD120DF3B8100B9AA8B /* TWechatContactsVC.m */; };
+		D659EFDB20DF3B8100B9AA8B /* TQQFriendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFD220DF3B8100B9AA8B /* TQQFriendVC.m */; };
+		D659EFDE20DF3B8D00B9AA8B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D659EFDD20DF3B8D00B9AA8B /* ViewController.m */; };
+		D659EFE120DF3B9700B9AA8B /* cat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D659EFDF20DF3B9700B9AA8B /* cat.mp4 */; };
+		D659EFE220DF3B9700B9AA8B /* res6.gif in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE020DF3B9700B9AA8B /* res6.gif */; };
+		D659EFE720DF3BBB00B9AA8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE320DF3BBB00B9AA8B /* Main.storyboard */; };
+		D659EFE820DF3BBB00B9AA8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE520DF3BBB00B9AA8B /* LaunchScreen.storyboard */; };
+		D659EFF820DF41B300B9AA8B /* Trochilus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D659EFF720DF41B300B9AA8B /* Trochilus.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D659EFA220DF3B3200B9AA8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D659EF8120DF3B3200B9AA8B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D659EF8820DF3B3200B9AA8B;
+			remoteInfo = TrochilusDemo;
+		};
+		D659EFAD20DF3B3200B9AA8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D659EF8120DF3B3200B9AA8B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D659EF8820DF3B3200B9AA8B;
+			remoteInfo = TrochilusDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D659EFEC20DF3C0400B9AA8B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D659EF8920DF3B3200B9AA8B /* TrochilusDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrochilusDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D659EF8C20DF3B3200B9AA8B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D659EF8D20DF3B3200B9AA8B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D659EF9B20DF3B3200B9AA8B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D659EFA120DF3B3200B9AA8B /* TrochilusDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrochilusDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D659EFA520DF3B3200B9AA8B /* TrochilusDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrochilusDemoTests.m; sourceTree = "<group>"; };
+		D659EFA720DF3B3200B9AA8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D659EFAC20DF3B3200B9AA8B /* TrochilusDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrochilusDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D659EFB020DF3B3200B9AA8B /* TrochilusDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrochilusDemoUITests.m; sourceTree = "<group>"; };
+		D659EFB220DF3B3200B9AA8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D659EFBE20DF3B5500B9AA8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D659EFC420DF3B7A00B9AA8B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D659EFC720DF3B8100B9AA8B /* TSinaWeiBoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSinaWeiBoVC.h; sourceTree = "<group>"; };
+		D659EFC820DF3B8100B9AA8B /* TWechatMomentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWechatMomentsVC.m; sourceTree = "<group>"; };
+		D659EFC920DF3B8100B9AA8B /* TWechatFavVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWechatFavVC.m; sourceTree = "<group>"; };
+		D659EFCA20DF3B8100B9AA8B /* TAliPayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAliPayVC.m; sourceTree = "<group>"; };
+		D659EFCB20DF3B8100B9AA8B /* TQQFriendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQQFriendVC.h; sourceTree = "<group>"; };
+		D659EFCC20DF3B8100B9AA8B /* TWechatContactsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWechatContactsVC.h; sourceTree = "<group>"; };
+		D659EFCD20DF3B8100B9AA8B /* TQZoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQZoneVC.m; sourceTree = "<group>"; };
+		D659EFCE20DF3B8100B9AA8B /* TWechatFavVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWechatFavVC.h; sourceTree = "<group>"; };
+		D659EFCF20DF3B8100B9AA8B /* TWechatMomentsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWechatMomentsVC.h; sourceTree = "<group>"; };
+		D659EFD020DF3B8100B9AA8B /* TSinaWeiBoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSinaWeiBoVC.m; sourceTree = "<group>"; };
+		D659EFD120DF3B8100B9AA8B /* TWechatContactsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWechatContactsVC.m; sourceTree = "<group>"; };
+		D659EFD220DF3B8100B9AA8B /* TQQFriendVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQQFriendVC.m; sourceTree = "<group>"; };
+		D659EFD320DF3B8100B9AA8B /* TAliPayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAliPayVC.h; sourceTree = "<group>"; };
+		D659EFD420DF3B8100B9AA8B /* TQZoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQZoneVC.h; sourceTree = "<group>"; };
+		D659EFDC20DF3B8D00B9AA8B /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D659EFDD20DF3B8D00B9AA8B /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D659EFDF20DF3B9700B9AA8B /* cat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.mp4; sourceTree = "<group>"; };
+		D659EFE020DF3B9700B9AA8B /* res6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = res6.gif; sourceTree = "<group>"; };
+		D659EFE420DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D659EFE620DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D659EFF720DF41B300B9AA8B /* Trochilus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Trochilus.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Trochilus-bvxjbusemwycypeugnzyvnbylnew/Build/Products/Debug-iphonesimulator/Trochilus.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D659EF8620DF3B3200B9AA8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D659EFF820DF41B300B9AA8B /* Trochilus.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EF9E20DF3B3200B9AA8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EFA920DF3B3200B9AA8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D659EF8020DF3B3200B9AA8B = {
+			isa = PBXGroup;
+			children = (
+				D659EFF720DF41B300B9AA8B /* Trochilus.framework */,
+				D659EF8B20DF3B3200B9AA8B /* TrochilusDemo */,
+				D659EFA420DF3B3200B9AA8B /* TrochilusDemoTests */,
+				D659EFAF20DF3B3200B9AA8B /* TrochilusDemoUITests */,
+				D659EF8A20DF3B3200B9AA8B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D659EF8A20DF3B3200B9AA8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D659EF8920DF3B3200B9AA8B /* TrochilusDemo.app */,
+				D659EFA120DF3B3200B9AA8B /* TrochilusDemoTests.xctest */,
+				D659EFAC20DF3B3200B9AA8B /* TrochilusDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D659EF8B20DF3B3200B9AA8B /* TrochilusDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D659EFE520DF3BBB00B9AA8B /* LaunchScreen.storyboard */,
+				D659EFE320DF3BBB00B9AA8B /* Main.storyboard */,
+				D659EFDF20DF3B9700B9AA8B /* cat.mp4 */,
+				D659EFE020DF3B9700B9AA8B /* res6.gif */,
+				D659EFDC20DF3B8D00B9AA8B /* ViewController.h */,
+				D659EFDD20DF3B8D00B9AA8B /* ViewController.m */,
+				D659EFC620DF3B8100B9AA8B /* ViewController */,
+				D659EFC420DF3B7A00B9AA8B /* Info.plist */,
+				D659EFBE20DF3B5500B9AA8B /* Assets.xcassets */,
+				D659EF8C20DF3B3200B9AA8B /* AppDelegate.h */,
+				D659EF8D20DF3B3200B9AA8B /* AppDelegate.m */,
+				D659EF9B20DF3B3200B9AA8B /* main.m */,
+			);
+			path = TrochilusDemo;
+			sourceTree = "<group>";
+		};
+		D659EFA420DF3B3200B9AA8B /* TrochilusDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				D659EFA520DF3B3200B9AA8B /* TrochilusDemoTests.m */,
+				D659EFA720DF3B3200B9AA8B /* Info.plist */,
+			);
+			path = TrochilusDemoTests;
+			sourceTree = "<group>";
+		};
+		D659EFAF20DF3B3200B9AA8B /* TrochilusDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D659EFB020DF3B3200B9AA8B /* TrochilusDemoUITests.m */,
+				D659EFB220DF3B3200B9AA8B /* Info.plist */,
+			);
+			path = TrochilusDemoUITests;
+			sourceTree = "<group>";
+		};
+		D659EFC620DF3B8100B9AA8B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D659EFC720DF3B8100B9AA8B /* TSinaWeiBoVC.h */,
+				D659EFC820DF3B8100B9AA8B /* TWechatMomentsVC.m */,
+				D659EFC920DF3B8100B9AA8B /* TWechatFavVC.m */,
+				D659EFCA20DF3B8100B9AA8B /* TAliPayVC.m */,
+				D659EFCB20DF3B8100B9AA8B /* TQQFriendVC.h */,
+				D659EFCC20DF3B8100B9AA8B /* TWechatContactsVC.h */,
+				D659EFCD20DF3B8100B9AA8B /* TQZoneVC.m */,
+				D659EFCE20DF3B8100B9AA8B /* TWechatFavVC.h */,
+				D659EFCF20DF3B8100B9AA8B /* TWechatMomentsVC.h */,
+				D659EFD020DF3B8100B9AA8B /* TSinaWeiBoVC.m */,
+				D659EFD120DF3B8100B9AA8B /* TWechatContactsVC.m */,
+				D659EFD220DF3B8100B9AA8B /* TQQFriendVC.m */,
+				D659EFD320DF3B8100B9AA8B /* TAliPayVC.h */,
+				D659EFD420DF3B8100B9AA8B /* TQZoneVC.h */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D659EF8820DF3B3200B9AA8B /* TrochilusDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D659EFB520DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemo" */;
+			buildPhases = (
+				D659EF8520DF3B3200B9AA8B /* Sources */,
+				D659EF8620DF3B3200B9AA8B /* Frameworks */,
+				D659EF8720DF3B3200B9AA8B /* Resources */,
+				D659EFEC20DF3C0400B9AA8B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TrochilusDemo;
+			productName = TrochilusDemo;
+			productReference = D659EF8920DF3B3200B9AA8B /* TrochilusDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D659EFA020DF3B3200B9AA8B /* TrochilusDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D659EFB820DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemoTests" */;
+			buildPhases = (
+				D659EF9D20DF3B3200B9AA8B /* Sources */,
+				D659EF9E20DF3B3200B9AA8B /* Frameworks */,
+				D659EF9F20DF3B3200B9AA8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D659EFA320DF3B3200B9AA8B /* PBXTargetDependency */,
+			);
+			name = TrochilusDemoTests;
+			productName = TrochilusDemoTests;
+			productReference = D659EFA120DF3B3200B9AA8B /* TrochilusDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D659EFAB20DF3B3200B9AA8B /* TrochilusDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D659EFBB20DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemoUITests" */;
+			buildPhases = (
+				D659EFA820DF3B3200B9AA8B /* Sources */,
+				D659EFA920DF3B3200B9AA8B /* Frameworks */,
+				D659EFAA20DF3B3200B9AA8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D659EFAE20DF3B3200B9AA8B /* PBXTargetDependency */,
+			);
+			name = TrochilusDemoUITests;
+			productName = TrochilusDemoUITests;
+			productReference = D659EFAC20DF3B3200B9AA8B /* TrochilusDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D659EF8120DF3B3200B9AA8B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "王权伟";
+				TargetAttributes = {
+					D659EF8820DF3B3200B9AA8B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					D659EFA020DF3B3200B9AA8B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D659EF8820DF3B3200B9AA8B;
+					};
+					D659EFAB20DF3B3200B9AA8B = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D659EF8820DF3B3200B9AA8B;
+					};
+				};
+			};
+			buildConfigurationList = D659EF8420DF3B3200B9AA8B /* Build configuration list for PBXProject "TrochilusDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D659EF8020DF3B3200B9AA8B;
+			productRefGroup = D659EF8A20DF3B3200B9AA8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D659EF8820DF3B3200B9AA8B /* TrochilusDemo */,
+				D659EFA020DF3B3200B9AA8B /* TrochilusDemoTests */,
+				D659EFAB20DF3B3200B9AA8B /* TrochilusDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D659EF8720DF3B3200B9AA8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D659EFE720DF3BBB00B9AA8B /* Main.storyboard in Resources */,
+				D659EFBF20DF3B5500B9AA8B /* Assets.xcassets in Resources */,
+				D659EFE820DF3BBB00B9AA8B /* LaunchScreen.storyboard in Resources */,
+				D659EFE220DF3B9700B9AA8B /* res6.gif in Resources */,
+				D659EFE120DF3B9700B9AA8B /* cat.mp4 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EF9F20DF3B3200B9AA8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EFAA20DF3B3200B9AA8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D659EF8520DF3B3200B9AA8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D659EFD620DF3B8100B9AA8B /* TWechatFavVC.m in Sources */,
+				D659EFD520DF3B8100B9AA8B /* TWechatMomentsVC.m in Sources */,
+				D659EF9C20DF3B3200B9AA8B /* main.m in Sources */,
+				D659EFDA20DF3B8100B9AA8B /* TWechatContactsVC.m in Sources */,
+				D659EFDE20DF3B8D00B9AA8B /* ViewController.m in Sources */,
+				D659EFDB20DF3B8100B9AA8B /* TQQFriendVC.m in Sources */,
+				D659EF8E20DF3B3200B9AA8B /* AppDelegate.m in Sources */,
+				D659EFD820DF3B8100B9AA8B /* TQZoneVC.m in Sources */,
+				D659EFD720DF3B8100B9AA8B /* TAliPayVC.m in Sources */,
+				D659EFD920DF3B8100B9AA8B /* TSinaWeiBoVC.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EF9D20DF3B3200B9AA8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D659EFA620DF3B3200B9AA8B /* TrochilusDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D659EFA820DF3B3200B9AA8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D659EFB120DF3B3200B9AA8B /* TrochilusDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D659EFA320DF3B3200B9AA8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D659EF8820DF3B3200B9AA8B /* TrochilusDemo */;
+			targetProxy = D659EFA220DF3B3200B9AA8B /* PBXContainerItemProxy */;
+		};
+		D659EFAE20DF3B3200B9AA8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D659EF8820DF3B3200B9AA8B /* TrochilusDemo */;
+			targetProxy = D659EFAD20DF3B3200B9AA8B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D659EFE320DF3BBB00B9AA8B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D659EFE420DF3BBB00B9AA8B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D659EFE520DF3BBB00B9AA8B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D659EFE620DF3BBB00B9AA8B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D659EFB320DF3B3200B9AA8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D659EFB420DF3B3200B9AA8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D659EFB620DF3B3200B9AA8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TrochilusDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D659EFB720DF3B3200B9AA8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = TrochilusDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D659EFB920DF3B3200B9AA8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				INFOPLIST_FILE = TrochilusDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrochilusDemo.app/TrochilusDemo";
+			};
+			name = Debug;
+		};
+		D659EFBA20DF3B3200B9AA8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				INFOPLIST_FILE = TrochilusDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrochilusDemo.app/TrochilusDemo";
+			};
+			name = Release;
+		};
+		D659EFBC20DF3B3200B9AA8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				INFOPLIST_FILE = TrochilusDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TrochilusDemo;
+			};
+			name = Debug;
+		};
+		D659EFBD20DF3B3200B9AA8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 89BZ957YW3;
+				INFOPLIST_FILE = TrochilusDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.quanweiwang.TrochilusDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TrochilusDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D659EF8420DF3B3200B9AA8B /* Build configuration list for PBXProject "TrochilusDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D659EFB320DF3B3200B9AA8B /* Debug */,
+				D659EFB420DF3B3200B9AA8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D659EFB520DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D659EFB620DF3B3200B9AA8B /* Debug */,
+				D659EFB720DF3B3200B9AA8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D659EFB820DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D659EFB920DF3B3200B9AA8B /* Debug */,
+				D659EFBA20DF3B3200B9AA8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D659EFBB20DF3B3200B9AA8B /* Build configuration list for PBXNativeTarget "TrochilusDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D659EFBC20DF3B3200B9AA8B /* Debug */,
+				D659EFBD20DF3B3200B9AA8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D659EF8120DF3B3200B9AA8B /* Project object */;
+}

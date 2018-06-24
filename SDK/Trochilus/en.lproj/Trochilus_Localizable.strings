@@ -1,0 +1,64 @@
+/*
+ Trochilus_Localizable.strings
+ Trochilus
+ 
+ Created by 王权伟 on 2018/4/12.
+ Copyright © 2018年 王权伟. All rights reserved.
+ */
+
+"PlatformType_0" = "Unknown";
+"PlatformType_1" = "SinaWeiBo";
+"PlatformType_2" = "Tencent Weibo";
+"PlatformType_5" = "Douban";
+"PlatformType_6" = "QQ";
+"PlatformType_7" = "Renren";
+"PlatformType_8" = "Kaixin";
+"PlatformType_9" = "Pengyou";
+"PlatformType_10" = "Facebook";
+"PlatformType_11" = "Twitter";
+"PlatformType_12" = "Yinxiang";
+"PlatformType_13" = "Foursquare";
+"PlatformType_14" = "Google+";
+"PlatformType_15" = "Instagram";
+"PlatformType_16" = "LinkedIn";
+"PlatformType_17" = "Tumblr";
+"PlatformType_18" = "Mail";
+"PlatformType_19" = "SMS";
+"PlatformType_20" = "Print";
+"PlatformType_21" = "Copy";
+"PlatformType_22" = "WeChat";
+"PlatformType_23" = "WeChat";
+"PlatformType_24" = "QQ";
+"PlatformType_25" = "Instapaper";
+"PlatformType_26" = "Pocket";
+"PlatformType_27" = "YouDao Notes";
+"PlatformType_28" = "Soho Kan";
+"PlatformType_30" = "Pinterest";
+"PlatformType_34" = "Flickr";
+"PlatformType_35" = "Dropbox";
+"PlatformType_36" = "VKontakte";
+"PlatformType_37" = "WeChat";
+"PlatformType_38" = "Yixin contacts";
+"PlatformType_39" = "Yixin moments";
+"PlatformType_40" = "Yixin favorites";
+"PlatformType_41" = "Mingdao";
+"PlatformType_42" = "Line";
+"PlatformType_43" = "WhatsApp";
+"PlatformType_44" = "KakaoTalk";
+"PlatformType_45" = "KakaoStory";
+"PlatformType_46" = "Messenger";
+"PlatformType_50" = "AliSocial";
+"PlatformType_51" = "AliSocial moments";
+"PlatformType_52" = "DingTalk";
+"PlatformType_53" = "YouTube";
+"PlatformType_54" = "Meipai";
+
+"PlatformType_994" = "Yixin";
+"PlatformType_995" = "Kakao";
+"PlatformType_996" = "Evernote";
+"PlatformType_997" = "WeChat";
+"PlatformType_998" = "QQ";
+"PlatformType_999" = "Any";
+
+
+
