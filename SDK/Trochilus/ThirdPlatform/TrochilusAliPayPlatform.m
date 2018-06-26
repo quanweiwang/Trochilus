@@ -22,8 +22,7 @@
 #pragma mark- 单例模式
 static TrochilusAliPayPlatform * _instance = nil;
 
-+ (instancetype)sharedInstance
-{
++ (instancetype)sharedInstance {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init] ;
@@ -53,10 +52,27 @@ static TrochilusAliPayPlatform * _instance = nil;
 }
 
 #pragma mark- 支付宝支付
-+ (NSString *)payToAliPayUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
++ (NSString *)payWithUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
     if (stateChangedHandler) {
         [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler = stateChangedHandler;
+    }
+    
+    //urlScheme为空
+    if (urlScheme == nil) {
+        
+        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayUrlSchemeNotFound];
+        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
+        
+        return nil;
+    }
+    
+    //orderString为空
+    if (orderString == nil) {
+        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayOrderStringNotFound];
+        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
+        
+        return nil;
     }
     
     //alipay://alipayclient/?{
@@ -66,6 +82,7 @@ static TrochilusAliPayPlatform * _instance = nil;
     //}
     
     if ([TrochilusAliPayPlatform isAliPayInstalled]) {
+        
         NSDictionary * aliPayDic = @{@"fromAppUrlScheme" : urlScheme,
                                      @"requestType" : @"SafePay",
                                      @"dataString" : orderString};
@@ -80,17 +97,16 @@ static TrochilusAliPayPlatform * _instance = nil;
         
     }
     else {
-        if (stateChangedHandler) {
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-            
-        }
+        
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayUninstalled];
+        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:err];
+
     }
     return nil;
 }
 
 #pragma 支付宝打赏
-+ (NSString *)awardToAliPayQRCodeUrl:(NSString *)url {
++ (NSString *)tipWithUrl:(NSString *)url {
     
     NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
     
@@ -106,25 +122,21 @@ static TrochilusAliPayPlatform * _instance = nil;
     if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
         NSError *err;
         NSDictionary *ret=[NSJSONSerialization JSONObjectWithData:[[NSString trochilus_urlDecode:url.query]dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&err];
+        
         if (err||ret[@"memo"]==[NSNull null]||[ret[@"memo"][@"ResultStatus"] intValue]!=9000) {
             //支付失败
             NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayFail userInfo:ret];
+            [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
             
-            if ([TrochilusAliPayPlatform sharedInstance].payStateChangedHandler) {
-                [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateFail,nil,error);
-            }
         }
         else if (err||ret[@"memo"]==[NSNull null]||[ret[@"memo"][@"ResultStatus"] intValue] == 6001) {
             //用户取消
-            if ([TrochilusAliPayPlatform sharedInstance].payStateChangedHandler) {
-                [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateCancel,nil,nil);
-            }
+            [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateCancel error:nil];
+            
         }
         else{
             //支付成功
-            if ([TrochilusAliPayPlatform sharedInstance].payStateChangedHandler) {
-                [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateSuccess,nil,nil);
-            }
+            [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateSuccess error:nil];
         }
         
         [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler = nil;
@@ -141,12 +153,19 @@ static TrochilusAliPayPlatform * _instance = nil;
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5/*延迟执行时间*/ * NSEC_PER_SEC));
     dispatch_after(delayTime, dispatch_get_main_queue(), ^{
         //延迟0.5s执行
-        if (self.payStateChangedHandler) {
-            //调用自己的服务器去查询支付结果
-            self.payStateChangedHandler(TrochilusResponseStatePayWait, nil, nil);
-            self.payStateChangedHandler = nil;
-        }
+        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStatePayWait error:nil];
+        
     });
+}
+
+#pragma mark 状态回调
++ (void)payResponseWithState:(TrochilusResponseState)responseState error:(NSError *)error {
+    
+    if ([TrochilusAliPayPlatform sharedInstance].payStateChangedHandler) {
+        [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(responseState, nil, error);
+    }
+    
+    [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler = nil;
 }
 
 @end

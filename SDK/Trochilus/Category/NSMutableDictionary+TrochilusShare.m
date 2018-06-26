@@ -48,7 +48,7 @@
     
     //分享类型
     if (type) {
-        [self setObject:@(type) forKey:@"Type"];
+        [self setObject:@(type) forKey:@"ContentType"];
     }
     
 }
@@ -117,7 +117,7 @@
     
     //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
     if (type) {
-        [self setObject:@(type) forKey:@"Type"];
+        [self setObject:@(type) forKey:@"ContentType"];
     }
     
     //平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
@@ -191,7 +191,7 @@
     
     //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
     if (type) {
-        [self setObject:@(type) forKey:@"Type"];
+        [self setObject:@(type) forKey:@"ContentType"];
     }
     
     //平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
@@ -295,7 +295,7 @@
     }
     
     if (type) {
-        [self setObject:@(type) forKey:@"Type"];
+        [self setObject:@(type) forKey:@"ContentType"];
     }
     
     if (platformSubType) {
@@ -311,17 +311,23 @@
  @param description 详细说明
  @param webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
  @param path 跳转到页面路径
- @param thumbImage 缩略图 （必填）
+ @param thumbImage 缩略图 （必填）, 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
+ @param hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
  @param userName 小程序的userName （必填）
- @param platformSubType 分享自平台 微信小程序暂只支持 TPlatformSubTypeWechatSession（微信好友分享）
+ @param withShareTicket 是否使用带 shareTicket 的转发
+ @param type 分享小程序的版本（0-正式，1-开发，2-体验）
+ @param platformSubType 分享自平台 微信小程序暂只支持 TrochilusPlatformSubTypeWechatSession（微信好友分享）
  */
-- (void)trochilus_SetupWeChatMiniProgramParamsByTitle:(NSString *)title
-                                 description:(NSString *)description
-                                  webpageUrl:(NSURL *)webpageUrl
-                                        path:(NSString *)path
-                                  thumbImage:(id)thumbImage
-                                    userName:(NSString *)userName
-                          forPlatformSubType:(TrochilusPlatformType)platformSubType {
+- (void)trochilus_SetupWeChatMiniProgramShareParamsByTitle:(NSString *)title
+                                               description:(NSString *)description
+                                                webpageUrl:(NSURL *)webpageUrl
+                                                      path:(NSString *)path
+                                                thumbImage:(id)thumbImage
+                                              hdThumbImage:(id)hdThumbImage
+                                                  userName:(NSString *)userName
+                                           withShareTicket:(BOOL)withShareTicket
+                                           miniProgramType:(NSUInteger)type
+                                        forPlatformSubType:(TrochilusPlatformType)platformSubType {
     
     if (title) {
         [self setObject:title forKey:@"Title"];
@@ -343,6 +349,10 @@
         [self setObject:thumbImage forKey:@"ThumbImage"];
     }
     
+    if (hdThumbImage) {
+        [self setObject:hdThumbImage forKey:@"HdThumbImage"];
+    }
+    
     if (userName) {
         [self setObject:userName forKey:@"UserName"];
     }
@@ -351,8 +361,12 @@
         [self setObject:@(platformSubType) forKey:@"PlatformSubType"];
     }
     
+    [self setObject:@(withShareTicket) forKey:@"WithShareTicket"];
+    
+    [self setObject:@(type) forKey:@"MiniProgramType"];
+    
     //小程序
-    [self setObject:@(TrochilusContentTypeMiniProgram) forKey:@"Type"];
+    [self setObject:@(TrochilusContentTypeMiniProgram) forKey:@"ContentType"];
     
 }
 
@@ -407,7 +421,7 @@
     }
     
     if (type) {
-        [self setObject:@(type) forKey:@"Type"];
+        [self setObject:@(type) forKey:@"ContentType"];
     }
     
 }
@@ -480,10 +494,10 @@
     return nil;
 }
 
-- (NSNumber *)trochilus_type {
+- (NSNumber *)trochilus_contentType {
     
-    if ([self objectForKey:@"Type"]) {
-        return [self objectForKey:@"Type"];
+    if ([self objectForKey:@"ContentType"]) {
+        return [self objectForKey:@"ContentType"];
     }
     
     return nil;

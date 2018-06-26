@@ -24,7 +24,8 @@
 		D659EFE220DF3B9700B9AA8B /* res6.gif in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE020DF3B9700B9AA8B /* res6.gif */; };
 		D659EFE720DF3BBB00B9AA8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE320DF3BBB00B9AA8B /* Main.storyboard */; };
 		D659EFE820DF3BBB00B9AA8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE520DF3BBB00B9AA8B /* LaunchScreen.storyboard */; };
-		D659EFF820DF41B300B9AA8B /* Trochilus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D659EFF720DF41B300B9AA8B /* Trochilus.framework */; };
+		D7400A1D20E245090055F49A /* Trochilus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; };
+		D7400A1E20E245090055F49A /* Trochilus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D7400A1E20E245090055F49A /* Trochilus.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,7 +92,7 @@
 		D659EFE020DF3B9700B9AA8B /* res6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = res6.gif; sourceTree = "<group>"; };
 		D659EFE420DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D659EFE620DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D659EFF720DF41B300B9AA8B /* Trochilus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Trochilus.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Trochilus-bvxjbusemwycypeugnzyvnbylnew/Build/Products/Debug-iphonesimulator/Trochilus.framework"; sourceTree = "<group>"; };
+		D7400A1C20E245090055F49A /* Trochilus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Trochilus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D659EFF820DF41B300B9AA8B /* Trochilus.framework in Frameworks */,
+				D7400A1D20E245090055F49A /* Trochilus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +124,7 @@
 		D659EF8020DF3B3200B9AA8B = {
 			isa = PBXGroup;
 			children = (
-				D659EFF720DF41B300B9AA8B /* Trochilus.framework */,
+				D7400A1C20E245090055F49A /* Trochilus.framework */,
 				D659EF8B20DF3B3200B9AA8B /* TrochilusDemo */,
 				D659EFA420DF3B3200B9AA8B /* TrochilusDemoTests */,
 				D659EFAF20DF3B3200B9AA8B /* TrochilusDemoUITests */,
@@ -181,19 +183,19 @@
 			isa = PBXGroup;
 			children = (
 				D659EFC720DF3B8100B9AA8B /* TSinaWeiBoVC.h */,
+				D659EFD020DF3B8100B9AA8B /* TSinaWeiBoVC.m */,
+				D659EFCF20DF3B8100B9AA8B /* TWechatMomentsVC.h */,
 				D659EFC820DF3B8100B9AA8B /* TWechatMomentsVC.m */,
+				D659EFCE20DF3B8100B9AA8B /* TWechatFavVC.h */,
 				D659EFC920DF3B8100B9AA8B /* TWechatFavVC.m */,
+				D659EFD320DF3B8100B9AA8B /* TAliPayVC.h */,
 				D659EFCA20DF3B8100B9AA8B /* TAliPayVC.m */,
 				D659EFCB20DF3B8100B9AA8B /* TQQFriendVC.h */,
-				D659EFCC20DF3B8100B9AA8B /* TWechatContactsVC.h */,
-				D659EFCD20DF3B8100B9AA8B /* TQZoneVC.m */,
-				D659EFCE20DF3B8100B9AA8B /* TWechatFavVC.h */,
-				D659EFCF20DF3B8100B9AA8B /* TWechatMomentsVC.h */,
-				D659EFD020DF3B8100B9AA8B /* TSinaWeiBoVC.m */,
-				D659EFD120DF3B8100B9AA8B /* TWechatContactsVC.m */,
 				D659EFD220DF3B8100B9AA8B /* TQQFriendVC.m */,
-				D659EFD320DF3B8100B9AA8B /* TAliPayVC.h */,
+				D659EFCC20DF3B8100B9AA8B /* TWechatContactsVC.h */,
+				D659EFD120DF3B8100B9AA8B /* TWechatContactsVC.m */,
 				D659EFD420DF3B8100B9AA8B /* TQZoneVC.h */,
+				D659EFCD20DF3B8100B9AA8B /* TQZoneVC.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -261,7 +263,7 @@
 		D659EF8120DF3B3200B9AA8B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "王权伟";
 				TargetAttributes = {
 					D659EF8820DF3B3200B9AA8B = {
@@ -412,6 +414,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -419,6 +422,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -467,6 +471,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -474,6 +479,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

@@ -158,9 +158,7 @@ static Trochilus * _instance = nil;
  */
 + (void)aLiPayWithUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
-    NSString * aliPayInfo = [TrochilusAliPayPlatform payToAliPayUrlScheme:urlScheme
-                                                      orderString:orderString
-                                                   onStateChanged:stateChangedHandler];
+    NSString * aliPayInfo = [TrochilusAliPayPlatform payWithUrlScheme:urlScheme orderString:orderString onStateChanged:stateChangedHandler];
     
     [Trochilus sendToURL:aliPayInfo];
 }
@@ -171,9 +169,9 @@ static Trochilus * _instance = nil;
  
  @param url 二维码解析出来的地址
  */
-+ (void)aliTipWithQRCodeUrl:(NSString *)url {
++ (void)aliTipWithUrl:(NSString *)url {
     
-    NSString * awardInfo = [TrochilusAliPayPlatform awardToAliPayQRCodeUrl:url];
+    NSString * awardInfo = [TrochilusAliPayPlatform tipWithUrl:url];
     
     [Trochilus sendToURL:awardInfo];
 }

@@ -106,7 +106,7 @@ static TrochilusQQPlatform * _instance = nil;
     if ([TrochilusQQPlatform isQQInstalled] || [TrochilusQQPlatform isTIMInstalled]) {
         
         NSString * file_type = @"";
-        TrochilusContentType contentType = [[parameters trochilus_type] integerValue];
+        TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
         if (contentType == TrochilusContentTypeText) {
             //文本类型
             file_type = @"text";
@@ -224,7 +224,7 @@ static TrochilusQQPlatform * _instance = nil;
         [qzoneInfo appendString:@"&objectlocation=pasteboard"];
         
         
-        TrochilusContentType platformType = [[parameters trochilus_type] integerValue];
+        TrochilusContentType platformType = [[parameters trochilus_contentType] integerValue];
         if (platformType == TrochilusContentTypeText) {
             //文本类型
             file_type = @"qzone";

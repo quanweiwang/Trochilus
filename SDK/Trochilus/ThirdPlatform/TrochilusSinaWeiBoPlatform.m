@@ -71,7 +71,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         NSString * uuid = [[NSUUID UUID] UUIDString];
         
         NSDictionary * message = nil;
-        TrochilusContentType type = [[parameters trochilus_type] integerValue];
+        TrochilusContentType type = [[parameters trochilus_contentType] integerValue];
         
         if (type == TrochilusContentTypeText) {
             //文字分享

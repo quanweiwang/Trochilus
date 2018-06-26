@@ -40,7 +40,8 @@ typedef enum : NSUInteger {
     TrochilusErrorCodeWeiboAuthorizeFail = -20302,      //微博授权失败
     
     TrochilusErrorCodeAliPayFail = -20403,              //支付宝支付失败
-    
+    TrochilusErrorCodeAliPayUrlSchemeNotFound = -20404,  //urlScheme未填写
+    TrochilusErrorCodeAliPayOrderStringNotFound = -20405  //orderString未填写
     
 } TrochilusErrorCode;
 

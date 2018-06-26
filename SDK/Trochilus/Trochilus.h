@@ -67,7 +67,7 @@
  
  @param url 二维码解析出来的地址
  */
-+ (void)aliTipWithQRCodeUrl:(NSString *)url;
++ (void)aliTipWithUrl:(NSString *)url;
 
 /**
  第三方平台回调

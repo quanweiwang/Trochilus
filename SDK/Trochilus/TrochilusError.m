@@ -72,8 +72,18 @@
                      };
     }
     else if (errorCode == TrochilusErrorCodeAliPayUninstalled) {
-        userInfo = @{NSLocalizedDescriptionKey : @"支付平台［支付宝］尚未安装支付宝客户端!无法进行分享!",
+        userInfo = @{NSLocalizedDescriptionKey : @"支付平台［支付宝］尚未安装支付宝客户端!无法进行支付!",
                      NSLocalizedRecoverySuggestionErrorKey : @"请安装支付宝客户端"
+                     };
+    }
+    else if (errorCode == TrochilusErrorCodeAliPayUrlSchemeNotFound) {
+        userInfo = @{NSLocalizedDescriptionKey : @"支付平台［支付宝］UrlScheme未填写!无法进行支付!",
+                     NSLocalizedRecoverySuggestionErrorKey : @"请填写UrlScheme"
+                     };
+    }
+    else if (errorCode == TrochilusErrorCodeAliPayOrderStringNotFound) {
+        userInfo = @{NSLocalizedDescriptionKey : @"支付平台［支付宝］OrderString未填写!无法进行支付!",
+                     NSLocalizedRecoverySuggestionErrorKey : @"请填写OrderString"
                      };
     }
     else {
