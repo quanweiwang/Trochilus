@@ -82,9 +82,19 @@ typedef NS_ENUM(NSUInteger, TrochilusContentType){
     //v3.6.2 增加
     TrochilusContentTypeFBMessageVideo = 9,
     
-    //3.6.3 小程序分享(暂时仅微信可用)
-    TrochilusContentTypeMiniProgram  = 10
+    //小程序
+    TrochilusContentTypeMiniProgram = 10,
+};
+
+typedef NS_ENUM(NSUInteger, TrochilusMiniProgramType) {
+    //小程序分享(暂时仅微信可用) 正式版
+    TrochilusMiniProgramTypeRelease  = 0,
     
+    //小程序分享(暂时仅微信可用) 开发版
+    TrochilusMiniProgramTypeTest  = 1,
+    
+    //小程序分享(暂时仅微信可用) 体验版
+    TrochilusMiniProgramTypePreview  = 2
 };
 
 /**

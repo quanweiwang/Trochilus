@@ -99,6 +99,7 @@
     [parameters trochilus_SetupWeChatParamsByText:@"222"
                                    title:nil
                                      url:nil
+                            mediaTagName:nil
                               thumbImage:nil
                                    image:nil
                             musicFileURL:nil
@@ -124,6 +125,7 @@
     [parameters trochilus_SetupWeChatParamsByText:@"222"
                                    title:nil
                                      url:nil
+                            mediaTagName:nil
                               thumbImage:nil
                                    image:[UIImage imageNamed:@"COD13"]
                             musicFileURL:nil
@@ -146,6 +148,7 @@
     [parameters trochilus_SetupWeChatParamsByText:@"222 Link Desc"
                                    title:@"222"
                                      url:[NSURL URLWithString:@"https://www.mob.com"]
+                            mediaTagName:nil
                               thumbImage:nil
                                    image:[UIImage imageNamed:@"COD13"]
                             musicFileURL:nil
@@ -169,6 +172,7 @@
     [parameters trochilus_SetupWeChatParamsByText:@"崔健"
                                    title:@"一无所有"
                                      url:[NSURL URLWithString:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"]
+                            mediaTagName:nil
                               thumbImage:[UIImage imageNamed:@"COD13"]
                                    image:nil
                             musicFileURL:[NSURL URLWithString:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"]
@@ -191,6 +195,7 @@
     [parameters trochilus_SetupWeChatParamsByText:@"视频"
                                    title:@"乔布斯"
                                      url:[NSURL URLWithString:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"]
+                            mediaTagName:nil
                               thumbImage:[UIImage imageNamed:@"COD13"]
                                    image:nil
                             musicFileURL:nil
@@ -209,18 +214,19 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     //平台定制
     [parameters trochilus_SetupWeChatParamsByText:@"222"
-                                   title:@"file"
-                                     url:nil
-                              thumbImage:[UIImage imageNamed:@"COD13"]
-                                   image:nil
-                            musicFileURL:nil
-                                 extInfo:nil
-                                fileData:nil
-                            emoticonData:nil
-                     sourceFileExtension:@"mp4"
-                          sourceFileData:[[NSBundle mainBundle] pathForResource:@"cat" ofType:@"mp4"]
-                                    type:TrochilusContentTypeFile
-                      forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                            title:@"file"
+                                              url:nil
+                                     mediaTagName:nil
+                                       thumbImage:[UIImage imageNamed:@"COD13"]
+                                            image:nil
+                                     musicFileURL:nil
+                                          extInfo:nil
+                                         fileData:nil
+                                     emoticonData:nil
+                              sourceFileExtension:@"mp4"
+                                   sourceFileData:[[NSBundle mainBundle] pathForResource:@"cat"     ofType:@"mp4"]
+                                             type:TrochilusContentTypeFile
+                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
     
     [self shareWithParameters:parameters];
 }

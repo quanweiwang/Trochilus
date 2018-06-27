@@ -6,7 +6,7 @@
 //  Copyright © 2017年 王权伟. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "TrochilusTypeDefine.h"
 
 @interface NSMutableDictionary (TrochilusShare)
@@ -85,43 +85,42 @@
  *  设置type为TContentTypeVideo，并设置text、title、url参数
  */
 - (void)trochilus_SetupWeChatParamsByText:(NSString *)text
-                           title:(NSString *)title
-                             url:(NSURL *)url
-                      thumbImage:(id)thumbImage
-                           image:(id)image
-                    musicFileURL:(NSURL *)musicFileURL
-                         extInfo:(NSString *)extInfo
-                        fileData:(id)fileData
-                    emoticonData:(id)emoticonData
-             sourceFileExtension:(NSString *)fileExtension
-                  sourceFileData:(id)sourceFileData
-                            type:(TrochilusContentType)type
-              forPlatformSubType:(TrochilusPlatformType)platformSubType;
+                                    title:(NSString *)title
+                                      url:(NSURL *)url
+                             mediaTagName:(NSString *)mediaTagName
+                               thumbImage:(id)thumbImage
+                                    image:(id)image
+                             musicFileURL:(NSURL *)musicFileURL
+                                  extInfo:(NSString *)extInfo
+                                 fileData:(id)fileData
+                             emoticonData:(id)emoticonData
+                      sourceFileExtension:(NSString *)fileExtension
+                           sourceFileData:(id)sourceFileData
+                                     type:(TrochilusContentType)type
+                       forPlatformSubType:(TrochilusPlatformType)platformSubType;
 
 /**
  设置微信小程序分享
- 
+
+ @param webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
+ @param userName 小程序的userName （必填）
+ @param path 跳转到页面路径
  @param title 标题
  @param description 详细说明
- @param webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
- @param path 跳转到页面路径
  @param thumbImage 缩略图 （必填）, 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
- @param hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
- @param userName 小程序的userName （必填）
+ @param hdImageData 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
  @param withShareTicket 是否使用带 shareTicket 的转发
- @param type 分享小程序的版本（0-正式，1-开发，2-体验）
- @param platformSubType 分享自平台 微信小程序暂只支持 TrochilusPlatformSubTypeWechatSession（微信好友分享）
+ @param programType 分享小程序的版本（0-正式，1-开发，2-体验）
  */
-- (void)trochilus_SetupWeChatMiniProgramShareParamsByTitle:(NSString *)title
-                                         description:(NSString *)description
-                                          webpageUrl:(NSURL *)webpageUrl
-                                                path:(NSString *)path
-                                          thumbImage:(id)thumbImage
-                                        hdThumbImage:(id)hdThumbImage
-                                            userName:(NSString *)userName
-                                     withShareTicket:(BOOL)withShareTicket
-                                     miniProgramType:(NSUInteger)type
-                                  forPlatformSubType:(TrochilusPlatformType)platformSubType;
+- (void)trochilus_SetupWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
+                                                       userName:(NSString *)userName
+                                                           path:(NSString *)path
+                                                          title:(NSString *)title
+                                                    description:(NSString *)description
+                                                     thumbImage:(UIImage *)thumbImage
+                                                    hdImageData:(UIImage *)hdImageData
+                                                withShareTicket:(BOOL)withShareTicket
+                                                miniProgramType:(TrochilusMiniProgramType)programType;
 
 /**
  *  设置新浪微博分享参数
@@ -146,7 +145,8 @@
 
 - (NSString *)trochilus_text;
 - (NSString *)trochilus_title;
-- (NSURL *)trochilus_url;
+- (NSString *)trochilus_url;
+- (NSString *)trochilus_mediaTagName;
 - (NSURL *)trochilus_audioFlashURL;
 - (NSURL *)trochilus_videoFlashURL;
 - (id )trochilus_thumbImage;
@@ -161,6 +161,10 @@
 - (NSString *)trochilus_userName;
 - (NSString *)trochilus_path;
 - (NSString *)trochilus_descriptions;
+
+- (NSString *)trochilus_withShareTicket;
+- (NSNumber *)trochilus_miniProgramType;
+
 +(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url;
 
 

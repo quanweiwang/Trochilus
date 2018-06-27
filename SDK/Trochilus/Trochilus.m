@@ -86,14 +86,14 @@ static Trochilus * _instance = nil;
     
     Class platformClass = NSClassFromString([NSString stringWithFormat:@"Trochilus%@Platform",platformName]);
     
-    SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"shareWith%@Platform:onStateChanged:",platformName]);
+    SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"shareWith%@Platform:platformSubType:onStateChanged:",platformName]);
     IMP imp = [platformClass methodForSelector:selMethod];
-    NSString *(*func)(id,SEL,NSMutableDictionary*,TrochilusStateChangedHandler) = (void *)imp;
+    NSString *(*func)(id,SEL,NSMutableDictionary*,TrochilusPlatformType,TrochilusStateChangedHandler) = (void *)imp;
     
     NSString * shareUrl = @"";
     
     if ([platformClass respondsToSelector:selMethod]) {
-        shareUrl = platformClass? func(platformClass,selMethod,parameters,stateChangedHandler): @"";
+        shareUrl = platformClass? func(platformClass,selMethod,parameters,platformType,stateChangedHandler): @"";
     }
     [Trochilus sendToURL:shareUrl];
 }

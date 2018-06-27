@@ -27,7 +27,7 @@
  @param stateChangedHandler 分享状态变更回调处理
  @return 构造好用于提交给微信的字符串
  */
-+ (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  *  微信授权

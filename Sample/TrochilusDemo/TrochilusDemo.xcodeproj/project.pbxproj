@@ -93,6 +93,7 @@
 		D659EFE420DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D659EFE620DF3BBB00B9AA8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7400A1C20E245090055F49A /* Trochilus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Trochilus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79835C220E324EA00008F58 /* TrochilusDemoMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrochilusDemoMacro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +155,7 @@
 				D659EFC620DF3B8100B9AA8B /* ViewController */,
 				D659EFC420DF3B7A00B9AA8B /* Info.plist */,
 				D659EFBE20DF3B5500B9AA8B /* Assets.xcassets */,
+				D79835C220E324EA00008F58 /* TrochilusDemoMacro.h */,
 				D659EF8C20DF3B3200B9AA8B /* AppDelegate.h */,
 				D659EF8D20DF3B3200B9AA8B /* AppDelegate.m */,
 				D659EF9B20DF3B3200B9AA8B /* main.m */,

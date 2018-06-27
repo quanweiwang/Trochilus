@@ -8,6 +8,7 @@
 
 #import "NSMutableDictionary+TrochilusShare.h"
 #import <UIKit/UIKit.h>
+#import "UIImage+Trochilus.h"
 
 @implementation NSMutableDictionary (TrochilusShare)
 #pragma mark- 通用分享参数
@@ -239,6 +240,7 @@
 - (void)trochilus_SetupWeChatParamsByText:(NSString *)text
                            title:(NSString *)title
                              url:(NSURL *)url
+                    mediaTagName:(NSString *)mediaTagName
                       thumbImage:(id)thumbImage
                            image:(id)image
                     musicFileURL:(NSURL *)musicFileURL
@@ -260,6 +262,10 @@
     
     if (url) {
         [self setObject:url forKey:@"URL"];
+    }
+    
+    if (mediaTagName) {
+        [self setObject:mediaTagName forKey:@"MediaTagName"];
     }
     
     if (thumbImage) {
@@ -306,67 +312,74 @@
 
 /**
  设置微信小程序分享
- 
+
+ @param webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
+ @param userName 小程序的userName （必填）
+ @param path 跳转到页面路径
  @param title 标题
  @param description 详细说明
- @param webpageUrl 网址（6.5.6以下版本微信会自动转化为分享链接 必填）
- @param path 跳转到页面路径
  @param thumbImage 缩略图 （必填）, 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
- @param hdThumbImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
- @param userName 小程序的userName （必填）
+ @param hdImageData 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
  @param withShareTicket 是否使用带 shareTicket 的转发
- @param type 分享小程序的版本（0-正式，1-开发，2-体验）
- @param platformSubType 分享自平台 微信小程序暂只支持 TrochilusPlatformSubTypeWechatSession（微信好友分享）
+ @param programType 分享小程序的版本（0-正式，1-开发，2-体验）
  */
-- (void)trochilus_SetupWeChatMiniProgramShareParamsByTitle:(NSString *)title
-                                               description:(NSString *)description
-                                                webpageUrl:(NSURL *)webpageUrl
-                                                      path:(NSString *)path
-                                                thumbImage:(id)thumbImage
-                                              hdThumbImage:(id)hdThumbImage
-                                                  userName:(NSString *)userName
-                                           withShareTicket:(BOOL)withShareTicket
-                                           miniProgramType:(NSUInteger)type
-                                        forPlatformSubType:(TrochilusPlatformType)platformSubType {
+- (void)trochilus_SetupWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
+                                                       userName:(NSString *)userName
+                                                           path:(NSString *)path
+                                                          title:(NSString *)title
+                                                    description:(NSString *)description
+                                                     thumbImage:(UIImage *)thumbImage
+                                                    hdImageData:(UIImage *)hdImageData
+                                                withShareTicket:(BOOL)withShareTicket
+                                                miniProgramType:(TrochilusMiniProgramType)programType {
     
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
+    [self setObject:@(TrochilusContentTypeMiniProgram) forKey:@"ContentType"];
     
-    if (description) {
-        [self setObject:description forKey:@"Description"];
-    }
-    
-    if (webpageUrl) {
+    if (webpageUrl != nil) {
         [self setObject:webpageUrl forKey:@"URL"];
     }
     
-    if (path) {
-        [self setObject:path forKey:@"Path"];
-    }
-    
-    if (thumbImage) {
-        [self setObject:thumbImage forKey:@"ThumbImage"];
-    }
-    
-    if (hdThumbImage) {
-        [self setObject:hdThumbImage forKey:@"HdThumbImage"];
-    }
-    
-    if (userName) {
+    if (userName != nil) {
         [self setObject:userName forKey:@"UserName"];
     }
     
-    if (platformSubType) {
-        [self setObject:@(platformSubType) forKey:@"PlatformSubType"];
+    if (path != nil) {
+        [self setObject:path forKey:@"Path"];
     }
     
-    [self setObject:@(withShareTicket) forKey:@"WithShareTicket"];
+    if (title != nil) {
+        [self setObject:title forKey:@"Title"];
+    }
     
-    [self setObject:@(type) forKey:@"MiniProgramType"];
+    if (description != nil) {
+        [self setObject:description forKey:@"Text"];
+    }
     
-    //小程序
-    [self setObject:@(TrochilusContentTypeMiniProgram) forKey:@"ContentType"];
+    if (thumbImage != nil) {
+        thumbImage = [UIImage compressImage:thumbImage toByte:32];
+        [self setObject:thumbImage forKey:@"ThumbImage"];
+    }
+    
+    if (hdImageData != nil) {
+        [self setObject:hdImageData forKey:@"HdImageData"];
+    }
+    
+    if (withShareTicket == YES) {
+        [self setObject:@"1" forKey:@"WithShareTicket"];
+    }
+    else {
+        [self setObject:@"0" forKey:@"WithShareTicket"];
+    }
+    
+    if (programType == TrochilusMiniProgramTypeRelease) {
+        [self setObject:@(0) forKey:@"MiniProgramType"];
+    }
+    else if (programType == TrochilusMiniProgramTypeTest) {
+        [self setObject:@(1) forKey:@"MiniProgramType"];
+    }
+    else {
+        [self setObject:@(2) forKey:@"MiniProgramType"];
+    }
     
 }
 
@@ -427,153 +440,46 @@
 }
 
 #pragma mark- 通过key获取Value
-
-//分享内容
+//文本
 - (NSString *)trochilus_text {
     
-    if ([self objectForKey:@"Text"]) {
-        return [self objectForKey:@"Text"];
-    }
-    
-    return @"";
+    return [self objectForKey:@"Text"];
 }
 
-//分享标题
 - (NSString *)trochilus_title {
     
-    if ([self objectForKey:@"Title"]) {
-        return [self objectForKey:@"Title"];
-    }
-    
-    return @"";
-}
-
-//分享链接
-- (NSURL *)trochilus_url {
-    
-    if ([self objectForKey:@"URL"]) {
-        return [self objectForKey:@"URL"];
-    }
-    
-    return nil;
-}
-
-- (NSURL *)trochilus_audioFlashURL {
-    
-    if ([self objectForKey:@"AudioFlashURL"]) {
-        return [self objectForKey:@"AudioFlashURL"];
-    }
-    
-    return nil;
-}
-
-- (NSURL *)trochilus_videoFlashURL {
-    
-    if ([self objectForKey:@"VideoFlashURL"]) {
-        return [self objectForKey:@"VideoFlashURL"];
-    }
-    
-    return nil;
-}
-
-- (id)trochilus_thumbImage {
-    
-    if ([self objectForKey:@"ThumbImage"]) {
-        return [self objectForKey:@"ThumbImage"];
-    }
-    
-    return nil;
-}
-
-- (id)trochilus_images {
-    
-    if ([self objectForKey:@"Images"]) {
-        return [self objectForKey:@"Images"];
-    }
-    
-    return nil;
-}
-
-- (NSNumber *)trochilus_contentType {
-    
-    if ([self objectForKey:@"ContentType"]) {
-        return [self objectForKey:@"ContentType"];
-    }
-    
-    return nil;
-}
-
-- (NSNumber *)trochilus_platformSubType {
-    
-    if ([self objectForKey:@"PlatformSubType"]) {
-        return [self objectForKey:@"PlatformSubType"];
-    }
-    
-    return nil;
-}
-
-- (NSString *)trochilus_extInfo {
-    
-    if ([self objectForKey:@"ExtInfo"]) {
-        return [self objectForKey:@"ExtInfo"];
-    }
-    return nil;
-}
-
-- (id)trochilus_fileData {
-    
-    if ([self objectForKey:@"FileData"]) {
-        return [self objectForKey:@"FileData"];
-    }
-    return nil;
-}
-
-- (id)trochilus_emoticonData {
-    
-    if ([self objectForKey:@"EmoticonData"]) {
-        return [self objectForKey:@"EmoticonData"];
-    }
-    
-    return nil;
-}
-
-- (NSString *)trochilus_sourceFileExtension {
-    if ([self objectForKey:@"SourceFileExtension"]) {
-        return [self objectForKey:@"SourceFileExtension"];
-    }
-    return nil;
-}
-
-- (id)trochilus_sourceFileData {
-    if ([self objectForKey:@"SourceFileData"]) {
-        return [self objectForKey:@"SourceFileData"];
-    }
-    
-    return nil;
-}
-
-- (NSString *)trochilus_userName {
-    if ([self objectForKey:@"UserName"]) {
-        return [self objectForKey:@"UserName"];
-    }
-    
-    return nil;
+    return [self objectForKey:@"Title"];
 }
 
 - (NSString *)trochilus_path {
-    if ([self objectForKey:@"Path"]) {
-        return [self objectForKey:@"Path"];
-    }
     
-    return nil;
+    return [self objectForKey:@"Path"];
 }
 
-- (NSString *)trochilus_descriptions {
-    if ([self objectForKey:@"Description"]) {
-        return [self objectForKey:@"Description"];
-    }
+- (NSString *)trochilus_userName {
+    return [self objectForKey:@"UserName"];
+}
+
+- (NSString *)trochilus_url {
+    return [self objectForKey:@"URL"];
+}
+
+- (NSString *)trochilus_withShareTicket {
     
-    return nil;
+    return [self objectForKey:@"WithShareTicket"];
+}
+
+- (NSNumber *)trochilus_miniProgramType {
+    
+    return [self objectForKey:@"MiniProgramType"];
+}
+
+- (NSNumber *)trochilus_platformSubType {
+    return [self objectForKey:@"PlatformSubType"];
+}
+
+- (NSNumber *)trochilus_contentType {
+    return [self objectForKey:@"ContentType"];
 }
 
 +(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url {

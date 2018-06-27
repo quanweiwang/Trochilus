@@ -102,7 +102,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
                                            @"objectID" : timeIntervalStr,
                                            @"thumbnailData" : thumbnail[0],
                                            @"title" : [parameters trochilus_title],
-                                           @"webpageUrl" : [parameters trochilus_url].absoluteString
+                                           @"webpageUrl" : [parameters trochilus_url]
                                            };
             message = @{@"__class" : @"WBMessageObject",
                         @"text" : [parameters trochilus_text],

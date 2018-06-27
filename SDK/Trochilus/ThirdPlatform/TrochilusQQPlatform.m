@@ -252,7 +252,7 @@ static TrochilusQQPlatform * _instance = nil;
             [qzoneInfo appendString:@"&description="];
             [qzoneInfo appendString:[NSString trochilus_base64Encode:[parameters trochilus_text]]];
             [qzoneInfo appendString:@"&url="];
-            [qzoneInfo appendString:[NSString trochilus_base64Encode:[parameters trochilus_url].absoluteString]];
+            [qzoneInfo appendString:[NSString trochilus_base64Encode:[parameters trochilus_url]]];
             
             NSMutableArray * thumbImg = [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];
             NSDictionary * data=@{@"previewimagedata":thumbImg[0]};
@@ -264,7 +264,7 @@ static TrochilusQQPlatform * _instance = nil;
             file_type = @"qzone";
             cflag = @"0";
             [qzoneInfo appendString:@"&video_assetURL="];
-            [qzoneInfo appendString:[NSString trochilus_base64Encode:[parameters trochilus_url].absoluteString]];
+            [qzoneInfo appendString:[NSString trochilus_base64Encode:[parameters trochilus_url]]];
         }
         
         [qzoneInfo appendString:@"&cflag="];

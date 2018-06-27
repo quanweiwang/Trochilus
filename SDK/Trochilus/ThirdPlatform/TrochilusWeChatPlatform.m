@@ -31,7 +31,7 @@
 #pragma mark- 单例模式
 static TrochilusWeChatPlatform * _instance = nil;
 
-+ (instancetype) sharedInstance {
++ (instancetype)sharedInstance {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init];
@@ -59,7 +59,7 @@ static TrochilusWeChatPlatform * _instance = nil;
 }
 
 #pragma mark- 分享
-+ (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     if (stateChangedHandler) {
         [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
@@ -73,11 +73,11 @@ static TrochilusWeChatPlatform * _instance = nil;
         return nil;
     }
     
-    if ([[parameters trochilus_platformSubType] integerValue] == TrochilusPlatformSubTypeWechatSession) {
+    if (platformSubType == TrochilusPlatformSubTypeWechatSession) {
         //微信好友
         return [TrochilusWeChatPlatform shareWithWechatSessionParameters:parameters onStateChanged:stateChangedHandler];
     }
-    else if ([[parameters trochilus_platformSubType] integerValue] == TrochilusPlatformSubTypeWechatTimeline) {
+    else if (platformSubType == TrochilusPlatformSubTypeWechatTimeline) {
         //微信朋友圈
         return [TrochilusWeChatPlatform shareWithWechatTimelineParameters:parameters onStateChanged:stateChangedHandler];
     }
@@ -113,28 +113,29 @@ static TrochilusWeChatPlatform * _instance = nil;
         }
         else if (contentType == TrochilusContentTypeWebPage) {
             //链接
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url].absoluteString
-                                             title:[parameters trochilus_title]
-                                  shareDescription:[parameters trochilus_text]
-                                             image:[parameters trochilus_images]
-                                        thumbImage:[parameters trochilus_thumbImage]
+            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                                  mediaTagName:[parameters trochilus_mediaTagName]
+                                                         title:[parameters trochilus_title]
+                                              shareDescription:[parameters trochilus_text]
+                                                         image:[parameters trochilus_images]
+                                                    thumbImage:[parameters trochilus_thumbImage]
                                                   platformType:TrochilusPlatformSubTypeWechatSession];
            
         }
         else if (contentType == TrochilusContentTypeAudio) {
             
             //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url].absoluteString
-                                                 title:[parameters trochilus_title]
-                                      shareDescription:[parameters trochilus_text]
-                                                images:[parameters trochilus_images]
-                                            thumbImage:[parameters trochilus_thumbImage]
-                                          platformType:TrochilusPlatformSubTypeWechatSession];
+            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
+                                                             title:[parameters trochilus_title]
+                                                  shareDescription:[parameters trochilus_text]
+                                                            images:[parameters trochilus_images]
+                                                        thumbImage:[parameters trochilus_thumbImage]
+                                                      platformType:TrochilusPlatformSubTypeWechatSession];
         }
         else if (contentType == TrochilusContentTypeVideo) {
             
             //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
                                                              title:[parameters trochilus_title]
                                                   shareDescription:[parameters trochilus_text]
                                                             images:[parameters trochilus_images]
@@ -144,7 +145,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (contentType == TrochilusContentTypeApp) {
             
             //应用消息
-            wechatDic = [TrochilusWeChatPlatform shareWithApp:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithApp:[parameters trochilus_url]
                                                         title:[parameters trochilus_title]
                                              shareDescription:[parameters trochilus_text]
                                                        images:[parameters trochilus_images]
@@ -188,20 +189,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         }
         else if (contentType == TrochilusContentTypeMiniProgram) {
             //小程序
-            NSArray * thumbData = [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];;
-            wechatDic =  @{@"appBrandPath" : [parameters trochilus_path],
-                           @"appBrandUserName" : [parameters trochilus_userName],
-                           @"command" : @"1010",
-                           @"description" : [parameters trochilus_descriptions],
-                           @"mediaUrl" : [parameters trochilus_url].absoluteString,
-                           @"objectType" : @"36",
-                           @"result" : @"1",
-                           @"returnFromApp" : @"0",
-                           @"scene" : @"0",
-                           @"sdkver" : kWeChatSDKVer,
-                           @"thumbData" : thumbData[0],
-                           @"title" : [parameters trochilus_title]
-                           };
+            wechatDic = [TrochilusWeChatPlatform shareMiniProgramWithParameter:parameters];
             
         }
         else {
@@ -212,7 +200,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         
         
         [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
-        return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?",[TrochilusPlatformKeys sharedInstance].wechatAppId];
+        return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?supportcontentfromwx=8191",[TrochilusPlatformKeys sharedInstance].wechatAppId];
     }
     else {
         
@@ -254,7 +242,8 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (platformType == TrochilusContentTypeWebPage) {
             
             //链接
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                                  mediaTagName:[parameters trochilus_mediaTagName]
                                                          title:[parameters trochilus_title]
                                               shareDescription:[parameters trochilus_text]
                                                          image:[parameters trochilus_images]
@@ -264,7 +253,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (platformType == TrochilusContentTypeAudio) {
             
             //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
                                                              title:[parameters trochilus_title]
                                                   shareDescription:[parameters trochilus_text]
                                                             images:[parameters trochilus_images]
@@ -275,7 +264,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (platformType == TrochilusContentTypeVideo) {
             
             //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
                                                              title:[parameters trochilus_title]
                                                   shareDescription:[parameters trochilus_text]
                                                             images:[parameters trochilus_images]
@@ -336,7 +325,8 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (contentType == TrochilusContentTypeWebPage) {
             //链接
             
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                                  mediaTagName:[parameters trochilus_mediaTagName]
                                                          title:@""
                                               shareDescription:[parameters trochilus_text]
                                                          image:[parameters trochilus_images]
@@ -346,7 +336,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (contentType == TrochilusContentTypeAudio) {
             
             //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
                                                              title:@""
                                                   shareDescription:[parameters trochilus_text]
                                                             images:[parameters trochilus_images]
@@ -356,7 +346,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         else if (contentType == TrochilusContentTypeVideo) {
             
             //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url].absoluteString
+            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
                                                              title:@""
                                                   shareDescription:[parameters trochilus_text]
                                                             images:[parameters trochilus_images]
@@ -475,7 +465,7 @@ static TrochilusWeChatPlatform * _instance = nil;
 }
 
 //链接分享
-+ (NSDictionary *)shareWithLink:(NSString *)url title:(NSString *)title shareDescription:(NSString *)shareDescription image:(id)image thumbImage:(id)thumbImage platformType:(TrochilusPlatformType)platformType {
++ (NSDictionary *)shareWithLink:(NSString *)url mediaTagName:(NSString *)mediaTagName title:(NSString *)title shareDescription:(NSString *)shareDescription image:(id)image thumbImage:(id)thumbImage platformType:(TrochilusPlatformType)platformType {
     
     NSString * scene = @"";
     
@@ -503,21 +493,37 @@ static TrochilusWeChatPlatform * _instance = nil;
         thumbData = [NSMutableArray trochilus_arrayWithImages:thumbImage isCompress:YES];
     }
     
-    NSDictionary * wechatDic =  @{@"command" : @"1010",
-                   @"description" : shareDescription,
-                   @"thumbData" : thumbData[0],
-                   @"mediaUrl" : url,
-                   @"objectType" : @"5",
-                   @"result" : @"1",
-                   @"returnFromApp" : @"0",
-                   @"scene" : scene,
-                   @"sdkver" : kWeChatSDKVer,
-                   @"title" : title
-                   };
+    NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"5" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:url forKey:@"mediaUrl"];
     
-    return wechatDic;
+    if (shareDescription != nil) {
+        [wechatDic setValue:shareDescription forKey:@"description"];
+    }
+    
+    if (thumbData != nil) {
+        [wechatDic setValue:thumbData[0] forKey:@"thumbData"];
+    }
+    
+    if (title != nil) {
+        [wechatDic setValue:title forKey:@"title"];
+    }
+    
+    if (mediaTagName != nil) {
+        [wechatDic setValue:@"" forKey:mediaTagName];
+    }
+    
+    return [wechatDic copy];
 }
 
+//网络音频
 + (NSDictionary *)shareWithAudioUrl:(NSString *)audioUrl title:(NSString *)title shareDescription:(NSString *)shareDescription images:(id)images thumbImage:(id)thumbImage platformType:(TrochilusPlatformType)platformType {
     
     NSString * scene = @"";
@@ -561,6 +567,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     return wechatDic;
 }
 
+//网络视频
 + (NSDictionary *)shareWithVideoUrl:(NSString *)videoUrl title:(NSString *)title shareDescription:(NSString *)shareDescription images:(id)images thumbImage:(id)thumbImage platformType:(TrochilusPlatformType)platformType {
     
     NSString * scene = @"";
@@ -604,6 +611,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     return wechatDic;
 }
 
+//应用消息
 + (NSDictionary *)shareWithApp:(NSString *)appUrl title:(NSString *)title shareDescription:(NSString *)shareDescription images:(id)images thumbImage:(id)thumbImage extInfo:(NSString *)extInfo fileData:(id)fileData platformType:(TrochilusPlatformType)platformType {
     
     NSString * scene = @"";
@@ -649,6 +657,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     
 }
 
+//本地文件
 + (NSDictionary *)shareWithSourceFileData:(NSData *)sourceFileData title:(NSString *)title shareDescription:(NSString *)shareDescription images:(id)images thumbImage:(id)thumbImage sourceFileExtension:(NSString *)sourceFileExtension platformType:(TrochilusPlatformType)platformType {
     
     //文件 仅微信可用
@@ -694,6 +703,42 @@ static TrochilusWeChatPlatform * _instance = nil;
                                   };
     return wechatDic;
     
+}
+
+//小程序分享
++ (NSDictionary *)shareMiniProgramWithParameter:(NSMutableDictionary *)parameter {
+    
+    NSString * title = [parameter trochilus_title];
+    
+    NSString * miniProgramDescription = [parameter trochilus_text];
+    
+    NSString * path = [parameter trochilus_path];
+    
+    NSString * userName = [parameter trochilus_userName];
+    
+    NSString * withShareTicket = [parameter trochilus_withShareTicket];
+    
+    NSNumber * programType = [parameter trochilus_miniProgramType];
+    
+    //网址（6.5.6以下版本微信会自动转化为分享链接 必填）
+    NSString * webpageUrl = [parameter trochilus_url];
+    
+    NSDictionary * wechatDic = @{@"description" : miniProgramDescription,
+                                 @"appBrandUserName" : userName,
+                                 @"objectType" : @"36",
+                                 @"scene" : @"0",
+                                 @"appBrandPath" : path,
+                                 @"title" : title,
+                                 @"mediaUrl" : webpageUrl,
+                                 @"sdkver" : kWeChatSDKVer,
+                                 @"command" : @"1010",
+                                 @"result" : @"1",
+                                 @"withShareTicket" : withShareTicket,
+                                 @"returnFromApp" : @"0",
+                                 @"miniprogramType" : programType
+                                 };
+    
+    return wechatDic;
 }
 
 #pragma mark- 授权登录

@@ -11,7 +11,7 @@
 #ifndef TrochilusSysDefine_h
 #define TrochilusSysDefine_h
 
-#define kWeChatSDKVer @"1.7.7"
+#define kWeChatSDKVer @"1.8.2"
 #define kQQSDKVer @"3.2.1"
 
 #define kCFBundleDisplayName [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"]

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Trochilus/Trochilus.h>
+#import "TrochilusDemoMacro.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +20,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [Trochilus registerPlatforms:<#(NSArray *)#> onConfiguration:^(TrochilusPlatformType platformType, NSMutableDictionary *appInfo) {
+    NSArray * platforms = @[@(TrochilusPlatformTypeSinaWeibo),
+                           @(TrochilusPlatformTypeQQ),
+                           @(TrochilusPlatformTypeWechat)];
+    
+    [Trochilus registerPlatforms:platforms onConfiguration:^(TrochilusPlatformType platformType, NSMutableDictionary *appInfo) {
+        
+        switch (platformType) {
+            case TrochilusPlatformTypeSinaWeibo:
+                
+                [appInfo trochilus_SetupSinaWeiboByAppKey:kSinaWeiboAppKey appSecret:kSinaWeiboAppSecret redirectUri:kSinaWeiboRedirectUri authType:@""];
+                
+                break;
+            case TrochilusPlatformTypeQQ:
+                
+                [appInfo trochilus_SetupQQByAppId:kQQAppId appKey:kQQAppKey authType:@"" useTIM:NO];
+                break;
+            case TrochilusPlatformTypeWechat:
+                
+                [appInfo trochilus_SetupWeChatByAppId:kWeChatAppId appSecret:kWeChatAppSecret];
+                
+                break;
+            default:
+                break;
+        }
         
     }];
     
