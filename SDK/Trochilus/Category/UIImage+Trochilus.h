@@ -12,6 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (Trochilus)
 
+/**
+ 图片压缩
+
+ @param image 原始图片
+ @param maxLength 最大占用内存值 字节
+ @return 压缩后的图片
+ */
 + (UIImage *)compressImage:(UIImage *)image toByte:(NSUInteger)maxLength;
 
 @end

@@ -28,7 +28,7 @@
  @param stateChangedHandler 授权状态变更回调处理
  @return 分享字符串
  */
-+ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  新浪微博授权

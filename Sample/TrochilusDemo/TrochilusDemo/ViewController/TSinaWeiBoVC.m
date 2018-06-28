@@ -233,7 +233,7 @@
     [parameters trochilus_SetupSinaWeiboShareParamsByText:@"Share SDK Link Desc"
                                                     title:@"MOB"
                                                     image:[UIImage imageNamed:@"COD13.jpg"]
-                                                      url:[NSURL URLWithString:@"http://www.mob.com"]
+                                                      url:@"http://www.mob.com"
                                                  latitude:0
                                                 longitude:0
                                                  objectID:nil

@@ -43,7 +43,7 @@
         [resultImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
         resultImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        data = UIImageJPEGRepresentation(resultImage, compression);
+        data = UIImageJPEGRepresentation(resultImage, 1);
     }
     
     return resultImage;

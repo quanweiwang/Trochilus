@@ -33,7 +33,7 @@
  @param stateChangedHandler 分享状态变更回调处理
  @return 构造好用于提交给QQ的字符串
  */
-+ (NSString *)shareWithQQPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithQQPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  *  分享平台授权

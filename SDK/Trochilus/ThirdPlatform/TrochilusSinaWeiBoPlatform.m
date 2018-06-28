@@ -8,15 +8,19 @@
 
 #import "TrochilusSinaWeiBoPlatform.h"
 #import <UIKit/UIKit.h>
+//#import <AssetsLibrary/AssetsLibrary.h>
+
+#import "UIImage+Trochilus.h"
 #import "NSDate+Trochilus.h"
 #import "NSMutableDictionary+TrochilusShare.h"
 #import "NSMutableArray+Trochilus.h"
+
 #import "TrochilusUser.h"
 //#import "TWebViewVC.h"
-#import "UIApplication+Trochilus.h"
 #import "TrochilusPlatformKeys.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
+
 
 @interface TrochilusSinaWeiBoPlatform()
 @property (copy,nonatomic)TrochilusStateChangedHandler stateChangedHandler;
@@ -53,7 +57,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
 }
 
 #pragma mark- 分享
-+ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusPlatformKeys sharedInstance].weiboAppKey length] == 0) {
         
@@ -79,13 +83,16 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
                         @"text" : [parameters trochilus_text]};
         }
         else if (type == TrochilusContentTypeImage) {
-            //图片 分享 貌似只能分享一张图片
-            NSAssert([parameters trochilus_images], @"图片分享，图片不能为空");
-            NSArray * images = [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_images] isCompress:NO];
-            NSDictionary * imageData = @{@"imageData" : images[0]};
+            //图片 分享 貌似只能分享一张图片 32768 32kb
+            
+            
+            UIImage * image = [parameters trochilus_images];
+            NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
+            
+            NSDictionary * imageDataDic = @{@"imageData" : imageData};
             message = @{@"__class" : @"WBMessageObject",
                         @"text" : [parameters trochilus_text],
-                        @"imageObject" : imageData};
+                        @"imageObject" : imageDataDic};
         }
         else if (type == TrochilusContentTypeWebPage) {
             //链接分享
@@ -186,26 +193,26 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
     
     NSString * uuid = [[NSUUID UUID] UUIDString];
     
-    NSString * authorizeType;
+    NSString * authorizeType = @"SSO";
     
-    if ([[TrochilusPlatformKeys sharedInstance].weiboAuthType isEqualToString:@"TAuthTypeBoth"]) {
-        
-        if ([TrochilusSinaWeiBoPlatform isSinaWeiBoInstalled]) {
-            //安装了客户端
-            authorizeType = @"SSO";
-        }
-        else {
-            //没安装客户端
-            authorizeType = @"WEB";
-        }
-        
-    }
-    else if ([[TrochilusPlatformKeys sharedInstance].weiboAuthType isEqualToString:@"TAuthTypeSSO"]) {
-        authorizeType = @"SSO";
-    }
-    else {
-        authorizeType = @"WEB";
-    }
+//    if ([[TrochilusPlatformKeys sharedInstance].weiboAuthType isEqualToString:@"TAuthTypeBoth"]) {
+//
+//        if ([TrochilusSinaWeiBoPlatform isSinaWeiBoInstalled]) {
+//            //安装了客户端
+//            authorizeType = @"SSO";
+//        }
+//        else {
+//            //没安装客户端
+//            authorizeType = @"WEB";
+//        }
+//
+//    }
+//    else if ([[TrochilusPlatformKeys sharedInstance].weiboAuthType isEqualToString:@"TAuthTypeSSO"]) {
+//        authorizeType = @"SSO";
+//    }
+//    else {
+//        authorizeType = @"WEB";
+//    }
     
     if ([authorizeType isEqualToString:@"SSO"]) {
         
@@ -243,25 +250,25 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         
         return [NSMutableString stringWithFormat:@"weibosdk://request?id=%@&sdkversion=003203000&luicode=10000360&lfid=%@",uuid,kCFBundleIdentifier];
     }
-    else if ([authorizeType isEqualToString:@"WEB"]){
-        //网页授权
-//        TWebViewVC * webViewVC = [TWebViewVC sharedInstance];
-//        //        https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=get_simple_userinfo,get_user_info,add_topic,upload_pic,add_share&status_version=10&sdkv=3.2.1&status_machine=iPhone8,2&status_os=10.3.2&switch=1&redirect_uri=auth://www.qq.com&client_id=100371282
-//
-//        //时间戳
-//        NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970] * 1000;
-//        NSString * timeIntervalStr = [NSString stringWithFormat:@"%ld",(long)timeInterval];
-//
-//        NSString * url = [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&response_type=code&redirect_uri=%@&display=mobile&state=%@",[TrochilusPlatformKeys sharedInstance].weiboAppKey,[TrochilusPlatformKeys sharedInstance].weiboRedirectUri,timeIntervalStr];
-//        webViewVC.url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//        webViewVC.title = @"Sina Web Login";
-//        webViewVC.redirectUri = [TrochilusPlatformKeys sharedInstance].weiboRedirectUri;
-//        webViewVC.delegate = [TrochilusSinaWeiBoPlatform sharedInstance];
-//
-//        UIViewController * vc = [[UIApplication sharedApplication] currentViewController];
-//        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewVC];
-//        [vc presentViewController:nav animated:YES completion:nil];
-    }
+//    else if ([authorizeType isEqualToString:@"WEB"]){
+//        //网页授权
+////        TWebViewVC * webViewVC = [TWebViewVC sharedInstance];
+////        //        https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=get_simple_userinfo,get_user_info,add_topic,upload_pic,add_share&status_version=10&sdkv=3.2.1&status_machine=iPhone8,2&status_os=10.3.2&switch=1&redirect_uri=auth://www.qq.com&client_id=100371282
+////
+////        //时间戳
+////        NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970] * 1000;
+////        NSString * timeIntervalStr = [NSString stringWithFormat:@"%ld",(long)timeInterval];
+////
+////        NSString * url = [NSString stringWithFormat:@"https://open.weibo.cn/oauth2/authorize?client_id=%@&response_type=code&redirect_uri=%@&display=mobile&state=%@",[TrochilusPlatformKeys sharedInstance].weiboAppKey,[TrochilusPlatformKeys sharedInstance].weiboRedirectUri,timeIntervalStr];
+////        webViewVC.url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+////        webViewVC.title = @"Sina Web Login";
+////        webViewVC.redirectUri = [TrochilusPlatformKeys sharedInstance].weiboRedirectUri;
+////        webViewVC.delegate = [TrochilusSinaWeiBoPlatform sharedInstance];
+////
+////        UIViewController * vc = [[UIApplication sharedApplication] currentViewController];
+////        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewVC];
+////        [vc presentViewController:nav animated:YES completion:nil];
+//    }
     
     return nil;
     

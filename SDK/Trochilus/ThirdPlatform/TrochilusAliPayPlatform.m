@@ -59,21 +59,21 @@ static TrochilusAliPayPlatform * _instance = nil;
     }
     
     //urlScheme为空
-    if (urlScheme == nil) {
-        
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayUrlSchemeNotFound];
-        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
-        
-        return nil;
-    }
+//    if (urlScheme == nil) {
+//
+//        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayUrlSchemeNotFound];
+//        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
+//
+//        return nil;
+//    }
     
     //orderString为空
-    if (orderString == nil) {
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayOrderStringNotFound];
-        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
-        
-        return nil;
-    }
+//    if (orderString == nil) {
+//        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeAliPayOrderStringNotFound];
+//        [TrochilusAliPayPlatform payResponseWithState:TrochilusResponseStateFail error:error];
+//        
+//        return nil;
+//    }
     
     //alipay://alipayclient/?{
     //    "fromAppUrlScheme" : "alipayMobike",

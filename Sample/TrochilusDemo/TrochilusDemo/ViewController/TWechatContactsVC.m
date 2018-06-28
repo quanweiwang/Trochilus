@@ -184,8 +184,8 @@
     //平台定制
     [parameters trochilus_SetupWeChatParamsByText:@"222 Link Desc"
                                             title:@"222"
-                                              url:[NSURL URLWithString:@"https://www.mob.com"]
-                                     mediaTagName:nil
+                                              url:@"https://www.baidu.com"
+                                     mediaTagName:@"aaa"
                                        thumbImage:nil
                                             image:[UIImage imageNamed:@"COD13"]
                                      musicFileURL:nil
@@ -208,7 +208,7 @@
     //平台定制
     [parameters trochilus_SetupWeChatParamsByText:@"崔健"
                                             title:@"一无所有"
-                                              url:[NSURL URLWithString:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"]
+                                              url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
                                      mediaTagName:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil
@@ -231,7 +231,7 @@
     //平台定制
     [parameters trochilus_SetupWeChatParamsByText:@"视频"
                                             title:@"乔布斯"
-                                              url:[NSURL URLWithString:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"]
+                                              url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
                                      mediaTagName:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil
@@ -252,7 +252,7 @@
     //平台定制
     [parameters trochilus_SetupWeChatParamsByText:@"222"
                                             title:@"App消息"
-                                              url:[NSURL URLWithString:@"http://www.mob.com"]
+                                              url:@"http://www.mob.com"
                                      mediaTagName:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil

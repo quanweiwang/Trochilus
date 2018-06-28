@@ -76,7 +76,7 @@ static TrochilusQQPlatform * _instance = nil;
 }
 
 #pragma mark- 分享
-+ (NSString *)shareWithQQPlatform:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (NSString *)shareWithQQPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusPlatformKeys sharedInstance].qqAppId length] == 0) {
         
@@ -85,7 +85,7 @@ static TrochilusQQPlatform * _instance = nil;
         return nil;
     }
     
-    if ([[parameters trochilus_platformSubType] integerValue] == TrochilusPlatformSubTypeQQFriend) {
+    if (platformSubType == TrochilusPlatformSubTypeQQFriend) {
         //QQ好友
         return [TrochilusQQPlatform shareWithQQParameters:parameters onStateChanged:stateChangedHandler];
     }
@@ -290,8 +290,9 @@ static TrochilusQQPlatform * _instance = nil;
                                       onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusPlatformKeys sharedInstance].qqAppId length] == 0) {
+        
         NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeQQAppIdNotFound];
-        stateChangedHandler(TrochilusResponseStateFail,nil,error);
+        [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:error];
         
         return nil;
     }
@@ -300,26 +301,26 @@ static TrochilusQQPlatform * _instance = nil;
         [TrochilusQQPlatform sharedInstance].authorizeStateChangedHandler = stateChangedHandler;
     }
     
-    NSString * authorizeType;
+    NSString * authorizeType = @"SSO";
     
-    if ([[TrochilusPlatformKeys sharedInstance].qqAuthType isEqualToString:@"TAuthTypeBoth"]) {
-        
-        if ([TrochilusQQPlatform isQQInstalled] || [TrochilusQQPlatform isTIMInstalled]) {
-            //安装了客户端
-            authorizeType = @"SSO";
-        }
-        else {
-            //没安装客户端
-            authorizeType = @"WEB";
-        }
-        
-    }
-    else if ([[TrochilusPlatformKeys sharedInstance].qqAuthType isEqualToString:@"TAuthTypeSSO"]) {
-        authorizeType = @"SSO";
-    }
-    else {
-        authorizeType = @"WEB";
-    }
+//    if ([[TrochilusPlatformKeys sharedInstance].qqAuthType isEqualToString:@"TAuthTypeBoth"]) {
+//
+//        if ([TrochilusQQPlatform isQQInstalled] || [TrochilusQQPlatform isTIMInstalled]) {
+//            //安装了客户端
+//            authorizeType = @"SSO";
+//        }
+//        else {
+//            //没安装客户端
+//            authorizeType = @"WEB";
+//        }
+//
+//    }
+//    else if ([[TrochilusPlatformKeys sharedInstance].qqAuthType isEqualToString:@"TAuthTypeSSO"]) {
+//        authorizeType = @"SSO";
+//    }
+//    else {
+//        authorizeType = @"WEB";
+//    }
     
     //获取setting参数 用户有配置就用用户的，没配置就默认
     NSString * scopes = @"get_user_info";
@@ -332,7 +333,7 @@ static TrochilusQQPlatform * _instance = nil;
     
     //授权类型 客户端 or 网页
     if ([authorizeType isEqualToString:@"SSO"]) {
-        
+    
         //    mqqOpensdkSSoLogin://SSoLogin/tencent100371282/com.tencent.tencent100371282?generalpastboard=1&sdkv=3.2.1
         NSMutableString * qqAuthorize;
         
@@ -370,19 +371,19 @@ static TrochilusQQPlatform * _instance = nil;
         
         return qqAuthorize;
     }
-    else if ([authorizeType isEqualToString:@"WEB"]) {
-        //网页授权
-//        TWebViewVC * webViewVC = [TWebViewVC sharedInstance];
-//        //        https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=get_simple_userinfo,get_user_info,add_topic,upload_pic,add_share&status_version=10&sdkv=3.2.1&status_machine=iPhone8,2&status_os=10.3.2&switch=1&redirect_uri=auth://www.qq.com&client_id=100371282
-//        NSString * url = [NSString stringWithFormat:@"https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=%@&status_version=10&sdkv=3.2.1&status_machine=%@&status_os=%@&switch=1&redirect_uri=auth://www.qq.com&client_id=%@",scopes,kModel,kSystemVersion,[TrochilusPlatformKeys sharedInstance].qqAppId];
-//        webViewVC.url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//        webViewVC.title = @"QQ Web Login";
-//        webViewVC.delegate = [TrochilusQQPlatform sharedInstance];
-//
-//        UIViewController * vc = [[UIApplication sharedApplication] currentViewController];
-//        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewVC];
-//        [vc presentViewController:nav animated:YES completion:nil];
-    }
+//    else if ([authorizeType isEqualToString:@"WEB"]) {
+//        //网页授权
+////        TWebViewVC * webViewVC = [TWebViewVC sharedInstance];
+////        //        https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=get_simple_userinfo,get_user_info,add_topic,upload_pic,add_share&status_version=10&sdkv=3.2.1&status_machine=iPhone8,2&status_os=10.3.2&switch=1&redirect_uri=auth://www.qq.com&client_id=100371282
+////        NSString * url = [NSString stringWithFormat:@"https://openmobile.qq.com/oauth2.0/m_authorize?state=test&sdkp=i&response_type=token&display=mobile&scope=%@&status_version=10&sdkv=3.2.1&status_machine=%@&status_os=%@&switch=1&redirect_uri=auth://www.qq.com&client_id=%@",scopes,kModel,kSystemVersion,[TrochilusPlatformKeys sharedInstance].qqAppId];
+////        webViewVC.url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+////        webViewVC.title = @"QQ Web Login";
+////        webViewVC.delegate = [TrochilusQQPlatform sharedInstance];
+////
+////        UIViewController * vc = [[UIApplication sharedApplication] currentViewController];
+////        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewVC];
+////        [vc presentViewController:nav animated:YES completion:nil];
+//    }
     return nil;
 }
 

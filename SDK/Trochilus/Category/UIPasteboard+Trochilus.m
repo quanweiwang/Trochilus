@@ -20,6 +20,7 @@
                 break;
             case TrochilusPboardEncodingPropertyListSerialization:
                 data=[NSPropertyListSerialization dataWithPropertyList:value format:NSPropertyListBinaryFormat_v1_0 options:0 error:&err];
+                break;
             default:
                 NSLog(@"encoding not implemented");
                 break;

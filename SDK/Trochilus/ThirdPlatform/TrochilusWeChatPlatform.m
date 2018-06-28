@@ -61,10 +61,7 @@ static TrochilusWeChatPlatform * _instance = nil;
 #pragma mark- 分享
 + (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if (stateChangedHandler) {
-        [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
-    }
-    
+    //判断有没有填写 appID 没填写不能分享
     if ([[TrochilusPlatformKeys sharedInstance].wechatAppId length] == 0) {
         
         NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAppIdNotFound];
@@ -73,324 +70,295 @@ static TrochilusWeChatPlatform * _instance = nil;
         return nil;
     }
     
-    if (platformSubType == TrochilusPlatformSubTypeWechatSession) {
-        //微信好友
-        return [TrochilusWeChatPlatform shareWithWechatSessionParameters:parameters onStateChanged:stateChangedHandler];
-    }
-    else if (platformSubType == TrochilusPlatformSubTypeWechatTimeline) {
-        //微信朋友圈
-        return [TrochilusWeChatPlatform shareWithWechatTimelineParameters:parameters onStateChanged:stateChangedHandler];
+    //判断客户端是否安装
+    if ([TrochilusWeChatPlatform isWeChatInstalled]) {
+        
+        if (stateChangedHandler) {
+            [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
+        }
+        
+        if (platformSubType == TrochilusPlatformSubTypeWechatSession) {
+            //微信好友
+            return [TrochilusWeChatPlatform shareWithWechatSessionParameters:parameters onStateChanged:stateChangedHandler];
+        }
+        else if (platformSubType == TrochilusPlatformSubTypeWechatTimeline) {
+            //微信朋友圈
+            return [TrochilusWeChatPlatform shareWithWechatTimelineParameters:parameters onStateChanged:stateChangedHandler];
+        }
+        else {
+            //微信收藏
+            return [TrochilusWeChatPlatform shareWithWechatFavParameters:parameters onStateChanged:stateChangedHandler];
+        }
     }
     else {
-        //微信收藏
-        return [TrochilusWeChatPlatform shareWithWechatFavParameters:parameters onStateChanged:stateChangedHandler];
+        
+        if (stateChangedHandler) {
+            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
+            stateChangedHandler(TrochilusResponseStateFail,nil,err);
+        }
     }
+    
+    return nil;
     
 }
 
 //微信好友分享
 + (NSString *)shareWithWechatSessionParameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if ([TrochilusWeChatPlatform isWeChatInstalled]) {
+    TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
+    NSDictionary * wechatDic;
+    
+    if (contentType == TrochilusContentTypeText) {
+        //文本
+        NSString * shareText = [parameters trochilus_text];
         
-        TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
-        NSDictionary * wechatDic;
+        wechatDic = [TrochilusWeChatPlatform shareWithText:shareText
+                                              platformType:TrochilusPlatformSubTypeWechatSession];
+    }
+    else if (contentType == TrochilusContentTypeImage && [parameters trochilus_emoticonData] == nil) {
+        //图片
+        wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
+                                                 thumbImage:[parameters trochilus_thumbImage]
+                                               emoticonData:nil
+                                           shareDescription:[parameters trochilus_text]
+                                               platformType:TrochilusPlatformSubTypeWechatSession];
+    }
+    else if (contentType == TrochilusContentTypeWebPage) {
+        //链接
+        wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                              mediaTagName:[parameters trochilus_mediaTagName]
+                                                     title:[parameters trochilus_title]
+                                          shareDescription:[parameters trochilus_text]
+                                                     image:[parameters trochilus_images]
+                                                thumbImage:[parameters trochilus_thumbImage]
+                                              platformType:TrochilusPlatformSubTypeWechatSession];
+       
+    }
+    else if (contentType == TrochilusContentTypeAudio) {
         
-        if (contentType == TrochilusContentTypeText) {
-            //文本
-            NSString * shareText = [parameters trochilus_text];
-            
-            wechatDic = [TrochilusWeChatPlatform shareWithText:shareText
-                                                  platformType:TrochilusPlatformSubTypeWechatSession];
-        }
-        else if (contentType == TrochilusContentTypeImage && [parameters trochilus_emoticonData] == nil) {
-            //图片
-            wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
-                                                     thumbImage:[parameters trochilus_thumbImage]
-                                                   emoticonData:nil
-                                               shareDescription:[parameters trochilus_text]
-                                                   platformType:TrochilusPlatformSubTypeWechatSession];
-        }
-        else if (contentType == TrochilusContentTypeWebPage) {
-            //链接
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
-                                                  mediaTagName:[parameters trochilus_mediaTagName]
+        //音频
+        wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
                                                          title:[parameters trochilus_title]
                                               shareDescription:[parameters trochilus_text]
-                                                         image:[parameters trochilus_images]
+                                                        images:[parameters trochilus_images]
                                                     thumbImage:[parameters trochilus_thumbImage]
                                                   platformType:TrochilusPlatformSubTypeWechatSession];
-           
-        }
-        else if (contentType == TrochilusContentTypeAudio) {
-            
-            //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
-                                                             title:[parameters trochilus_title]
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatSession];
-        }
-        else if (contentType == TrochilusContentTypeVideo) {
-            
-            //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
-                                                             title:[parameters trochilus_title]
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatSession];
-        }
-        else if (contentType == TrochilusContentTypeApp) {
-            
-            //应用消息
-            wechatDic = [TrochilusWeChatPlatform shareWithApp:[parameters trochilus_url]
-                                                        title:[parameters trochilus_title]
-                                             shareDescription:[parameters trochilus_text]
-                                                       images:[parameters trochilus_images]
-                                                   thumbImage:[parameters trochilus_thumbImage]
-                                                      extInfo:[parameters trochilus_extInfo]
-                                                     fileData:[parameters trochilus_fileData]
-                                                 platformType:TrochilusPlatformSubTypeWechatSession];
-            
-        }
-        else if (contentType == TrochilusContentTypeImage && [parameters trochilus_emoticonData]) {
-            //表情图片
-            NSAssert([parameters trochilus_emoticonData], @"emoticonData 不能为空，传表情图片");
-            NSData * imageData = [NSData dataWithContentsOfFile:[parameters trochilus_emoticonData]];
-            NSArray * thumbData =  [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];
-            
-            wechatDic =  @{@"command" : @"1010",
-                           @"description" : [parameters trochilus_text],
-                           @"fileData" : imageData,
-                           @"objectType" : @"8",
-                           @"result" : @"1",
-                           @"returnFromApp" : @"0",
-                           @"scene" : @"0",
-                           @"sdkver" : kWeChatSDKVer,
-                           @"thumbData" : thumbData[0]
-                           };
-            
-        }
-        else if (contentType == TrochilusContentTypeFile) {
-            //文件 仅微信可用
-            NSString * sourceFile = [parameters trochilus_sourceFileData];
-            NSData * sourceFileData = [NSData dataWithContentsOfFile:sourceFile];
-            
-            wechatDic = [TrochilusWeChatPlatform shareWithSourceFileData:sourceFileData
-                                                                   title:[parameters trochilus_title]
-                                                        shareDescription:[parameters trochilus_text]
-                                                                  images:[parameters trochilus_images]
-                                                              thumbImage:[parameters trochilus_thumbImage]
-                                                     sourceFileExtension:[parameters trochilus_sourceFileExtension]
-                                                            platformType:TrochilusPlatformSubTypeWechatSession];
-            
-        }
-        else if (contentType == TrochilusContentTypeMiniProgram) {
-            //小程序
-            wechatDic = [TrochilusWeChatPlatform shareMiniProgramWithParameter:parameters];
-            
-        }
-        else {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-            return nil;
-        }
+    }
+    else if (contentType == TrochilusContentTypeVideo) {
         
+        //视频
+        wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
+                                                         title:[parameters trochilus_title]
+                                              shareDescription:[parameters trochilus_text]
+                                                        images:[parameters trochilus_images]
+                                                    thumbImage:[parameters trochilus_thumbImage]
+                                                  platformType:TrochilusPlatformSubTypeWechatSession];
+    }
+    else if (contentType == TrochilusContentTypeApp) {
         
-        [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
-        return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?supportcontentfromwx=8191",[TrochilusPlatformKeys sharedInstance].wechatAppId];
+        //应用消息
+        wechatDic = [TrochilusWeChatPlatform shareWithApp:[parameters trochilus_url]
+                                                    title:[parameters trochilus_title]
+                                         shareDescription:[parameters trochilus_text]
+                                                   images:[parameters trochilus_images]
+                                               thumbImage:[parameters trochilus_thumbImage]
+                                                  extInfo:[parameters trochilus_extInfo]
+                                                 fileData:[parameters trochilus_fileData]
+                                             platformType:TrochilusPlatformSubTypeWechatSession];
+        
+    }
+    else if (contentType == TrochilusContentTypeImage && [parameters trochilus_emoticonData]) {
+        //表情图片
+        NSAssert([parameters trochilus_emoticonData], @"emoticonData 不能为空，传表情图片");
+        NSData * imageData = [NSData dataWithContentsOfFile:[parameters trochilus_emoticonData]];
+        NSArray * thumbData =  [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];
+        
+        wechatDic =  @{@"command" : @"1010",
+                       @"description" : [parameters trochilus_text],
+                       @"fileData" : imageData,
+                       @"objectType" : @"8",
+                       @"result" : @"1",
+                       @"returnFromApp" : @"0",
+                       @"scene" : @"0",
+                       @"sdkver" : kWeChatSDKVer,
+                       @"thumbData" : thumbData[0]
+                       };
+        
+    }
+    else if (contentType == TrochilusContentTypeFile) {
+        //文件 仅微信可用
+        NSString * sourceFile = [parameters trochilus_sourceFileData];
+        NSData * sourceFileData = [NSData dataWithContentsOfFile:sourceFile];
+        
+        wechatDic = [TrochilusWeChatPlatform shareWithSourceFileData:sourceFileData
+                                                               title:[parameters trochilus_title]
+                                                    shareDescription:[parameters trochilus_text]
+                                                              images:[parameters trochilus_images]
+                                                          thumbImage:[parameters trochilus_thumbImage]
+                                                 sourceFileExtension:[parameters trochilus_sourceFileExtension]
+                                                        platformType:TrochilusPlatformSubTypeWechatSession];
+        
+    }
+    else if (contentType == TrochilusContentTypeMiniProgram) {
+        //小程序
+        wechatDic = [TrochilusWeChatPlatform shareMiniProgramWithParameter:parameters];
+        
     }
     else {
-        
-        if (stateChangedHandler) {
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-        }
-        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return nil;
     }
     
-    return nil;
+    [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+    return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?supportcontentfromwx=8191",[TrochilusPlatformKeys sharedInstance].wechatAppId];
 }
 
 //微信朋友圈
 + (NSString *)shareWithWechatTimelineParameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if (stateChangedHandler) {
-        [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
-    }
+    TrochilusContentType platformType = [[parameters trochilus_contentType] integerValue];
+    NSDictionary * wechatDic = nil;
     
-    if ([TrochilusWeChatPlatform isWeChatInstalled]) {
+    if (platformType == TrochilusContentTypeText) {
+        //文本
         
-        TrochilusContentType platformType = [[parameters trochilus_contentType] integerValue];
-        NSDictionary * wechatDic = nil;
+        wechatDic = [TrochilusWeChatPlatform shareWithText:[parameters trochilus_text] platformType:TrochilusPlatformSubTypeWechatTimeline];
+    }
+    else if (platformType == TrochilusContentTypeImage) {
+        //图片
+        wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
+                                                 thumbImage:[parameters trochilus_thumbImage]
+                                               emoticonData:nil
+                                           shareDescription:[parameters trochilus_text]
+                                               platformType:TrochilusPlatformSubTypeWechatTimeline];
+    }
+    else if (platformType == TrochilusContentTypeWebPage) {
         
-        if (platformType == TrochilusContentTypeText) {
-            //文本
-            
-            wechatDic = [TrochilusWeChatPlatform shareWithText:[parameters trochilus_text] platformType:TrochilusPlatformSubTypeWechatTimeline];
-        }
-        else if (platformType == TrochilusContentTypeImage) {
-            //图片
-            wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
-                                                     thumbImage:[parameters trochilus_thumbImage]
-                                                   emoticonData:nil
-                                               shareDescription:[parameters trochilus_text]
-                                                   platformType:TrochilusPlatformSubTypeWechatTimeline];
-        }
-        else if (platformType == TrochilusContentTypeWebPage) {
-            
-            //链接
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
-                                                  mediaTagName:[parameters trochilus_mediaTagName]
+        //链接
+        wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                              mediaTagName:[parameters trochilus_mediaTagName]
+                                                     title:[parameters trochilus_title]
+                                          shareDescription:[parameters trochilus_text]
+                                                     image:[parameters trochilus_images]
+                                                thumbImage:[parameters trochilus_thumbImage]
+                                              platformType:TrochilusPlatformSubTypeWechatTimeline];
+    }
+    else if (platformType == TrochilusContentTypeAudio) {
+        
+        //音频
+        wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
                                                          title:[parameters trochilus_title]
                                               shareDescription:[parameters trochilus_text]
-                                                         image:[parameters trochilus_images]
+                                                        images:[parameters trochilus_images]
                                                     thumbImage:[parameters trochilus_thumbImage]
                                                   platformType:TrochilusPlatformSubTypeWechatTimeline];
-        }
-        else if (platformType == TrochilusContentTypeAudio) {
-            
-            //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
-                                                             title:[parameters trochilus_title]
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatTimeline];
-            
-        }
-        else if (platformType == TrochilusContentTypeVideo) {
-            
-            //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
-                                                             title:[parameters trochilus_title]
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatTimeline];
-            
-        }
-        else {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-            return nil;
-        }
         
+    }
+    else if (platformType == TrochilusContentTypeVideo) {
         
-        [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+        //视频
+        wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
+                                                         title:[parameters trochilus_title]
+                                              shareDescription:[parameters trochilus_text]
+                                                        images:[parameters trochilus_images]
+                                                    thumbImage:[parameters trochilus_thumbImage]
+                                                  platformType:TrochilusPlatformSubTypeWechatTimeline];
         
-        return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?",[TrochilusPlatformKeys sharedInstance].wechatAppId];
     }
     else {
-        
-        if (stateChangedHandler) {
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-        }
-        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return nil;
     }
     
-    return nil;
+    
+    [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+    
+    return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?",[TrochilusPlatformKeys sharedInstance].wechatAppId];
+    
 }
 
 //微信收藏
 + (NSString *)shareWithWechatFavParameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if (stateChangedHandler) {
-        [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
-    }
+    TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
+    NSDictionary * wechatDic = nil;
     
-    if ([TrochilusWeChatPlatform isWeChatInstalled]) {
+    if (contentType == TrochilusContentTypeText) {
         
-        TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
-        NSDictionary * wechatDic = nil;
+        //文本
+        wechatDic = [TrochilusWeChatPlatform shareWithText:[parameters trochilus_text] platformType:TrochilusPlatformSubTypeWechatFav];
+    }
+    else if (contentType == TrochilusContentTypeImage) {
+        //图片
+        //这里有个坑参数打印如果是打印剪切板content的话，打印出来的参数不完整，需要使用items打印
+        wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
+                                                 thumbImage:[parameters trochilus_thumbImage]
+                                               emoticonData:nil
+                                           shareDescription:[parameters trochilus_text]
+                                               platformType:TrochilusPlatformSubTypeWechatFav];
         
-        if (contentType == TrochilusContentTypeText) {
-            
-            //文本
-            wechatDic = [TrochilusWeChatPlatform shareWithText:[parameters trochilus_text] platformType:TrochilusPlatformSubTypeWechatFav];
-        }
-        else if (contentType == TrochilusContentTypeImage) {
-            //图片
-            //这里有个坑参数打印如果是打印剪切板content的话，打印出来的参数不完整，需要使用items打印
-            wechatDic = [TrochilusWeChatPlatform shareWithImage:[parameters trochilus_images]
-                                                     thumbImage:[parameters trochilus_thumbImage]
-                                                   emoticonData:nil
-                                               shareDescription:[parameters trochilus_text]
-                                                   platformType:TrochilusPlatformSubTypeWechatFav];
-            
-        }
-        else if (contentType == TrochilusContentTypeWebPage) {
-            //链接
-            
-            wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
-                                                  mediaTagName:[parameters trochilus_mediaTagName]
+    }
+    else if (contentType == TrochilusContentTypeWebPage) {
+        //链接
+        
+        wechatDic = [TrochilusWeChatPlatform shareWithLink:[parameters trochilus_url]
+                                              mediaTagName:[parameters trochilus_mediaTagName]
+                                                     title:@""
+                                          shareDescription:[parameters trochilus_text]
+                                                     image:[parameters trochilus_images]
+                                                thumbImage:[parameters trochilus_thumbImage]
+                                              platformType:TrochilusPlatformSubTypeWechatFav];
+    }
+    else if (contentType == TrochilusContentTypeAudio) {
+        
+        //音频
+        wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
                                                          title:@""
                                               shareDescription:[parameters trochilus_text]
-                                                         image:[parameters trochilus_images]
+                                                        images:[parameters trochilus_images]
                                                     thumbImage:[parameters trochilus_thumbImage]
                                                   platformType:TrochilusPlatformSubTypeWechatFav];
-        }
-        else if (contentType == TrochilusContentTypeAudio) {
-            
-            //音频
-            wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:[parameters trochilus_url]
-                                                             title:@""
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatFav];
-        }
-        else if (contentType == TrochilusContentTypeVideo) {
-            
-            //视频
-            wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
-                                                             title:@""
-                                                  shareDescription:[parameters trochilus_text]
-                                                            images:[parameters trochilus_images]
-                                                        thumbImage:[parameters trochilus_thumbImage]
-                                                      platformType:TrochilusPlatformSubTypeWechatFav];
-            
-        }
-        else if (contentType == TrochilusContentTypeFile) {
-            //文件 仅微信可用
-            //这里有个坑参数打印如果是打印剪切板content的话，打印出来的参数不完整，需要使用items打印
-            NSString * sourceFile = [parameters trochilus_sourceFileData];
-            NSData * sourceFileData = [NSData dataWithContentsOfFile:sourceFile];
-            
-            wechatDic = [TrochilusWeChatPlatform shareWithSourceFileData:sourceFileData
-                                                                   title:[parameters trochilus_title]
-                                                        shareDescription:[parameters trochilus_text]
-                                                                  images:[parameters trochilus_images]
-                                                              thumbImage:[parameters trochilus_thumbImage]
-                                                     sourceFileExtension:[parameters trochilus_sourceFileExtension]
-                                                            platformType:TrochilusPlatformSubTypeWechatFav];
-        }
-        else {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-            return nil;
-        }
+    }
+    else if (contentType == TrochilusContentTypeVideo) {
         
-        [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+        //视频
+        wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:[parameters trochilus_url]
+                                                         title:@""
+                                              shareDescription:[parameters trochilus_text]
+                                                        images:[parameters trochilus_images]
+                                                    thumbImage:[parameters trochilus_thumbImage]
+                                                  platformType:TrochilusPlatformSubTypeWechatFav];
         
-        return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?",[TrochilusPlatformKeys sharedInstance].wechatAppId];
+    }
+    else if (contentType == TrochilusContentTypeFile) {
+        //文件 仅微信可用
+        //这里有个坑参数打印如果是打印剪切板content的话，打印出来的参数不完整，需要使用items打印
+        NSString * sourceFile = [parameters trochilus_sourceFileData];
+        NSData * sourceFileData = [NSData dataWithContentsOfFile:sourceFile];
+        
+        wechatDic = [TrochilusWeChatPlatform shareWithSourceFileData:sourceFileData
+                                                               title:[parameters trochilus_title]
+                                                    shareDescription:[parameters trochilus_text]
+                                                              images:[parameters trochilus_images]
+                                                          thumbImage:[parameters trochilus_thumbImage]
+                                                 sourceFileExtension:[parameters trochilus_sourceFileExtension]
+                                                        platformType:TrochilusPlatformSubTypeWechatFav];
     }
     else {
-        
-        if (stateChangedHandler) {
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-        }
-        
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信暂不支持该分享类型" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return nil;
     }
     
-    return nil;
+    [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusPlatformKeys sharedInstance].wechatAppId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+    
+    return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?",[TrochilusPlatformKeys sharedInstance].wechatAppId];
+    
 }
 
-#pragma mark 分享
+#pragma mark 分享类型
 //文本分享
 + (NSDictionary *)shareWithText:(NSString *)text platformType:(TrochilusPlatformType)platformType {
     
@@ -450,17 +418,6 @@ static TrochilusWeChatPlatform * _instance = nil;
                                   @"thumbData" : thumbData[0]
                                   };
     
-//    wechatDic =  @{@"command" : @"1010",
-//                   @"description" : [parameters trochilus_text],
-//                   @"fileData" : imageData,
-//                   @"objectType" : @"8",
-//                   @"result" : @"1",
-//                   @"returnFromApp" : @"0",
-//                   @"scene" : @"0",
-//                   @"sdkver" : kWeChatSDKVer,
-//                   @"thumbData" : thumbData[0]
-//                   };
-    
     return wechatDic;
 }
 
@@ -494,30 +451,30 @@ static TrochilusWeChatPlatform * _instance = nil;
     }
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setValue:@"1010" forKey:@"command"];
-    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
-    [wechatDic setValue:@"5" forKey:@"objectType"];
-    [wechatDic setValue:@"1" forKey:@"result"];
-    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
-    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
-    [wechatDic setValue:scene forKey:@"scene"];
-    [wechatDic setValue:url forKey:@"mediaUrl"];
+    [wechatDic setObject:@"1010" forKey:@"command"];
+    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
+    [wechatDic setObject:@"5" forKey:@"objectType"];
+    [wechatDic setObject:@"1" forKey:@"result"];
+    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
+    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
+    [wechatDic setObject:scene forKey:@"scene"];
+    [wechatDic setObject:url forKey:@"mediaUrl"];
     
     if (shareDescription != nil) {
-        [wechatDic setValue:shareDescription forKey:@"description"];
+        [wechatDic setObject:shareDescription forKey:@"description"];
     }
     
     if (thumbData != nil) {
-        [wechatDic setValue:thumbData[0] forKey:@"thumbData"];
+        [wechatDic setObject:thumbData[0] forKey:@"thumbData"];
     }
     
     if (title != nil) {
-        [wechatDic setValue:title forKey:@"title"];
+        [wechatDic setObject:title forKey:@"title"];
     }
     
     if (mediaTagName != nil) {
-        [wechatDic setValue:@"" forKey:mediaTagName];
+        [wechatDic setObject:mediaTagName forKey:@"mediaTagName"];
     }
     
     return [wechatDic copy];
@@ -686,9 +643,6 @@ static TrochilusWeChatPlatform * _instance = nil;
         thumbData = [NSMutableArray trochilus_arrayWithImages:thumbImage isCompress:YES];
     }
     
-//    NSString * sourceFile = [parameters trochilus_sourceFileData];
-//    NSData * sourceFileData = [NSData dataWithContentsOfFile:sourceFile];
-    
     NSDictionary * wechatDic =  @{@"command" : @"1010",
                                   @"fileData" : sourceFileData,
                                   @"objectType" : @"6",
@@ -723,22 +677,44 @@ static TrochilusWeChatPlatform * _instance = nil;
     //网址（6.5.6以下版本微信会自动转化为分享链接 必填）
     NSString * webpageUrl = [parameter trochilus_url];
     
-    NSDictionary * wechatDic = @{@"description" : miniProgramDescription,
-                                 @"appBrandUserName" : userName,
-                                 @"objectType" : @"36",
-                                 @"scene" : @"0",
-                                 @"appBrandPath" : path,
-                                 @"title" : title,
-                                 @"mediaUrl" : webpageUrl,
-                                 @"sdkver" : kWeChatSDKVer,
-                                 @"command" : @"1010",
-                                 @"result" : @"1",
-                                 @"withShareTicket" : withShareTicket,
-                                 @"returnFromApp" : @"0",
-                                 @"miniprogramType" : programType
-                                 };
+    NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
     
-    return wechatDic;
+    if (title != nil) {
+        [wechatDic setObject:title forKey:@"title"];
+    }
+    
+    if (miniProgramDescription != nil) {
+        [wechatDic setObject:miniProgramDescription forKey:@"description"];
+    }
+    
+    if (path != nil) {
+        [wechatDic setObject:path forKey:@"appBrandPath"];
+    }
+    
+    if (userName != nil) {
+        [wechatDic setObject:userName forKey:@"appBrandUserName"];
+    }
+    
+    if (withShareTicket != nil) {
+        [wechatDic setObject:withShareTicket forKey:@"withShareTicket"];
+    }
+    
+    if (programType != nil) {
+        [wechatDic setObject:programType forKey:@"miniprogramType"];
+    }
+    
+    if (webpageUrl != nil) {
+        [wechatDic setObject:webpageUrl forKey:@"mediaUrl"];
+    }
+    
+    [wechatDic setObject:@"36" forKey:@"objectType"];
+    [wechatDic setObject:@"0" forKey:@"scene"];
+    [wechatDic setObject:@"1010" forKey:@"command"];
+    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setObject:@"1" forKey:@"result"];
+    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
+    
+    return [wechatDic copy];
 }
 
 #pragma mark- 授权登录

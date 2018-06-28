@@ -43,9 +43,9 @@
  */
 - (void)trochilus_SetupQQParamsByText:(NSString *)text
                        title:(NSString *)title
-                         url:(NSURL *)url
-               audioFlashURL:(NSURL *)audioFlashURL
-               videoFlashURL:(NSURL *)videoFlashURL
+                         url:(NSString *)url
+               audioFlashURL:(NSString *)audioFlashURL
+               videoFlashURL:(NSString *)videoFlashURL
                   thumbImage:(id)thumbImage
                       images:(id)images
                         type:(TrochilusContentType)type
@@ -57,36 +57,36 @@
  *  @param text         文本
  *  @param title        标题
  *  @param url          分享链接
- *  @param thumbImage   缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
- *  @param image        图片，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
+ *  @param thumbImage   缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
+ *  @param image        图片，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
  *  @param musicFileURL 音乐文件链接地址
  *  @param extInfo      扩展信息
- *  @param fileData     文件数据，可以为NSData、UIImage、NSString、NSURL（文件路径）、TData、TImage
- *  @param emoticonData 表情数据，可以为NSData、UIImage、NSURL（文件路径）、TData、TImage
- *  @param type         分享类型，支持TContentTypeText、TContentTypeImage、TContentTypeWebPage、TContentTypeApp、TContentTypeAudio和TContentTypeVideo
- *  @param platformSubType 平台子类型，只能传入TPlatformSubTypeWechatSession、TPlatformSubTypeWechatTimeline和TPlatformSubTypeWechatFav其中一个
+ *  @param fileData     文件数据，可以为NSData、UIImage、NSString、NSURL（文件路径）
+ *  @param emoticonData 表情数据，可以为NSData、UIImage、NSURL（文件路径）
+ *  @param type         分享类型，支持TrochilusContentTypeText、TrochilusContentTypeImage、TrochilusContentTypeWebPage、TrochilusContentTypeApp、TrochilusContentTypeAudio和TrochilusContentTypeVideo
+ *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeWechatSession、TrochilusPlatformSubTypeWechatTimeline和TrochilusPlatformSubTypeWechatFav其中一个
  *
  *  分享文本时：
- *  设置type为TContentTypeText, 并填入text参数
+ *  设置type为TrochilusContentTypeText, 并填入text参数
  *
  *  分享图片时：
- *  设置type为TContentTypeImage, 非gif图片时：填入title和image参数，如果为gif图片则需要填写title和emoticonData参数
+ *  设置type为TrochilusContentTypeImage, 非gif图片时：填入title和image参数，如果为gif图片则需要填写title和emoticonData参数
  *
  *  分享网页时：
- *  设置type为TContentTypeWebPage, 并设置text、title、url以及thumbImage参数，如果尚未设置thumbImage则会从image参数中读取图片并对图片进行缩放操作。
+ *  设置type为TrochilusContentTypeWebPage, 并设置text、title、url以及thumbImage参数，如果尚未设置thumbImage则会从image参数中读取图片并对图片进行缩放操作。
  *
  *  分享应用时：
- *  设置type为TContentTypeApp，并设置text、title、extInfo（可选）以及fileData（可选）参数。
+ *  设置type为TrochilusContentTypeApp，并设置text、title、extInfo（可选）以及fileData（可选）参数。
  *
  *  分享音乐时：
- *  设置type为TContentTypeAudio，并设置text、title、url以及musicFileURL（可选）参数。
+ *  设置type为TrochilusContentTypeAudio，并设置text、title、url以及musicFileURL（可选）参数。
  *
  *  分享视频时：
- *  设置type为TContentTypeVideo，并设置text、title、url参数
+ *  设置type为TrochilusContentTypeVideo，并设置text、title、url参数
  */
 - (void)trochilus_SetupWeChatParamsByText:(NSString *)text
                                     title:(NSString *)title
-                                      url:(NSURL *)url
+                                      url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
                                thumbImage:(id)thumbImage
                                     image:(id)image
@@ -127,7 +127,7 @@
  *
  *  @param text      文本
  *  @param title     标题
- *  @param image     图片对象，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、SSDKImage
+ *  @param image     图片对象，可以为UIImage、NSString（图片路径）、NSURL（图片路径) 必须小于32k 大于将自动进行压缩
  *  @param url       分享链接
  *  @param latitude  纬度
  *  @param longitude 经度
@@ -137,7 +137,7 @@
 - (void)trochilus_SetupSinaWeiboShareParamsByText:(NSString *)text
                                    title:(NSString *)title
                                    image:(id)image
-                                     url:(NSURL *)url
+                                     url:(NSString *)url
                                 latitude:(double)latitude
                                longitude:(double)longitude
                                 objectID:(NSString *)objectID
@@ -147,8 +147,8 @@
 - (NSString *)trochilus_title;
 - (NSString *)trochilus_url;
 - (NSString *)trochilus_mediaTagName;
-- (NSURL *)trochilus_audioFlashURL;
-- (NSURL *)trochilus_videoFlashURL;
+- (NSString *)trochilus_audioFlashURL;
+- (NSString *)trochilus_videoFlashURL;
 - (id )trochilus_thumbImage;
 - (id )trochilus_images;
 - (NSNumber *)trochilus_contentType;

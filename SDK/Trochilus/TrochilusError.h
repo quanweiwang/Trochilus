@@ -12,6 +12,7 @@
 typedef enum : NSUInteger {
     TrochilusErrorCodeSucceed = 0,                      //成功
     TrochilusErrorCodeFail = -1,                        //失败
+    TrochilusErrorCodeParameter = -998,                 //参数错误
     TrochilusErrorCodeUnknown = -999,                   //未知错误
     
     TrochilusErrorCodeQQAppIdNotFound = -10101,         //QQ app id 未填写
@@ -40,8 +41,7 @@ typedef enum : NSUInteger {
     TrochilusErrorCodeWeiboAuthorizeFail = -20302,      //微博授权失败
     
     TrochilusErrorCodeAliPayFail = -20403,              //支付宝支付失败
-    TrochilusErrorCodeAliPayUrlSchemeNotFound = -20404,  //urlScheme未填写
-    TrochilusErrorCodeAliPayOrderStringNotFound = -20405  //orderString未填写
+
     
 } TrochilusErrorCode;
 

@@ -115,6 +115,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>a</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>使用相册</string>
 	<key>UILaunchStoryboardName</key>
