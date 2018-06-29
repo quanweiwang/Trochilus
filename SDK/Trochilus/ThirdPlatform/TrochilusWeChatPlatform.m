@@ -169,7 +169,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     }
     else if (contentType == TrochilusContentTypeImage && [parameters trochilus_emoticonData]) {
         //表情图片
-        NSAssert([parameters trochilus_emoticonData], @"emoticonData 不能为空，传表情图片");
+        
         NSData * imageData = [NSData dataWithContentsOfFile:[parameters trochilus_emoticonData]];
         NSArray * thumbData =  [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];
         
@@ -388,6 +388,20 @@ static TrochilusWeChatPlatform * _instance = nil;
 //图片分享
 + (NSDictionary *)shareWithImage:(id)image thumbImage:(id)thumbImage emoticonData:(id)emoticonData shareDescription:(NSString *)shareDescription platformType:(TrochilusPlatformType)platformType {
     
+//    NSData * imageData = [NSData dataWithContentsOfFile:[parameters trochilus_emoticonData]];
+//    NSArray * thumbData =  [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_thumbImage] isCompress:YES];
+//
+//    wechatDic =  @{@"command" : @"1010",
+//                   @"description" : [parameters trochilus_text],
+//                   @"fileData" : imageData,
+//                   @"objectType" : @"8",
+//                   @"result" : @"1",
+//                   @"returnFromApp" : @"0",
+//                   @"scene" : @"0",
+//                   @"sdkver" : kWeChatSDKVer,
+//                   @"thumbData" : thumbData[0]
+//                   };
+    
     NSString * scene = @"";
     
     if (platformType == TrochilusPlatformSubTypeWechatSession) {
@@ -403,19 +417,22 @@ static TrochilusWeChatPlatform * _instance = nil;
         scene = @"2";
     }
     
-    NSArray * imageArray = [NSMutableArray trochilus_arrayWithImages:image isCompress:NO];
+    NSString * objectType = emoticonData ? @"8" : @"2";
     
-    NSArray * thumbData = thumbImage == nil ? [NSMutableArray trochilus_arrayWithImages:image isCompress:YES] : [NSMutableArray trochilus_arrayWithImages:thumbImage isCompress:YES];
+    NSData * imageData = UIImageJPEGRepresentation(image, 1);
+    if (emoticonData) {
+        
+    }
     
     NSDictionary * wechatDic =  @{@"command" : @"1010",
                                   @"description" : shareDescription,
-                                  @"fileData" : imageArray[0],
-                                  @"objectType" : @"2",
+                                  @"fileData" : imageData,
+                                  @"objectType" : objectType,
                                   @"result" : @"1",
                                   @"returnFromApp" : @"0",
                                   @"scene" : scene,
                                   @"sdkver" : kWeChatSDKVer,
-                                  @"thumbData" : thumbData[0]
+//                                  @"thumbData" : thumbData[0]
                                   };
     
     return wechatDic;

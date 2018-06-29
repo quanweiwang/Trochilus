@@ -50,6 +50,8 @@
 		D67C429520DE5C2E0024D0C2 /* TrochilusPlatformKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = D67C429320DE5C2E0024D0C2 /* TrochilusPlatformKeys.m */; };
 		D79835C520E3692100008F58 /* UIImage+Trochilus.h in Headers */ = {isa = PBXBuildFile; fileRef = D79835C320E3692100008F58 /* UIImage+Trochilus.h */; };
 		D79835C620E3692100008F58 /* UIImage+Trochilus.m in Sources */ = {isa = PBXBuildFile; fileRef = D79835C420E3692100008F58 /* UIImage+Trochilus.m */; };
+		D7A5969B20E5D77C00C34931 /* TrochilusPlatformParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = D7A5969920E5D77C00C34931 /* TrochilusPlatformParameter.h */; };
+		D7A5969C20E5D77C00C34931 /* TrochilusPlatformParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D7A5969A20E5D77C00C34931 /* TrochilusPlatformParameter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		D67C429620DE65630024D0C2 /* TrochilusSysDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrochilusSysDefine.h; sourceTree = "<group>"; };
 		D79835C320E3692100008F58 /* UIImage+Trochilus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Trochilus.h"; sourceTree = "<group>"; };
 		D79835C420E3692100008F58 /* UIImage+Trochilus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Trochilus.m"; sourceTree = "<group>"; };
+		D7A5969920E5D77C00C34931 /* TrochilusPlatformParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrochilusPlatformParameter.h; sourceTree = "<group>"; };
+		D7A5969A20E5D77C00C34931 /* TrochilusPlatformParameter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrochilusPlatformParameter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,8 @@
 		D67C423320DE561A0024D0C2 /* Trochilus */ = {
 			isa = PBXGroup;
 			children = (
+				D7A5969920E5D77C00C34931 /* TrochilusPlatformParameter.h */,
+				D7A5969A20E5D77C00C34931 /* TrochilusPlatformParameter.m */,
 				D67C429220DE5C2E0024D0C2 /* TrochilusPlatformKeys.h */,
 				D67C429320DE5C2E0024D0C2 /* TrochilusPlatformKeys.m */,
 				D67C426B20DE5BB20024D0C2 /* TrochilusError.h */,
@@ -238,6 +244,7 @@
 				D659EFF620DF3D9200B9AA8B /* TrochilusTypeDefine.h in Headers */,
 				D659EFF520DF3D9200B9AA8B /* TrochilusSysDefine.h in Headers */,
 				D67C429420DE5C2E0024D0C2 /* TrochilusPlatformKeys.h in Headers */,
+				D7A5969B20E5D77C00C34931 /* TrochilusPlatformParameter.h in Headers */,
 				D79835C520E3692100008F58 /* UIImage+Trochilus.h in Headers */,
 				D67C425820DE5A7B0024D0C2 /* NSString+Trochilus.h in Headers */,
 				D67C426420DE5B920024D0C2 /* TrochilusWeChatPlatform.h in Headers */,
@@ -363,6 +370,7 @@
 				D67C425920DE5A7B0024D0C2 /* NSString+Trochilus.m in Sources */,
 				D67C426520DE5B920024D0C2 /* TrochilusWeChatPlatform.m in Sources */,
 				D67C428D20DE5BFA0024D0C2 /* NSMutableArray+Trochilus.m in Sources */,
+				D7A5969C20E5D77C00C34931 /* TrochilusPlatformParameter.m in Sources */,
 				D67C428E20DE5BFA0024D0C2 /* NSMutableDictionary+TrochilusPay.m in Sources */,
 				D67C428320DE5BFA0024D0C2 /* NSDate+Trochilus.m in Sources */,
 				D67C424F20DE56760024D0C2 /* Trochilus.m in Sources */,

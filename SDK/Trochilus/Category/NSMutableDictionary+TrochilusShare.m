@@ -9,6 +9,7 @@
 #import "NSMutableDictionary+TrochilusShare.h"
 #import <UIKit/UIKit.h>
 #import "UIImage+Trochilus.h"
+#import "TrochilusPlatformParameter.h"
 
 @implementation NSMutableDictionary (TrochilusShare)
 #pragma mark- 通用分享参数
@@ -243,71 +244,37 @@
                     mediaTagName:(NSString *)mediaTagName
                       thumbImage:(id)thumbImage
                            image:(id)image
-                    musicFileURL:(NSURL *)musicFileURL
+                    musicFileURL:(NSString *)musicFileURL
                          extInfo:(NSString *)extInfo
                         fileData:(id)fileData
                     emoticonData:(id)emoticonData
-             sourceFileExtension:(NSString *)fileExtension
+             sourceFileExtension:(NSString *)sourceFileExtension
                   sourceFileData:(id)sourceFileData
                             type:(TrochilusContentType)type
               forPlatformSubType:(TrochilusPlatformType)platformSubType {
     
-    if (text) {
-        [self setObject:text forKey:@"Text"];
-    }
+    TrochilusPlatformParameter * platformParameter = [[TrochilusPlatformParameter alloc] init];
     
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
+    //文本
+    platformParameter.text = text;
+    //标题
+    platformParameter.title = title;
+    //分享链接
+    platformParameter.url = url;
+    platformParameter.mediaTagName = mediaTagName;
+    //缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
+    platformParameter.thumbImage = thumbImage;
+    platformParameter.images = image;
+    platformParameter.musicFileURL = musicFileURL;
+    platformParameter.extInfo = extInfo;
+    platformParameter.fileData = fileData;
+    platformParameter.emoticonData = emoticonData;
+    platformParameter.sourceFileExtension = sourceFileExtension;
+    platformParameter.sourceFileData = sourceFileData;
+    platformParameter.contentType = type;
+    platformParameter.platformSubType = platformSubType;
     
-    if (url) {
-        [self setObject:url forKey:@"URL"];
-    }
-    
-    if (mediaTagName) {
-        [self setObject:mediaTagName forKey:@"MediaTagName"];
-    }
-    
-    if (thumbImage) {
-        [self setObject:thumbImage forKey:@"ThumbImage"];
-    }
-    
-    if (image) {
-        [self setObject:image forKey:@"Images"];
-    }
-    
-    if (musicFileURL) {
-        [self setObject:musicFileURL forKey:@"MusicFileURL"];
-    }
-    
-    if (extInfo) {
-        [self setObject:extInfo forKey:@"ExtInfo"];
-    }
-    
-    if (fileData) {
-        [self setObject:fileData forKey:@"FileData"];
-    }
-    
-    if (emoticonData) {
-        [self setObject:emoticonData forKey:@"EmoticonData"];
-    }
-    
-    if (fileExtension) {
-        [self setObject:fileExtension forKey:@"SourceFileExtension"];
-    }
-    
-    if (sourceFileData) {
-        [self setObject:sourceFileData forKey:@"SourceFileData"];
-    }
-    
-    if (type) {
-        [self setObject:@(type) forKey:@"ContentType"];
-    }
-    
-    if (platformSubType) {
-        [self setObject:@(platformSubType) forKey:@"PlatformSubType"];
-    }
-    
+    [self setObject:platformParameter forKey:@"TrochilusPlatformParameter"];
 }
 
 /**
@@ -508,6 +475,10 @@
 
 - (NSString *)trochilus_sourceFileExtension {
     return [self objectForKey:@"SourceFileExtension"];
+}
+
+- (id)trochilus_emoticonData {
+    return [self objectForKey:@"EmoticonData"];
 }
 
 +(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url {

@@ -75,14 +75,14 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         NSString * uuid = [[NSUUID UUID] UUIDString];
         
         NSDictionary * message = nil;
-        TrochilusContentType type = [[parameters trochilus_contentType] integerValue];
+        TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
         
-        if (type == TrochilusContentTypeText) {
+        if (contentType == TrochilusContentTypeText) {
             //文字分享
             message = @{@"__class" : @"WBMessageObject",
                         @"text" : [parameters trochilus_text]};
         }
-        else if (type == TrochilusContentTypeImage) {
+        else if (contentType == TrochilusContentTypeImage) {
             //图片 分享 貌似只能分享一张图片 32768 32kb
             
             
@@ -94,7 +94,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
                         @"text" : [parameters trochilus_text],
                         @"imageObject" : imageDataDic};
         }
-        else if (type == TrochilusContentTypeWebPage) {
+        else if (contentType == TrochilusContentTypeWebPage) {
             //链接分享
             
             //时间戳
