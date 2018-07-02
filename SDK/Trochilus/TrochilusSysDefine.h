@@ -11,6 +11,8 @@
 #ifndef TrochilusSysDefine_h
 #define TrochilusSysDefine_h
 
+#define k32KB 32768
+
 #define kWeChatSDKVer @"1.8.2"
 #define kQQSDKVer @"3.2.1"
 

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) NSString * title;
 @property (strong,nonatomic) NSString * url;
 @property (strong,nonatomic) NSString * mediaTagName;
+@property (strong,nonatomic) NSString * messageAction;
 @property (strong,nonatomic) NSString * audioFlashURL;
 @property (strong,nonatomic) NSString * videoFlashURL;
 @property (strong,nonatomic) id thumbImage;
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong,nonatomic) id sourceFileData;
 @property (strong,nonatomic) NSString * userName;
 @property (strong,nonatomic) NSString * path;
-@property (strong,nonatomic) NSString * trochilus_descriptions;
+@property (strong,nonatomic) NSString * descriptions;
 @property (strong,nonatomic) NSString * withShareTicket;
 @property (strong,nonatomic) NSNumber * miniProgramType;
 @property (strong,nonatomic) NSString * musicFileURL;

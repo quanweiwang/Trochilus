@@ -239,19 +239,20 @@
  *  设置type为TrochilusContentTypeVideo，并设置text、title、url参数
  */
 - (void)trochilus_SetupWeChatParamsByText:(NSString *)text
-                           title:(NSString *)title
-                             url:(NSString *)url
-                    mediaTagName:(NSString *)mediaTagName
-                      thumbImage:(id)thumbImage
-                           image:(id)image
-                    musicFileURL:(NSString *)musicFileURL
-                         extInfo:(NSString *)extInfo
-                        fileData:(id)fileData
-                    emoticonData:(id)emoticonData
-             sourceFileExtension:(NSString *)sourceFileExtension
-                  sourceFileData:(id)sourceFileData
-                            type:(TrochilusContentType)type
-              forPlatformSubType:(TrochilusPlatformType)platformSubType {
+                                    title:(NSString *)title
+                                      url:(NSString *)url
+                             mediaTagName:(NSString *)mediaTagName
+                            messageAction:(NSString *)messageAction
+                               thumbImage:(id)thumbImage
+                                    image:(id)image
+                             musicFileURL:(NSString *)musicFileURL
+                                  extInfo:(NSString *)extInfo
+                                 fileData:(id)fileData
+                             emoticonData:(id)emoticonData
+                      sourceFileExtension:(NSString *)sourceFileExtension
+                           sourceFileData:(id)sourceFileData
+                                     type:(TrochilusContentType)type
+                       forPlatformSubType:(TrochilusPlatformType)platformSubType {
     
     TrochilusPlatformParameter * platformParameter = [[TrochilusPlatformParameter alloc] init];
     
@@ -262,6 +263,7 @@
     //分享链接
     platformParameter.url = url;
     platformParameter.mediaTagName = mediaTagName;
+    platformParameter.messageAction = messageAction;
     //缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
     platformParameter.thumbImage = thumbImage;
     platformParameter.images = image;

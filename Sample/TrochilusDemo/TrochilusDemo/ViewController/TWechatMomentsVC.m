@@ -42,6 +42,7 @@
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
+                                    messageAction:nil
                                        thumbImage:nil
                                             image:nil
                                      musicFileURL:nil
@@ -68,6 +69,7 @@
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
+                                    messageAction:nil
                                        thumbImage:nil
                                             image:[UIImage imageNamed:@"COD13"]
                                      musicFileURL:nil
@@ -90,6 +92,7 @@
                                             title:@"Share SDK"
                                               url:@"https://www.mob.com"
                                      mediaTagName:nil
+                                    messageAction:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil
                                      musicFileURL:nil
@@ -113,6 +116,7 @@
                                             title:@"一无所有"
                                               url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
                                      mediaTagName:nil
+                                    messageAction:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil
                                      musicFileURL:[NSURL URLWithString:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"]
@@ -135,6 +139,7 @@
                                             title:@"乔布斯"
                                               url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
                                      mediaTagName:nil
+                                    messageAction:nil
                                        thumbImage:[UIImage imageNamed:@"COD13"]
                                             image:nil
                                      musicFileURL:nil

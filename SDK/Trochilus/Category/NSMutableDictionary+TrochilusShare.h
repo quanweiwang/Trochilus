@@ -88,6 +88,7 @@
                                     title:(NSString *)title
                                       url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
+                            messageAction:(NSString *)messageAction
                                thumbImage:(id)thumbImage
                                     image:(id)image
                              musicFileURL:(NSURL *)musicFileURL
