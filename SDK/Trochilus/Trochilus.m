@@ -15,6 +15,9 @@
 #import "TrochilusPlatformKeys.h"
 #import "TrochilusSysDefine.h"
 
+#import "NSMutableDictionary+TrochilusShare.h"
+
+
 @interface Trochilus ()
 
 @end
@@ -79,21 +82,21 @@ static Trochilus * _instance = nil;
  @param parameters 分享平台参数
  @param stateChangedHandler 分享状态变更回调处理
  */
-+ (void)shareWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (void)shareWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     NSString *platformTypeName = [NSString stringWithFormat:@"PlatformType_%zi",platformType];
     NSString *platformName = [[NSBundle bundleForClass:[self class]] localizedStringForKey:platformTypeName value:platformTypeName table:@"Trochilus_Localizable"];
     
     Class platformClass = NSClassFromString([NSString stringWithFormat:@"Trochilus%@Platform",platformName]);
     
-    SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"shareWith%@Platform:platformSubType:onStateChanged:",platformName]);
+    SEL selMethod = NSSelectorFromString(@"shareWithPlatformType:parameter:onStateChanged:");
     IMP imp = [platformClass methodForSelector:selMethod];
-    NSString *(*func)(id,SEL,NSMutableDictionary*,TrochilusPlatformType,TrochilusStateChangedHandler) = (void *)imp;
+    NSString *(*func)(id,SEL,TrochilusPlatformType,NSDictionary*,TrochilusStateChangedHandler) = (void *)imp;
     
     NSString * shareUrl = @"";
     
     if ([platformClass respondsToSelector:selMethod]) {
-        shareUrl = platformClass? func(platformClass,selMethod,parameters,platformType,stateChangedHandler): @"";
+        shareUrl = platformClass? func(platformClass,selMethod,platformType,parameters,stateChangedHandler): @"";
     }
     [Trochilus sendToURL:shareUrl];
 }

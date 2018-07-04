@@ -28,16 +28,23 @@
         switch (platformType) {
             case TrochilusPlatformTypeSinaWeibo:
                 
-                [appInfo trochilus_SetupSinaWeiboByAppKey:kSinaWeiboAppKey appSecret:kSinaWeiboAppSecret redirectUri:kSinaWeiboRedirectUri authType:@""];
+                [appInfo trochilus_SetupSinaWeiboByAppKey:kSinaWeiboAppKey
+                                                appSecret:kSinaWeiboAppSecret
+                                              redirectUri:kSinaWeiboRedirectUri
+                                                 authType:@""];
                 
                 break;
             case TrochilusPlatformTypeQQ:
                 
-                [appInfo trochilus_SetupQQByAppId:kQQAppId appKey:kQQAppKey authType:@"" useTIM:NO];
+                [appInfo trochilus_SetupQQByAppId:kQQAppId
+                                           appKey:kQQAppKey
+                                         authType:@""
+                                           useTIM:NO];
                 break;
             case TrochilusPlatformTypeWechat:
                 
-                [appInfo trochilus_SetupWeChatByAppId:kWeChatAppId appSecret:kWeChatAppSecret];
+                [appInfo trochilus_SetupWeChatByAppId:kWeChatAppId
+                                            appSecret:kWeChatAppSecret];
                 
                 break;
             default:

@@ -20,15 +20,15 @@
  */
 + (BOOL)isSinaWeiBoInstalled;
 
-
 /**
  微博分享
- 
- @param parameters 分享参数
- @param stateChangedHandler 授权状态变更回调处理
- @return 分享字符串
+
+ @param platformType 平台类型 只能为 TrochilusPlatformTypeSinaWeibo
+ @param parameters parameters 分享参数
+ @param stateChangedHandler 分享状态变更回调处理
+ @return 构造好用于提交给微博的字符串
  */
-+ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType parameter:(NSDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  新浪微博授权

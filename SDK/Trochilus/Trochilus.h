@@ -12,6 +12,7 @@
 #import "NSMutableDictionary+TrochilusShare.h"
 #import "NSMutableDictionary+TrochilusPay.h"
 #import "TrochilusError.h"
+#import "TrochilusMessageObject.h"
 
 @interface Trochilus : NSObject
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TrochilusTypeDefine.h"
+@class TrochilusMessage;
 
 @interface TrochilusWeChatPlatform : NSObject
 
@@ -22,12 +23,15 @@
 
 /**
  分享到微信平台
- 
- @param parameters 分享参数
+
+ @param platformType 分享类型 只能为 微信好友:TrochilusPlatformSubTypeWechatSession 朋友圈:TrochilusPlatformSubTypeWechatTimeline 微信收藏:TrochilusPlatformSubTypeWechatFav
+ @param parameter 分享参数
  @param stateChangedHandler 分享状态变更回调处理
  @return 构造好用于提交给微信的字符串
  */
-+ (NSString *)shareWithWeChatPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
+                          parameter:(NSDictionary *)parameter
+                     onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  *  微信授权
@@ -46,7 +50,8 @@
  @return 支付字符串
  @param stateChangedHandler 支付状态变更回调处理
  */
-+ (NSString *)payToWechatParameters:(NSDictionary *)parameters onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler;
++ (NSString *)payToWechatParameters:(NSDictionary *)parameters
+                     onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler;
 
 /**
  微信客户端回调
@@ -55,11 +60,6 @@
  @return YES or NO
  */
 + (BOOL)handleUrlWithWeChat:(NSURL *)url;
-
-/**
- 检查支付状态
- */
-- (void)checkPayState;
 
 @end
 

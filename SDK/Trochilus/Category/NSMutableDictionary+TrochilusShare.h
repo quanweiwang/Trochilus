@@ -33,13 +33,13 @@
  *  @param title           分享标题
  *  @param url             分享链接(如果分享类型为音频/视频时,应该传入音频/视频的网络URL地址)
  [特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
- *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Audio时生效
- *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Video时生效
+ *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Audio时生效
+ *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Video时生效
  *  @param thumbImage      缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
  *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
  QQ会采用首张图片，QZone则支持图片数组
  *  @param type            分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
- *  @param platformSubType 平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
+ *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeQZone或者TrochilusPlatformSubTypeQQFriend其中一个
  */
 - (void)trochilus_SetupQQParamsByText:(NSString *)text
                        title:(NSString *)title
@@ -64,7 +64,6 @@
  *  @param fileData     文件数据，可以为NSData、UIImage、NSString、NSURL（文件路径）
  *  @param emoticonData 表情数据，可以为NSData、UIImage、NSURL（文件路径）
  *  @param type         分享类型，支持TrochilusContentTypeText、TrochilusContentTypeImage、TrochilusContentTypeWebPage、TrochilusContentTypeApp、TrochilusContentTypeAudio和TrochilusContentTypeVideo
- *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeWechatSession、TrochilusPlatformSubTypeWechatTimeline和TrochilusPlatformSubTypeWechatFav其中一个
  *
  *  分享文本时：
  *  设置type为TrochilusContentTypeText, 并填入text参数
@@ -91,14 +90,12 @@
                             messageAction:(NSString *)messageAction
                                thumbImage:(id)thumbImage
                                     image:(id)image
-                             musicFileURL:(NSURL *)musicFileURL
+                             musicFileURL:(NSString *)musicFileURL
                                   extInfo:(NSString *)extInfo
                                  fileData:(id)fileData
+                            fileExtension:(NSString *)fileExtension
                              emoticonData:(id)emoticonData
-                      sourceFileExtension:(NSString *)fileExtension
-                           sourceFileData:(id)sourceFileData
-                                     type:(TrochilusContentType)type
-                       forPlatformSubType:(TrochilusPlatformType)platformSubType;
+                                     type:(TrochilusContentType)type;
 
 /**
  设置微信小程序分享
@@ -121,6 +118,7 @@
                                                      thumbImage:(UIImage *)thumbImage
                                                     hdImageData:(UIImage *)hdImageData
                                                 withShareTicket:(BOOL)withShareTicket
+                                                    contentType:(TrochilusContentType)contentType
                                                 miniProgramType:(TrochilusMiniProgramType)programType;
 
 /**

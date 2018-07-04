@@ -7,9 +7,7 @@
 //
 
 #import "NSMutableDictionary+TrochilusShare.h"
-#import <UIKit/UIKit.h>
-#import "UIImage+Trochilus.h"
-#import "TrochilusPlatformParameter.h"
+#import "TrochilusMessageObject.h"
 
 @implementation NSMutableDictionary (TrochilusShare)
 #pragma mark- 通用分享参数
@@ -248,35 +246,28 @@
                              musicFileURL:(NSString *)musicFileURL
                                   extInfo:(NSString *)extInfo
                                  fileData:(id)fileData
+                            fileExtension:(NSString *)fileExtension
                              emoticonData:(id)emoticonData
-                      sourceFileExtension:(NSString *)sourceFileExtension
-                           sourceFileData:(id)sourceFileData
-                                     type:(TrochilusContentType)type
-                       forPlatformSubType:(TrochilusPlatformType)platformSubType {
+                                     type:(TrochilusContentType)type {
     
-    TrochilusPlatformParameter * platformParameter = [[TrochilusPlatformParameter alloc] init];
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.text = text;
+    message.title = title;
+    message.url = url;
+    message.mediaTagName = mediaTagName;
+    message.messageAction = messageAction;
+    message.thumbImage = thumbImage;
+    message.image = image;
+    message.mediaUrl = musicFileURL;
+    message.extInfo = extInfo;
+    message.fileData = fileData;
+    message.emoticonData = emoticonData;
+    message.fileExtension = fileExtension;
+    message.emoticonData = emoticonData;
+    message.contentType = type;
     
-    //文本
-    platformParameter.text = text;
-    //标题
-    platformParameter.title = title;
-    //分享链接
-    platformParameter.url = url;
-    platformParameter.mediaTagName = mediaTagName;
-    platformParameter.messageAction = messageAction;
-    //缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
-    platformParameter.thumbImage = thumbImage;
-    platformParameter.images = image;
-    platformParameter.musicFileURL = musicFileURL;
-    platformParameter.extInfo = extInfo;
-    platformParameter.fileData = fileData;
-    platformParameter.emoticonData = emoticonData;
-    platformParameter.sourceFileExtension = sourceFileExtension;
-    platformParameter.sourceFileData = sourceFileData;
-    platformParameter.contentType = type;
-    platformParameter.platformSubType = platformSubType;
-    
-    [self setObject:platformParameter forKey:@"TrochilusPlatformParameter"];
+    [self setObject:message forKey:@"TrochilusMessageObject"];
+
 }
 
 /**
@@ -300,56 +291,23 @@
                                                      thumbImage:(UIImage *)thumbImage
                                                     hdImageData:(UIImage *)hdImageData
                                                 withShareTicket:(BOOL)withShareTicket
+                                                    contentType:(TrochilusContentType)contentType
                                                 miniProgramType:(TrochilusMiniProgramType)programType {
     
-    [self setObject:@(TrochilusContentTypeMiniProgram) forKey:@"ContentType"];
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
     
-    if (webpageUrl != nil) {
-        [self setObject:webpageUrl forKey:@"URL"];
-    }
+    message.url = webpageUrl;
+    message.userName = userName;
+    message.path = path;
+    message.title = title;
+    message.text = description;
+    message.thumbImage = thumbImage;
+    message.image = hdImageData;
+    message.withShareTicket = withShareTicket == YES ? @"1" : @"0";
+    message.miniProgramType = programType;
+    message.contentType = contentType;
     
-    if (userName != nil) {
-        [self setObject:userName forKey:@"UserName"];
-    }
-    
-    if (path != nil) {
-        [self setObject:path forKey:@"Path"];
-    }
-    
-    if (title != nil) {
-        [self setObject:title forKey:@"Title"];
-    }
-    
-    if (description != nil) {
-        [self setObject:description forKey:@"Text"];
-    }
-    
-    if (thumbImage != nil) {
-        thumbImage = [UIImage compressImage:thumbImage toByte:32];
-        [self setObject:thumbImage forKey:@"ThumbImage"];
-    }
-    
-    if (hdImageData != nil) {
-        [self setObject:hdImageData forKey:@"HdImageData"];
-    }
-    
-    if (withShareTicket == YES) {
-        [self setObject:@"1" forKey:@"WithShareTicket"];
-    }
-    else {
-        [self setObject:@"0" forKey:@"WithShareTicket"];
-    }
-    
-    if (programType == TrochilusMiniProgramTypeRelease) {
-        [self setObject:@(0) forKey:@"MiniProgramType"];
-    }
-    else if (programType == TrochilusMiniProgramTypeTest) {
-        [self setObject:@(1) forKey:@"MiniProgramType"];
-    }
-    else {
-        [self setObject:@(2) forKey:@"MiniProgramType"];
-    }
-    
+    [self setObject:message forKey:@"TrochilusMessageObject"];
 }
 
 #pragma mark- 新浪微博
@@ -374,37 +332,49 @@
                                 objectID:(NSString *)objectID
                                     type:(TrochilusContentType)type {
     
-    if (text) {
-        [self setObject:text forKey:@"Text"];
-    }
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.text = text;
+    message.title = title;
+    message.image = image;
+    message.url = url;
+    message.latitude = latitude;
+    message.longitude = longitude;
+    message.objectID = objectID;
+    message.contentType = type;
     
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
+    [self setObject:message forKey:@"TrochilusMessageObject"];
     
-    if (image) {
-        [self setObject:image forKey:@"Images"];
-    }
-    
-    if (url) {
-        [self setObject:url forKey:@"URL"];
-    }
-    
-    if (latitude) {
-        [self setObject:@(latitude) forKey:@"Latitude"];
-    }
-    
-    if (longitude) {
-        [self setObject:@(longitude) forKey:@"Longitude"];
-    }
-    
-    if (objectID) {
-        [self setObject:objectID forKey:@"objectID"];
-    }
-    
-    if (type) {
-        [self setObject:@(type) forKey:@"ContentType"];
-    }
+//    if (text) {
+//        [self setObject:text forKey:@"Text"];
+//    }
+//    
+//    if (title) {
+//        [self setObject:title forKey:@"Title"];
+//    }
+//    
+//    if (image) {
+//        [self setObject:image forKey:@"Images"];
+//    }
+//    
+//    if (url) {
+//        [self setObject:url forKey:@"URL"];
+//    }
+//    
+//    if (latitude) {
+//        [self setObject:@(latitude) forKey:@"Latitude"];
+//    }
+//    
+//    if (longitude) {
+//        [self setObject:@(longitude) forKey:@"Longitude"];
+//    }
+//    
+//    if (objectID) {
+//        [self setObject:objectID forKey:@"objectID"];
+//    }
+//    
+//    if (type) {
+//        [self setObject:@(type) forKey:@"ContentType"];
+//    }
     
 }
 

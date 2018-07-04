@@ -13,21 +13,18 @@
 #import "UIImage+Trochilus.h"
 #import "NSDate+Trochilus.h"
 #import "NSMutableDictionary+TrochilusShare.h"
-#import "NSMutableArray+Trochilus.h"
 
 #import "TrochilusUser.h"
 //#import "TWebViewVC.h"
 #import "TrochilusPlatformKeys.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
-
+#import "TrochilusMessageObject.h"
 
 @interface TrochilusSinaWeiBoPlatform()
-@property (copy,nonatomic)TrochilusStateChangedHandler stateChangedHandler;
+@property (copy, nonatomic)TrochilusStateChangedHandler stateChangedHandler;
 @property (copy, nonatomic)TrochilusAuthorizeStateChangedHandler authorizeStateChangedHandler;
-@property (copy, nonatomic)NSString * redirectUri; //回调地址
-@property (copy, nonatomic)NSString * appKey;//appkey
-@property (copy, nonatomic)NSString * appSecret;//appSecret
+
 @end
 
 @implementation TrochilusSinaWeiBoPlatform
@@ -57,7 +54,9 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
 }
 
 #pragma mark- 分享
-+ (NSString *)shareWithSinaWeiBoPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
+                      parameter:(NSDictionary *)parameters
+                 onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusPlatformKeys sharedInstance].weiboAppKey length] == 0) {
         
@@ -72,26 +71,27 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
     }
     
     if ([TrochilusSinaWeiBoPlatform isSinaWeiBoInstalled]) {
+        
+        TrochilusMessageObject * messageObject = [parameters objectForKey:@"TrochilusMessageObject"];
+        
         NSString * uuid = [[NSUUID UUID] UUIDString];
         
         NSDictionary * message = nil;
-        TrochilusContentType contentType = [[parameters trochilus_contentType] integerValue];
+        TrochilusContentType contentType = messageObject.contentType;
         
         if (contentType == TrochilusContentTypeText) {
             //文字分享
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : [parameters trochilus_text]};
+                        @"text" : messageObject.text};
         }
         else if (contentType == TrochilusContentTypeImage) {
-            //图片 分享 貌似只能分享一张图片 32768 32kb
-            
-            
-            UIImage * image = [parameters trochilus_images];
+            //图片 分享 貌似只能分享一张图片
+            UIImage * image = messageObject.image;
             NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
             
             NSDictionary * imageDataDic = @{@"imageData" : imageData};
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : [parameters trochilus_text],
+                        @"text" : messageObject.text,
                         @"imageObject" : imageDataDic};
         }
         else if (contentType == TrochilusContentTypeWebPage) {
@@ -101,18 +101,17 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
             NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970] * 1000;
             NSString * timeIntervalStr = [NSString stringWithFormat:@"%ld",(long)timeInterval];
             //缩略图
-            NSArray * thumbnail = [NSMutableArray trochilus_arrayWithImages:[parameters trochilus_images] isCompress:YES];
-            
+            NSData * thumbnailData = UIImageJPEGRepresentation([UIImage compressImage:messageObject.image toByte:k32KB], 1.f);
             
             NSDictionary * mediaObject = @{@"__class" : @"WBWebpageObject",
-                                           @"description" : [parameters trochilus_text],
+                                           @"description" : messageObject.text,
                                            @"objectID" : timeIntervalStr,
-                                           @"thumbnailData" : thumbnail[0],
-                                           @"title" : [parameters trochilus_title],
-                                           @"webpageUrl" : [parameters trochilus_url]
+                                           @"thumbnailData" : thumbnailData,
+                                           @"title" : messageObject.title,
+                                           @"webpageUrl" : messageObject.url
                                            };
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : [parameters trochilus_text],
+                        @"text" : messageObject.text,
                         @"mediaObject" : mediaObject};
         }
         else {
@@ -160,7 +159,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         
         if (stateChangedHandler) {
             NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
+            [TrochilusSinaWeiBoPlatform shareResponseWithState:TrochilusResponseStateFail error:err];
         }
         
     }

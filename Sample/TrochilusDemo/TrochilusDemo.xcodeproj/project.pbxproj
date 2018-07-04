@@ -24,8 +24,8 @@
 		D659EFE220DF3B9700B9AA8B /* res6.gif in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE020DF3B9700B9AA8B /* res6.gif */; };
 		D659EFE720DF3BBB00B9AA8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE320DF3BBB00B9AA8B /* Main.storyboard */; };
 		D659EFE820DF3BBB00B9AA8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D659EFE520DF3BBB00B9AA8B /* LaunchScreen.storyboard */; };
-		D7400A1D20E245090055F49A /* Trochilus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; };
-		D7400A1E20E245090055F49A /* Trochilus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D76E58D120EB567400341F2E /* Trochilus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; };
+		D76E58D220EB567400341F2E /* Trochilus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D7400A1C20E245090055F49A /* Trochilus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,13 +46,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D659EFEC20DF3C0400B9AA8B /* Embed Frameworks */ = {
+		D76E58D320EB567400341F2E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D7400A1E20E245090055F49A /* Trochilus.framework in Embed Frameworks */,
+				D76E58D220EB567400341F2E /* Trochilus.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7400A1D20E245090055F49A /* Trochilus.framework in Frameworks */,
+				D76E58D120EB567400341F2E /* Trochilus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +212,7 @@
 				D659EF8520DF3B3200B9AA8B /* Sources */,
 				D659EF8620DF3B3200B9AA8B /* Frameworks */,
 				D659EF8720DF3B3200B9AA8B /* Resources */,
-				D659EFEC20DF3C0400B9AA8B /* Embed Frameworks */,
+				D76E58D320EB567400341F2E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

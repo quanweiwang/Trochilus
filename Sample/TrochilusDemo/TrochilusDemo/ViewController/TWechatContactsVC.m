@@ -130,24 +130,25 @@
  */
 -(void)shareText
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:@"222"
-                                            title:nil
-                                              url:nil
-                                     mediaTagName:nil
-                                    messageAction:nil
-                                       thumbImage:nil
-                                            image:nil
-                                     musicFileURL:nil
-                                          extInfo:nil
-                                         fileData:nil
-                                     emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeText
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                     title:nil
+                                       url:nil
+                              mediaTagName:nil
+                             messageAction:nil
+                                thumbImage:nil
+                                     image:nil
+                              musicFileURL:nil
+                                   extInfo:nil
+                                  fileData:nil
+                             fileExtension:nil
+                              emoticonData:nil
+                                      type:TrochilusContentTypeText];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"222";
+    message.contentType = TrochilusContentTypeText;
     
     [self shareWithParameters:parameters];
 }
@@ -157,9 +158,8 @@
  */
 - (void)shareImage
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:@"222"
                                             title:nil
                                               url:nil
@@ -170,22 +170,24 @@
                                      musicFileURL:nil
                                           extInfo:nil
                                          fileData:nil
+                                    fileExtension:nil
                                      emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeImage
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeImage];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"222";
+    message.image = [UIImage imageNamed:@"COD13"];
+    message.contentType = TrochilusContentTypeImage;
     
     [self shareWithParameters:parameters];
 }
 
 - (void)shareLink
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     
-    //平台定制
-    [parameters trochilus_SetupWeChatParamsByText:@"222 Link Desc"
-                                            title:@"222"
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"222"
+                                            title:nil
                                               url:@"https://www.baidu.com"
                                      mediaTagName:@"aaa"
                                     messageAction:nil
@@ -194,90 +196,109 @@
                                      musicFileURL:nil
                                           extInfo:nil
                                          fileData:nil
+                                    fileExtension:nil
                                      emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeWebPage
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeWebPage];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"222";
+    message.image = [UIImage imageNamed:@"COD13"];
+    message.url = @"https://www.baidu.com";
+    message.mediaTagName = @"aaa";
+    message.contentType = TrochilusContentTypeWebPage;
     
     [self shareWithParameters:parameters];
 }
 
 - (void)shareAudio
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //网络音频
     
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:@"崔健"
                                             title:@"一无所有"
                                               url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
-                                     mediaTagName:nil
+                                     mediaTagName:@"aaa"
                                     messageAction:nil
-                                       thumbImage:[UIImage imageNamed:@"COD13"]
-                                            image:nil
-                                     musicFileURL:[NSURL URLWithString:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"]
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
+                                     musicFileURL:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
                                           extInfo:nil
                                          fileData:nil
+                                    fileExtension:nil
                                      emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeAudio
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeAudio];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"一无所有";
+    message.text = @"崔健";
+    message.image = [UIImage imageNamed:@"COD13"];
+    message.thumbImage = [UIImage imageNamed:@"COD13"];
+    message.url = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
+    message.mediaUrl = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
+    message.mediaTagName = @"aaa";
+    message.contentType = TrochilusContentTypeAudio;
+    
     [self shareWithParameters:parameters];
 }
 
 - (void)shareVideo
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //网络视频
     
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:@"视频"
                                             title:@"乔布斯"
                                               url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
                                      mediaTagName:nil
                                     messageAction:nil
-                                       thumbImage:[UIImage imageNamed:@"COD13"]
-                                            image:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
                                      musicFileURL:nil
                                           extInfo:nil
                                          fileData:nil
+                                    fileExtension:nil
                                      emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeVideo
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeVideo];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"乔布斯";
+    message.text = @"视频";
+    message.url = @"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html";
+    message.thumbImage = [UIImage imageNamed:@"COD13"];
+    message.contentType = TrochilusContentTypeVideo;
     [self shareWithParameters:parameters];
 }
 
 - (void)shareApp
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:@"222"
                                             title:@"App消息"
                                               url:@"http://www.mob.com"
                                      mediaTagName:nil
                                     messageAction:nil
-                                       thumbImage:[UIImage imageNamed:@"COD13"]
-                                            image:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
                                      musicFileURL:nil
                                           extInfo:@"<xml>extend info</xml>"
                                          fileData:[@"13232" dataUsingEncoding:NSUTF8StringEncoding]
+                                    fileExtension:nil
                                      emoticonData:nil
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeApp
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeApp];
+    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.title = @"App消息";
+    message.text = @"222";
+    message.url = @"http://www.mob.com";
+    message.thumbImage = [UIImage imageNamed:@"COD13"];
+    message.extInfo = @"<xml>extend info</xml>";
+    message.fileData = [@"13232" dataUsingEncoding:NSUTF8StringEncoding];
+    message.contentType = TrochilusContentTypeApp;
     [self shareWithParameters:parameters];
 }
 
 - (void)shareEmoticon
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //gif 或 普通格式图片
-    //平台定制
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilus_SetupWeChatParamsByText:nil
                                             title:nil
                                               url:nil
@@ -288,21 +309,23 @@
                                      musicFileURL:nil
                                           extInfo:nil
                                          fileData:nil
-                                     emoticonData:[[NSBundle mainBundle] pathForResource:@"res6" ofType:@"gif"]
-                              sourceFileExtension:nil
-                                   sourceFileData:nil
-                                             type:TrochilusContentTypeImage
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                    fileExtension:nil
+                                     emoticonData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"res6" ofType:@"gif"]]
+                                             type:TrochilusContentTypeImage];
+    //gif 或 普通格式图片
     
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.thumbImage = [UIImage imageNamed:@"COD13"];
+    message.emoticonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"res6" ofType:@"gif"]];
+    message.contentType = TrochilusContentTypeImage;
     [self shareWithParameters:parameters];
 }
 
 - (void)shareFile
 {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //平台定制
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
-                                            title:@"file"
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:nil
+                                            title:nil
                                               url:nil
                                      mediaTagName:nil
                                     messageAction:nil
@@ -310,13 +333,16 @@
                                             image:nil
                                      musicFileURL:nil
                                           extInfo:nil
-                                         fileData:nil
+                                         fileData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"cat" ofType:@"mp4"]]
+                                    fileExtension:@"mp4"
                                      emoticonData:nil
-                              sourceFileExtension:@"mp4"
-                                   sourceFileData:[[NSBundle mainBundle] pathForResource:@"cat" ofType:@"mp4"]
-                                             type:TrochilusContentTypeFile
-                               forPlatformSubType:TrochilusPlatformSubTypeWechatSession];
+                                             type:TrochilusContentTypeFile];
     
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.thumbImage = [UIImage imageNamed:@"COD13"];
+    message.fileExtension = @"mp4";
+    message.fileData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"cat" ofType:@"mp4"]];
+    message.contentType = TrochilusContentTypeFile;
     [self shareWithParameters:parameters];
 }
 
@@ -334,23 +360,26 @@
                                                             description:@"test MiniProgram"
                                                              thumbImage:thumbImage
                                                             hdImageData:thumbImage
-                                                        withShareTicket:YES miniProgramType:TrochilusMiniProgramTypeRelease];
+                                                        withShareTicket:YES
+                                                            contentType:TrochilusContentTypeMiniProgram
+                                                        miniProgramType:TrochilusMiniProgramTypeRelease];
     
-    //平台定制
-    //    [parameters TSetupWeChatParamsByTitle:@"MiniProgram"
-    //                                 description:@"test MiniProgram"
-    //                                  webpageUrl:[NSURL URLWithString:@"http://www.mob.com"]
-    //                                        path:@"/page/API/pages/share/share"
-    //                                  thumbImage:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
-    //                                    userName:@"gh_d43f693ca31f"
-    //                          forPlatformSubType:TPlatformSubTypeWechatSession];
-    
+    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
+    message.url = @"http://www.mob.com";
+    message.userName = @"gh_d43f693ca31f";
+    message.path = @"/page/API/pages/share/share";
+    message.title = @"MiniProgram";
+    message.text = @"test MiniProgram";
+    message.thumbImage = [UIImage imageWithContentsOfFile:thumbImageStr];
+//    message.hdImage = [UIImage imageWithContentsOfFile:thumbImageStr];
+    message.miniProgramType = TrochilusMiniProgramTypeRelease;
+    message.contentType = TrochilusContentTypeMiniProgram;
     [self shareWithParameters:parameters];
 }
 
 - (void)shareWithParameters:(NSMutableDictionary *)parameters
 {
-    if(parameters.count == 0){
+    if(parameters == nil) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
                                                             message:@"请先设置分享参数"
                                                            delegate:nil
