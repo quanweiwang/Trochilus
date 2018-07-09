@@ -31,25 +31,16 @@
     return NO;
 }
 
-- (void)setImage:(id)image {
-    
-    if ([image isKindOfClass:[NSURL class]]) {
-        
-        [self downloadImageWithUrl:image];
-        
-    }
-    else if ([image isKindOfClass:[NSString class]]) {
-        
-    }
-    else if ([image isKindOfClass:[UIImage class]]) {
-        _image = image;
-    }
-    
+- (BOOL)isNotEmpty:(NSArray*)attributes {
+    return YES;
 }
 
-- (void)downloadImageWithUrl:(NSURL *)url {
-    
-    
+- (NSString *)title {
+    return _title == nil ? @"" : _title;
+}
+
+- (NSString *)text {
+    return _text == nil ? @"" : _text;
 }
 
 @end

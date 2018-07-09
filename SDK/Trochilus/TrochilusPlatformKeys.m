@@ -33,8 +33,7 @@
 static TrochilusPlatformKeys* _instance = nil;
 
 #pragma mark- 单例模式
-+ (instancetype)sharedInstance
-{
++ (instancetype)sharedInstance {
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init] ;

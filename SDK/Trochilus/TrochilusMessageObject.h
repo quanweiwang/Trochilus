@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param contentType 分享类型
  @return YES or NO
  */
-- (BOOL)isEmptyWithContentType:(TrochilusContentType)contentType;
+-(BOOL)isNotEmpty:(NSArray*)attributes;
 
 @end
 

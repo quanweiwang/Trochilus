@@ -10,18 +10,18 @@
 
 @interface TrochilusPlatformKeys : NSObject
 
-@property (strong,nonatomic,readonly) NSString * qqAppId;   //QQ appId
-@property (strong,nonatomic,readonly) NSString * qqAppKey;  //QQ appKey
-@property (strong,nonatomic,readonly) NSString * qqAuthType;//QQ authType
-@property (assign,nonatomic,readonly) BOOL useTIM;  //QQ useTIM
+@property (nonatomic, readonly, strong) NSString * qqAppId;   //QQ appId
+@property (nonatomic, readonly, strong) NSString * qqAppKey;  //QQ appKey
+@property (nonatomic, readonly, strong) NSString * qqAuthType;//QQ authType
+@property (nonatomic, readonly, assign) BOOL useTIM;  //QQ useTIM
 
-@property (strong,nonatomic,readonly) NSString * wechatAppId; //Wechat appId
-@property (strong,nonatomic,readonly) NSString * wechatAppSecret; //Wechat appSecret
+@property (nonatomic, readonly, strong) NSString * wechatAppId; //Wechat appId
+@property (nonatomic, readonly, strong) NSString * wechatAppSecret; //Wechat appSecret
 
-@property (strong,nonatomic,readonly) NSString * weiboAppKey; //Sina WeiBo appId
-@property (strong,nonatomic,readonly) NSString * weiboAppSecret; //Sina WeiBo appSecret
-@property (strong,nonatomic,readonly) NSString * weiboRedirectUri; //Sina WeiBo redirectUri
-@property (strong,nonatomic,readonly) NSString * weiboAuthType; //Sina WeiBo authType
+@property (nonatomic, readonly, strong) NSString * weiboAppKey; //Sina WeiBo appId
+@property (nonatomic, readonly, strong) NSString * weiboAppSecret; //Sina WeiBo appSecret
+@property (nonatomic, readonly, strong) NSString * weiboRedirectUri; //Sina WeiBo redirectUri
+@property (nonatomic, readonly, strong) NSString * weiboAuthType; //Sina WeiBo authType
 
 + (instancetype)sharedInstance;
 
