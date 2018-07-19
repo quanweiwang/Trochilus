@@ -78,8 +78,8 @@ static TrochilusWeChatPlatform * _instance = nil;
     //判断有没有填写 appID 没填写不能分享
     if ([[TrochilusWeChatPlatform sharedInstance].appId length] == 0) {
         
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAppIdNotFound];
-        [TrochilusWeChatPlatform shareResponseWithState:TrochilusResponseStateFail error:error];
+        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAppKeyNotFound];
+        stateChangedHandler(TrochilusResponseStateFail,nil,error);
         
         return nil;
     }
@@ -88,7 +88,6 @@ static TrochilusWeChatPlatform * _instance = nil;
         [TrochilusWeChatPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
     }
     
-    //判断客户端是否安装
     if ([TrochilusWeChatPlatform isWeChatInstalled]) {
         
         NSDictionary * wechatDic;
@@ -188,10 +187,12 @@ static TrochilusWeChatPlatform * _instance = nil;
         [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusWeChatPlatform sharedInstance].appId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
         
         return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?supportcontentfromwx=8191",[TrochilusWeChatPlatform sharedInstance].appId];
+    
     }
     else {
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
-        [TrochilusWeChatPlatform shareResponseWithState:TrochilusResponseStateFail error:error];
+        
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboUninstalled];
+        [TrochilusWeChatPlatform shareResponseWithState:TrochilusResponseStateFail error:err];
         
     }
     
@@ -566,6 +567,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     [wechatDic setObject:@"0" forKey:@"returnFromApp"];
     
     return [wechatDic copy];
+
 }
 
 #pragma mark- 授权登录

@@ -38,6 +38,7 @@ static TrochilusQQPlatform * _instance = nil;
 
 #pragma mark- 单例模式
 + (instancetype)sharedInstance {
+    
     static dispatch_once_t onceToken ;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init] ;
@@ -52,7 +53,6 @@ static TrochilusQQPlatform * _instance = nil;
     [TrochilusQQPlatform sharedInstance].appId = parameters[@"appId"];
     [TrochilusQQPlatform sharedInstance].useTIM = [parameters[@"useTIM"] boolValue];
     
-    NSLog(@"%@",[TrochilusQQPlatform sharedInstance].appId = parameters[@"appId"]);
 }
 
 #pragma mark- 判断是否安装了客户端
@@ -90,17 +90,11 @@ static TrochilusQQPlatform * _instance = nil;
 }
 
 #pragma mark- 分享
+//分享到QQ好友
 + (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
                           parameter:(NSMutableDictionary *)parameters
                      onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if ([[TrochilusQQPlatform sharedInstance].appId length] == 0) {
-
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeQQAppIdNotFound];
-        stateChangedHandler(TrochilusResponseStateFail,nil,error);
-        return nil;
-    }
-
     if (stateChangedHandler) {
         [TrochilusQQPlatform sharedInstance].stateChangedHandler = stateChangedHandler;
     }
@@ -222,6 +216,7 @@ static TrochilusQQPlatform * _instance = nil;
         NSMutableString * qqAuthorize;
         
         if ([TrochilusQQPlatform sharedInstance].useTIM && [TrochilusQQPlatform isTIMInstalled]) {
+
             qqAuthorize = [[NSMutableString alloc] initWithString:@"timOpensdkSSoLogin://SSoLogin/"];
         }
         else {
@@ -338,6 +333,7 @@ static TrochilusQQPlatform * _instance = nil;
     else if ([url.scheme hasPrefix:@"tencent"]) {
         //QQ登录
         NSString * authorizeKey = [NSString stringWithFormat:@"com.tencent.tencent%@",[TrochilusQQPlatform sharedInstance].appId];
+
         NSDictionary * ret = [UIPasteboard trochilus_getPasteboard:authorizeKey encoding:TrochilusPboardEncodingKeyedArchiver];
         
         if (ret[@"user_cancelled"] && [ret[@"user_cancelled"] boolValue] == YES) {

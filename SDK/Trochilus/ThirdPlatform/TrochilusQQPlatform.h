@@ -36,7 +36,7 @@
  @return 构造好用于提交给QQ的字符串
  */
 + (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
-                          parameter:(NSDictionary *)parameter
+                          parameter:(NSMutableDictionary *)parameters
                      onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
