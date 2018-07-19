@@ -7,7 +7,7 @@
 //
 
 #import "NSMutableDictionary+TrochilusShare.h"
-#import "TrochilusMessageObject.h"
+#import "UIImage+Trochilus.h"
 
 @implementation NSMutableDictionary (TrochilusShare)
 #pragma mark- 通用分享参数
@@ -26,30 +26,10 @@
                           title:(NSString *)title
                            type:(TrochilusContentType)type {
     
-    //文本
-    if (text) {
-        [self setObject:text forKey:@"Text"];
-    }
-    
-    //图片
-    if (images) {
-        [self setObject:images forKey:@"Images"];
-    }
-    
-    //网页路径/应用路径
-    if (url) {
-        [self setObject:url forKey:@"URL"];
-    }
-    
-    //标题
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
-    
-    //分享类型
-    if (type) {
-        [self setObject:@(type) forKey:@"ContentType"];
-    }
+    [self setValue:text forKey:@"text"];
+    [self setValue:images forKey:@"images"];
+    [self setValue:title forKey:@"title"];
+    [self setValue:@(type) forKey:@"contentType"];
     
 }
 
@@ -61,144 +41,58 @@
  *  @param title           分享标题
  *  @param url             分享链接(如果分享类型为音频/视频时,应该传入音频/视频的网络URL地址)
  [特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
- *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Audio时生效
- *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Video时生效
- *  @param thumbImage      缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
- *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
+ *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Audio时生效
+ *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Video时生效
+ *  @param thumbImage      缩略图，可以为UIImage
+ *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
  QQ会采用首张图片，QZone则支持图片数组
  *  @param type            分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
- *  @param platformSubType 平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
+ *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeQZone或者TrochilusPlatformSubTypeQQFriend其中一个
  */
-- (void)trochilus_SetupQQParamsByText:(NSString *)text
-                       title:(NSString *)title
-                         url:(NSString *)url
-               audioFlashURL:(NSString *)audioFlashURL
-               videoFlashURL:(NSString *)videoFlashURL
-                  thumbImage:(id)thumbImage
-                      images:(id)images
-                        type:(TrochilusContentType)type
-          forPlatformSubType:(TrochilusPlatformType)platformSubType {
+- (void)trochilusSetQQParamsByText:(NSString *)text
+                             title:(NSString *)title
+                               url:(NSString *)url
+                     audioFlashURL:(NSString *)audioFlashURL
+                     videoFlashURL:(NSString *)videoFlashURL
+                        thumbImage:(UIImage *)thumbImage
+                            images:(id)images
+                              type:(TrochilusContentType)type
+                forPlatformSubType:(TrochilusPlatformType)platformSubType {
     
     //文本
-    if (text) {
-        [self setObject:text forKey:@"Text"];
-    }
+    [self setValue:text forKey:@"text"];
     
     //标题
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
+    [self setValue:title forKey:@"title"];
     
     //分享链接(如果分享类型为音频/视频时,应该传入音频/视频的网络URL地址)
     //[特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
-    if (url) {
-        [self setObject:url forKey:@"URL"];
+    [self setValue:url forKey:@"url"];
+    
+    if (type == TrochilusContentTypeAudio) {
+        //分享音频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Audio时生效
+        [self setValue:audioFlashURL forKey:@"audioFlashURL"];
+    }
+    else if (type == TrochilusContentTypeVideo) {
+        //分享视频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Video时生效
+        [self setValue:videoFlashURL forKey:@"videoFlashURL"];
     }
     
-    //分享音频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Audio时生效
-    if (audioFlashURL && platformSubType == TrochilusPlatformSubTypeQQFriend && type == TrochilusContentTypeAudio) {
-        [self setObject:audioFlashURL forKey:@"AudioFlashURL"];
+    //缩略图，可以为UIImage
+    if (thumbImage == nil) {
+        [self setValue:[self saveImages:images isThumbImage:YES] forKey:@"thumbImage"];
     }
+    else {
+        [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+    }
+    //图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage QQ会采用首张图片，QZone则支持图片数组
     
-    //分享视频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Video时生效
-    if (videoFlashURL && platformSubType == TrochilusPlatformSubTypeQQFriend && type == TrochilusContentTypeVideo) {
-        [self setObject:videoFlashURL forKey:@"VideoFlashURL"];
-    }
-    
-    //缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
-    if (thumbImage) {
-        [self setObject:thumbImage forKey:@"ThumbImage"];
-    }
-    
-    //图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImageQQ会采用首张图片，QZone则支持图片数组
-    if (images) {
-        [self setObject:images forKey:@"Images"];
-    }
+    [self setValue:[self saveImages:images isThumbImage:NO] forKey:@"images"];
     
     //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
-    if (type) {
-        [self setObject:@(type) forKey:@"ContentType"];
-    }
+    [self setValue:@(type) forKey:@"contentType"];
     
-    //平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
-    if (platformSubType) {
-        [self setObject:@(platformSubType) forKey:@"PlatformSubType"];
-    }
-    
-    
-}
-#pragma mark- QZone
-/**
- *  设置QQ分享参数
- *
- *  @param text            分享内容
- *  @param title           分享标题
- *  @param url             分享链接(如果分享类型为音频/视频时,应该传入音频/视频的网络URL地址)
- [特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
- *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Audio时生效
- *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Video时生效
- *  @param thumbImage      缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
- *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
- QQ会采用首张图片，QZone则支持图片数组
- *  @param type            分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
- *  @param platformSubType 平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
- */
-- (void)trochilus_SetupQZoneParamsByText:(NSString *)text
-                          title:(NSString *)title
-                            url:(NSURL *)url
-                  audioFlashURL:(NSURL *)audioFlashURL
-                  videoFlashURL:(NSURL *)videoFlashURL
-                     thumbImage:(id)thumbImage
-                         images:(id)images
-                           type:(TrochilusContentType)type
-             forPlatformSubType:(TrochilusPlatformType)platformSubType {
-    
-    //文本
-    if (text) {
-        [self setObject:text forKey:@"Text"];
-    }
-    
-    //标题
-    if (title) {
-        [self setObject:title forKey:@"Title"];
-    }
-    
-    //分享链接(如果分享类型为音频/视频时,应该传入音频/视频的网络URL地址)
-    //[特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
-    if (url) {
-        [self setObject:url forKey:@"URL"];
-    }
-    
-    //分享音频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Audio时生效
-    if (audioFlashURL && platformSubType == TrochilusPlatformSubTypeQQFriend && type == TrochilusContentTypeAudio) {
-        [self setObject:audioFlashURL forKey:@"AudioFlashURL"];
-    }
-    
-    //分享视频时缩略图播放源,仅平台子类型为TPlatformSubTypeQQFriend,且分享类型为Video时生效
-    if (videoFlashURL && platformSubType == TrochilusPlatformSubTypeQQFriend && type == TrochilusContentTypeVideo) {
-        [self setObject:videoFlashURL forKey:@"VideoFlashURL"];
-    }
-    
-    //缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
-    if (thumbImage) {
-        [self setObject:thumbImage forKey:@"ThumbImage"];
-    }
-    
-    //图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImageQQ会采用首张图片，QZone则支持图片数组
-    if (images) {
-        [self setObject:images forKey:@"Images"];
-    }
-    
-    //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
-    if (type) {
-        [self setObject:@(type) forKey:@"ContentType"];
-    }
-    
-    //平台子类型，只能传入TPlatformSubTypeQZone或者TPlatformSubTypeQQFriend其中一个
-    if (platformSubType) {
-        [self setObject:@(platformSubType) forKey:@"PlatformSubType"];
-    }
-    
+    [self setValue:@(platformSubType) forKey:@"platformSubType"];
     
 }
 
@@ -209,8 +103,8 @@
  *  @param text         文本
  *  @param title        标题
  *  @param url          分享链接
- *  @param thumbImage   缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
- *  @param image        图片，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
+ *  @param thumbImage   缩略图，可以为UIImage
+ *  @param image        图片，可以为UIImage
  *  @param musicFileURL 音乐文件链接地址
  *  @param extInfo      扩展信息
  *  @param fileData     文件数据，可以为NSData、UIImage、NSString、NSURL（文件路径）
@@ -241,7 +135,7 @@
                                       url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
                             messageAction:(NSString *)messageAction
-                               thumbImage:(id)thumbImage
+                               thumbImage:(UIImage *)thumbImage
                                     image:(id)image
                              musicFileURL:(NSString *)musicFileURL
                                   extInfo:(NSString *)extInfo
@@ -250,24 +144,19 @@
                              emoticonData:(id)emoticonData
                                      type:(TrochilusContentType)type {
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.text = text;
-    message.title = title;
-    message.url = url;
-    message.mediaTagName = mediaTagName;
-    message.messageAction = messageAction;
-    message.thumbImage = thumbImage;
-    message.image = image;
-    message.mediaUrl = musicFileURL;
-    message.extInfo = extInfo;
-    message.fileData = fileData;
-    message.emoticonData = emoticonData;
-    message.fileExtension = fileExtension;
-    message.emoticonData = emoticonData;
-    message.contentType = type;
-    
-    [self setObject:message forKey:@"TrochilusMessageObject"];
-
+    [self setValue:text forKey:@"text"];
+    [self setValue:title forKey:@"title"];
+    [self setValue:url forKey:@"url"];
+    [self setValue:mediaTagName forKey:@"mediaTagName"];
+    [self setValue:messageAction forKey:@"messageAction"];
+    [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+    [self setValue:[self saveImages:image isThumbImage:NO] forKey:@"image"];
+    [self setValue:musicFileURL forKey:@"musicFileURL"];
+    [self setValue:extInfo forKey:@"extInfo"];
+    [self setValue:fileData forKey:@"fileData"];
+    [self setValue:fileExtension forKey:@"fileExtension"];
+    [self setValue:emoticonData forKey:@"emoticonData"];
+    [self setValue:@(type) forKey:@"contentType"];
 }
 
 /**
@@ -294,20 +183,17 @@
                                                     contentType:(TrochilusContentType)contentType
                                                 miniProgramType:(TrochilusMiniProgramType)programType {
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    
-    message.url = webpageUrl;
-    message.userName = userName;
-    message.path = path;
-    message.title = title;
-    message.text = description;
-    message.thumbImage = thumbImage;
-    message.image = hdImageData;
-    message.withShareTicket = withShareTicket == YES ? @"1" : @"0";
-    message.miniProgramType = programType;
-    message.contentType = contentType;
-    
-    [self setObject:message forKey:@"TrochilusMessageObject"];
+    [self setValue:webpageUrl forKey:@"webpageUrl"];
+    [self setValue:userName forKey:@"userName"];
+    [self setValue:path forKey:@"path"];
+    [self setValue:title forKey:@"title"];
+    [self setValue:description forKey:@"description"];
+    [self setValue:thumbImage forKey:@"thumbImage"];
+    [self setValue:hdImageData forKey:@"hdImageData"];
+    [self setValue:@(withShareTicket) forKey:@"withShareTicket"];
+    [self setValue:@(contentType) forKey:@"contentType"];
+    [self setValue:@(programType) forKey:@"programType"];
+
 }
 
 #pragma mark- 新浪微博
@@ -325,132 +211,23 @@
  */
 - (void)trochilus_SetupSinaWeiboShareParamsByText:(NSString *)text
                                    title:(NSString *)title
-                                   image:(id)image
+                                   image:(UIImage *)image
                                      url:(NSString *)url
                                 latitude:(double)latitude
                                longitude:(double)longitude
                                 objectID:(NSString *)objectID
                                     type:(TrochilusContentType)type {
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.text = text;
-    message.title = title;
-    message.image = image;
-    message.url = url;
-    message.latitude = latitude;
-    message.longitude = longitude;
-    message.objectID = objectID;
-    message.contentType = type;
+    [self setValue:text forKey:@"text"];
+    [self setValue:title forKey:@"title"];
+    [self setValue:[self saveImages:image isThumbImage:NO] forKey:@"image"];
+    [self setValue:[self saveImages:image isThumbImage:YES] forKey:@"thumbImage"];
+    [self setValue:url forKey:@"url"];
+    [self setValue:@(latitude) forKey:@"latitude"];
+    [self setValue:@(longitude) forKey:@"longitude"];
+    [self setValue:objectID forKey:@"objectID"];
+    [self setValue:@(type) forKey:@"contentType"];
     
-    [self setObject:message forKey:@"TrochilusMessageObject"];
-    
-//    if (text) {
-//        [self setObject:text forKey:@"Text"];
-//    }
-//    
-//    if (title) {
-//        [self setObject:title forKey:@"Title"];
-//    }
-//    
-//    if (image) {
-//        [self setObject:image forKey:@"Images"];
-//    }
-//    
-//    if (url) {
-//        [self setObject:url forKey:@"URL"];
-//    }
-//    
-//    if (latitude) {
-//        [self setObject:@(latitude) forKey:@"Latitude"];
-//    }
-//    
-//    if (longitude) {
-//        [self setObject:@(longitude) forKey:@"Longitude"];
-//    }
-//    
-//    if (objectID) {
-//        [self setObject:objectID forKey:@"objectID"];
-//    }
-//    
-//    if (type) {
-//        [self setObject:@(type) forKey:@"ContentType"];
-//    }
-    
-}
-
-#pragma mark- 通过key获取Value
-//文本
-- (NSString *)trochilus_text {
-    
-    return [self objectForKey:@"Text"];
-}
-
-- (NSString *)trochilus_title {
-    
-    return [self objectForKey:@"Title"];
-}
-
-- (NSString *)trochilus_path {
-    
-    return [self objectForKey:@"Path"];
-}
-
-- (NSString *)trochilus_userName {
-    return [self objectForKey:@"UserName"];
-}
-
-- (NSString *)trochilus_url {
-    return [self objectForKey:@"URL"];
-}
-
-- (NSString *)trochilus_withShareTicket {
-    
-    return [self objectForKey:@"WithShareTicket"];
-}
-
-- (NSNumber *)trochilus_miniProgramType {
-    
-    return [self objectForKey:@"MiniProgramType"];
-}
-
-- (NSNumber *)trochilus_platformSubType {
-    return [self objectForKey:@"PlatformSubType"];
-}
-
-- (NSNumber *)trochilus_contentType {
-    return [self objectForKey:@"ContentType"];
-}
-
-- (NSString *)trochilus_mediaTagName {
-    return [self objectForKey:@"MediaTagName"];
-}
-
-- (id)trochilus_images {
-    return [self objectForKey:@"Images"];
-}
-
-- (id)trochilus_thumbImage {
-    return [self objectForKey:@"ThumbImage"];
-}
-
-- (NSString *)trochilus_extInfo {
-    return [self objectForKey:@"ExtInfo"];
-}
-
-- (id)trochilus_fileData {
-    return [self objectForKey:@"FileData"];
-}
-
-- (id)trochilus_sourceFileData {
-    return [self objectForKey:@"SourceFileData"];
-}
-
-- (NSString *)trochilus_sourceFileExtension {
-    return [self objectForKey:@"SourceFileExtension"];
-}
-
-- (id)trochilus_emoticonData {
-    return [self objectForKey:@"EmoticonData"];
 }
 
 +(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url {
@@ -472,6 +249,50 @@
         [queryStringDictionary setObject:range.length>0?[keyValuePair substringFromIndex:range.location+1]:@"" forKey:(range.length?[keyValuePair substringToIndex:range.location]:keyValuePair)];
     }
     return queryStringDictionary;
+}
+
+- (NSArray *)saveImages:(id)images isThumbImage:(BOOL)isThumbImage {
+    
+    NSMutableArray * array = [NSMutableArray array];
+    
+    if ([images isKindOfClass:[NSArray class]]) {
+        
+        if (isThumbImage) {
+            
+            NSData * imageData = UIImageJPEGRepresentation([UIImage compressImage:images[0] toByte:32768], 1.f);
+            [array addObject:imageData];
+        }
+        else {
+            for (id image in images) {
+                
+                @autoreleasepool {
+                    if ([image isKindOfClass:[UIImage class]]) {
+                        NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
+                        [array addObject:imageData];
+                    }
+                }
+            }
+        }
+        
+        return [array copy];
+    }
+    else if ([images isKindOfClass:[UIImage class]]) {
+        
+        if (isThumbImage) {
+            //压缩图
+            UIImage * compressImage = [UIImage compressImage:images toByte:32768];
+            NSData * imageData = UIImageJPEGRepresentation(compressImage, 1.f);
+            [array addObject:imageData];
+        }
+        else {
+            NSData * imageData = UIImageJPEGRepresentation(images, 1.f);
+            [array addObject:imageData];
+        }
+    
+        return [array copy];
+    }
+    
+    return nil;
 }
 
 @end

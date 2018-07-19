@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <Trochilus/Trochilus.h>
 #import "TrochilusDemoMacro.h"
+#import <objc/runtime.h>
 
 @interface AppDelegate ()
 
@@ -19,16 +20,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    NSArray * platforms = @[@(TrochilusPlatformTypeSinaWeibo),
-                           @(TrochilusPlatformTypeQQ),
-                           @(TrochilusPlatformTypeWechat)];
+    NSArray * platforms = @[
+                            @(TrochilusPlatformTypeSinaWeibo),
+                            @(TrochilusPlatformTypeQQ),
+                            @(TrochilusPlatformTypeWechat)
+                            ];
     
     [Trochilus registerPlatforms:platforms onConfiguration:^(TrochilusPlatformType platformType, NSMutableDictionary *appInfo) {
         
         switch (platformType) {
             case TrochilusPlatformTypeSinaWeibo:
                 
-                [appInfo trochilus_SetupSinaWeiboByAppKey:kSinaWeiboAppKey
+                [appInfo trochilusSetSinaWeiboByAppKey:kSinaWeiboAppKey
                                                 appSecret:kSinaWeiboAppSecret
                                               redirectUri:kSinaWeiboRedirectUri
                                                  authType:@""];
@@ -36,14 +39,14 @@
                 break;
             case TrochilusPlatformTypeQQ:
                 
-                [appInfo trochilus_SetupQQByAppId:kQQAppId
+                [appInfo trochilusSetQQByAppId:kQQAppId
                                            appKey:kQQAppKey
                                          authType:@""
                                            useTIM:NO];
                 break;
             case TrochilusPlatformTypeWechat:
                 
-                [appInfo trochilus_SetupWeChatByAppId:kWeChatAppId
+                [appInfo trochilusSetWeChatByAppId:kWeChatAppId
                                             appSecret:kWeChatAppSecret];
                 
                 break;

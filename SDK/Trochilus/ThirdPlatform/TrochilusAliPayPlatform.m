@@ -13,7 +13,7 @@
 
 @interface TrochilusAliPayPlatform ()
 
-@property (copy, nonatomic) TrochilusPayStateChangedHandler payStateChangedHandler;//支付
+@property (nonatomic,copy) TrochilusPayStateChangedHandler payStateChangedHandler;//支付
 
 @end
 

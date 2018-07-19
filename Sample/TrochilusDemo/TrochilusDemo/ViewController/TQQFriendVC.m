@@ -99,7 +99,7 @@
 - (void)shareText {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"222"
+    [parameters trochilusSetQQParamsByText:@"222"
                                         title:nil
                                           url:nil
                                 audioFlashURL:nil
@@ -116,7 +116,7 @@
 - (void)shareImage {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"222"
+    [parameters trochilusSetQQParamsByText:@"222"
                                         title:nil
                                           url:nil
                                 audioFlashURL:nil
@@ -133,9 +133,9 @@
 - (void)shareLink {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"Link Desc"
+    [parameters trochilusSetQQParamsByText:@"Link Desc"
                                         title:@"Title"
-                                          url:[NSURL URLWithString:@"http://www.hao123.com"]
+                                          url:@"http://www.hao123.com"
                                 audioFlashURL:nil
                                 videoFlashURL:nil
                                    thumbImage:[UIImage imageNamed:@"COD13"] //链接使用缩略图

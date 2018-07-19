@@ -16,14 +16,17 @@
 
 #import "TrochilusUser.h"
 //#import "TWebViewVC.h"
-#import "TrochilusPlatformKeys.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
-#import "TrochilusMessageObject.h"
 
 @interface TrochilusSinaWeiBoPlatform()
+
 @property (copy, nonatomic)TrochilusStateChangedHandler stateChangedHandler;
 @property (copy, nonatomic)TrochilusAuthorizeStateChangedHandler authorizeStateChangedHandler;
+
+@property (nonatomic, strong) NSString * appKey;
+@property (nonatomic, strong) NSString * appSecret;
+@property (nonatomic, strong) NSString * redirectUri;
 
 @end
 
@@ -42,6 +45,13 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
     return _instance ;
 }
 
++ (void)registerWithParameters:(NSDictionary *)parameters {
+    
+    [TrochilusSinaWeiBoPlatform sharedInstance].appKey = parameters[@"appKey"];
+    [TrochilusSinaWeiBoPlatform sharedInstance].appSecret = parameters[@"appSecret"];
+    [TrochilusSinaWeiBoPlatform sharedInstance].redirectUri = parameters[@"redirectUri"];
+}
+
 #pragma mark- 判断是否安装了客户端
 /**
  判断是否安装了微博
@@ -55,10 +65,10 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
 
 #pragma mark- 分享
 + (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
-                      parameter:(NSDictionary *)parameters
+                      parameter:(NSMutableDictionary *)parameters
                  onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
-    if ([[TrochilusPlatformKeys sharedInstance].weiboAppKey length] == 0) {
+    if ([[TrochilusSinaWeiBoPlatform sharedInstance].appKey length] == 0) {
         
         NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAppKeyNotFound];
         stateChangedHandler(TrochilusResponseStateFail,nil,error);
@@ -72,26 +82,24 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
     
     if ([TrochilusSinaWeiBoPlatform isSinaWeiBoInstalled]) {
         
-        TrochilusMessageObject * messageObject = [parameters objectForKey:@"TrochilusMessageObject"];
-        
         NSString * uuid = [[NSUUID UUID] UUIDString];
         
         NSDictionary * message = nil;
-        TrochilusContentType contentType = messageObject.contentType;
+        TrochilusContentType contentType = [parameters[@"contentType"] integerValue];
         
         if (contentType == TrochilusContentTypeText) {
             //文字分享
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : messageObject.text};
+                        @"text" : parameters[@"text"]};
         }
         else if (contentType == TrochilusContentTypeImage) {
             //图片 分享 貌似只能分享一张图片
-            UIImage * image = messageObject.image;
-            NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
+            
+            NSData * imageData = parameters[@"image"][0];
             
             NSDictionary * imageDataDic = @{@"imageData" : imageData};
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : messageObject.text,
+                        @"text" : parameters[@"text"],
                         @"imageObject" : imageDataDic};
         }
         else if (contentType == TrochilusContentTypeWebPage) {
@@ -101,17 +109,18 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
             NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970] * 1000;
             NSString * timeIntervalStr = [NSString stringWithFormat:@"%ld",(long)timeInterval];
             //缩略图
-            NSData * thumbnailData = UIImageJPEGRepresentation([UIImage compressImage:messageObject.image toByte:k32KB], 1.f);
+            
+            NSData * thumbnailData = parameters[@"thumbImage"][0];
             
             NSDictionary * mediaObject = @{@"__class" : @"WBWebpageObject",
-                                           @"description" : messageObject.text,
+                                           @"description" : parameters[@"text"],
                                            @"objectID" : timeIntervalStr,
                                            @"thumbnailData" : thumbnailData,
-                                           @"title" : messageObject.title,
-                                           @"webpageUrl" : messageObject.url
+                                           @"title" : parameters[@"title"],
+                                           @"webpageUrl" : parameters[@"url"]
                                            };
             message = @{@"__class" : @"WBMessageObject",
-                        @"text" : messageObject.text,
+                        @"text" : parameters[@"text"],
                         @"mediaObject" : mediaObject};
         }
         else {
@@ -139,7 +148,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         
         //这里还有个参数aid 不知道干嘛的
         //aid = "01AoDLw5e-GEgq4jjxUWmuYV2Cak7aCCqMZJzWVa5OCQ_MXPc."
-        NSDictionary * app = @{@"appKey" : [TrochilusPlatformKeys sharedInstance].weiboAppKey,
+        NSDictionary * app = @{@"appKey" : [TrochilusSinaWeiBoPlatform sharedInstance].appKey,
                                @"bundleID" : kCFBundleIdentifier,
                                @"aid" : @"01AoDLw5e-GEgq4jjxUWmuYV2Cak7aCCqMZJzWVa5OCQ_MXPc."};
         NSData * appData = [NSKeyedArchiver archivedDataWithRootObject:app];
@@ -171,14 +180,14 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
 + (NSMutableString *)authorizeWithSinaWeiBoPlatformSettings:(NSDictionary *)settings
                                              onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
-    if ([[TrochilusPlatformKeys sharedInstance].weiboAppKey length] == 0) {
+    if ([[TrochilusSinaWeiBoPlatform sharedInstance].appKey length] == 0) {
         
         NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAppKeyNotFound];
         stateChangedHandler(TrochilusResponseStateFail,nil,error);
         
         return nil;
     }
-    else if ([[TrochilusPlatformKeys sharedInstance].weiboRedirectUri length] == 0) {
+    else if ([[TrochilusSinaWeiBoPlatform sharedInstance].redirectUri length] == 0) {
         
         NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboRedirectUri];
         stateChangedHandler(TrochilusResponseStateFail,nil,error);
@@ -216,7 +225,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
     if ([authorizeType isEqualToString:@"SSO"]) {
         
         NSDictionary * transferObject = @{@"__class" : @"WBAuthorizeRequest",
-                                          @"redirectURI" : [TrochilusPlatformKeys sharedInstance].weiboRedirectUri,
+                                          @"redirectURI" : [TrochilusSinaWeiBoPlatform sharedInstance].redirectUri,
                                           @"requestID" : uuid
                                           };
         NSData * transferObjectData = [NSKeyedArchiver archivedDataWithRootObject:transferObject];
@@ -232,7 +241,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         NSData * userInfoData = [NSKeyedArchiver archivedDataWithRootObject:userInfo];
         NSDictionary * userInfoDic = @{@"userInfo" : userInfoData};
         
-        NSDictionary * app = @{@"appKey" : [TrochilusPlatformKeys sharedInstance].weiboAppKey,
+        NSDictionary * app = @{@"appKey" : [TrochilusSinaWeiBoPlatform sharedInstance].appKey,
                                @"bundleID" : kCFBundleIdentifier};
         NSData * appData = [NSKeyedArchiver archivedDataWithRootObject:app];
         NSDictionary * appDic = @{@"app" : appData};

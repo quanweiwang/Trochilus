@@ -11,6 +11,9 @@
 #ifndef TrochilusSysDefine_h
 #define TrochilusSysDefine_h
 
+#define PLATFORMNAME(name)\
+[NSString stringWithFormat:@"Trochilus%@Platform",name]
+
 #define k32KB 32768
 
 #define kWeChatSDKVer @"1.8.2"

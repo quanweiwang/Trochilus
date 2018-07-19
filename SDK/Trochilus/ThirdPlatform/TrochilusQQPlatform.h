@@ -13,6 +13,8 @@
 
 + (instancetype) sharedInstance;
 
++ (void)registerWithParameters:(NSDictionary *)parameters;
+
 /**
  判断是否安装了QQ
  
@@ -33,7 +35,9 @@
  @param stateChangedHandler 分享状态变更回调处理
  @return 构造好用于提交给QQ的字符串
  */
-+ (NSString *)shareWithQQPlatform:(NSMutableDictionary *)parameters platformSubType:(TrochilusPlatformType)platformSubType onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
++ (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
+                          parameter:(NSDictionary *)parameter
+                     onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
  *  分享平台授权

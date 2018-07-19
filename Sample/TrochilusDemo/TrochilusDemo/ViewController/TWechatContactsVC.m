@@ -146,10 +146,6 @@
                               emoticonData:nil
                                       type:TrochilusContentTypeText];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"222";
-    message.contentType = TrochilusContentTypeText;
-    
     [self shareWithParameters:parameters];
 }
 
@@ -174,11 +170,6 @@
                                      emoticonData:nil
                                              type:TrochilusContentTypeImage];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"222";
-    message.image = [UIImage imageNamed:@"COD13"];
-    message.contentType = TrochilusContentTypeImage;
-    
     [self shareWithParameters:parameters];
 }
 
@@ -199,13 +190,6 @@
                                     fileExtension:nil
                                      emoticonData:nil
                                              type:TrochilusContentTypeWebPage];
-    
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"222";
-    message.image = [UIImage imageNamed:@"COD13"];
-    message.url = @"https://www.baidu.com";
-    message.mediaTagName = @"aaa";
-    message.contentType = TrochilusContentTypeWebPage;
     
     [self shareWithParameters:parameters];
 }
@@ -228,16 +212,6 @@
                                      emoticonData:nil
                                              type:TrochilusContentTypeAudio];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"一无所有";
-    message.text = @"崔健";
-    message.image = [UIImage imageNamed:@"COD13"];
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.url = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
-    message.mediaUrl = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
-    message.mediaTagName = @"aaa";
-    message.contentType = TrochilusContentTypeAudio;
-    
     [self shareWithParameters:parameters];
 }
 
@@ -259,12 +233,6 @@
                                      emoticonData:nil
                                              type:TrochilusContentTypeVideo];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"乔布斯";
-    message.text = @"视频";
-    message.url = @"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html";
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.contentType = TrochilusContentTypeVideo;
     [self shareWithParameters:parameters];
 }
 
@@ -285,14 +253,6 @@
                                      emoticonData:nil
                                              type:TrochilusContentTypeApp];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"App消息";
-    message.text = @"222";
-    message.url = @"http://www.mob.com";
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.extInfo = @"<xml>extend info</xml>";
-    message.fileData = [@"13232" dataUsingEncoding:NSUTF8StringEncoding];
-    message.contentType = TrochilusContentTypeApp;
     [self shareWithParameters:parameters];
 }
 
@@ -312,12 +272,7 @@
                                     fileExtension:nil
                                      emoticonData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"res6" ofType:@"gif"]]
                                              type:TrochilusContentTypeImage];
-    //gif 或 普通格式图片
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.emoticonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"res6" ofType:@"gif"]];
-    message.contentType = TrochilusContentTypeImage;
     [self shareWithParameters:parameters];
 }
 
@@ -338,11 +293,6 @@
                                      emoticonData:nil
                                              type:TrochilusContentTypeFile];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.fileExtension = @"mp4";
-    message.fileData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"cat" ofType:@"mp4"]];
-    message.contentType = TrochilusContentTypeFile;
     [self shareWithParameters:parameters];
 }
 
@@ -364,16 +314,6 @@
                                                             contentType:TrochilusContentTypeMiniProgram
                                                         miniProgramType:TrochilusMiniProgramTypeRelease];
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.url = @"http://www.mob.com";
-    message.userName = @"gh_d43f693ca31f";
-    message.path = @"/page/API/pages/share/share";
-    message.title = @"MiniProgram";
-    message.text = @"test MiniProgram";
-    message.thumbImage = [UIImage imageWithContentsOfFile:thumbImageStr];
-//    message.hdImage = [UIImage imageWithContentsOfFile:thumbImageStr];
-    message.miniProgramType = TrochilusMiniProgramTypeRelease;
-    message.contentType = TrochilusContentTypeMiniProgram;
     [self shareWithParameters:parameters];
 }
 

@@ -82,7 +82,7 @@
 - (void)shareText {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"222"
+    [parameters trochilusSetQQParamsByText:@"222"
                                         title:nil
                                           url:nil
                                 audioFlashURL:nil
@@ -99,7 +99,7 @@
 - (void)shareImage {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"222"
+    [parameters trochilusSetQQParamsByText:@"222"
                                         title:nil
                                           url:nil
                                 audioFlashURL:nil
@@ -120,7 +120,7 @@
 - (void)shareLink {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupQQParamsByText:@"Link Desc"
+    [parameters trochilusSetQQParamsByText:@"Link Desc"
                                         title:@"Title"
                                           url:@"http://www.hao123.com"
                                 audioFlashURL:nil
@@ -144,7 +144,7 @@
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
         //iPad版本QQ 暂时未支持此功能
         //通用参数设置
-        [parameters trochilus_SetupQQParamsByText:nil
+        [parameters trochilusSetQQParamsByText:nil
                                             title:@"Title"
                                               url:assetURL.absoluteString
                                     audioFlashURL:nil

@@ -13,6 +13,8 @@
 
 + (instancetype)sharedInstance;
 
++ (void)registerWithParameters:(NSDictionary *)parameters;
+
 /**
  判断是否安装了微博
  

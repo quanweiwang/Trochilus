@@ -12,7 +12,6 @@
 #import "TrochilusWeChatPlatform.h"
 #import "TrochilusSinaWeiBoPlatform.h"
 #import "TrochilusAliPayPlatform.h"
-#import "TrochilusPlatformKeys.h"
 #import "TrochilusSysDefine.h"
 
 #import "NSMutableDictionary+TrochilusShare.h"
@@ -25,6 +24,7 @@
 @implementation Trochilus
 
 static Trochilus * _instance = nil;
+static NSMutableDictionary * key;
 
 #pragma mark- 单例模式
 + (instancetype)sharedInstance {
@@ -33,19 +33,6 @@ static Trochilus * _instance = nil;
     dispatch_once(&onceToken, ^{
         _instance = [[self alloc] init];
     });
-    return _instance;
-}
-
-+ (instancetype)allocWithZone:(struct _NSZone *)zone {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [super allocWithZone:zone];
-        
-    });
-    return _instance;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
     return _instance;
 }
 
@@ -66,11 +53,24 @@ static Trochilus * _instance = nil;
             configurationHandler([platformType integerValue],keys);
         }
         
+        for (NSString * key in keys.allKeys) {
+            
+            NSDictionary * dic = keys[key];
+            
+            Class class = NSClassFromString(PLATFORMNAME(key));
+            
+            SEL selector = NSSelectorFromString(@"registerWithParameters:");
+            
+            NSMethodSignature * methodSignature = [class methodSignatureForSelector:selector];
+            
+            NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+            [invocation setTarget:class];
+            [invocation setSelector:selector];
+            [invocation setArgument:&dic atIndex:2];
+            [invocation invoke];
+            
+        }
     }
-    
-}
-
-- (void)dealloc {
     
 }
 
@@ -82,12 +82,12 @@ static Trochilus * _instance = nil;
  @param parameters 分享平台参数
  @param stateChangedHandler 分享状态变更回调处理
  */
-+ (void)shareWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (void)shareWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     NSString *platformTypeName = [NSString stringWithFormat:@"PlatformType_%zi",platformType];
     NSString *platformName = [[NSBundle bundleForClass:[self class]] localizedStringForKey:platformTypeName value:platformTypeName table:@"Trochilus_Localizable"];
     
-    Class platformClass = NSClassFromString([NSString stringWithFormat:@"Trochilus%@Platform",platformName]);
+    Class platformClass = NSClassFromString(PLATFORMNAME(platformName));
     
     SEL selMethod = NSSelectorFromString(@"shareWithPlatformType:parameter:onStateChanged:");
     IMP imp = [platformClass methodForSelector:selMethod];

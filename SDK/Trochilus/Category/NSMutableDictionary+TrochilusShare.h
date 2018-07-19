@@ -15,7 +15,7 @@
  *  设置分享参数 通用分享
  *
  *  @param text     文本
- *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage。如: @"http://www.mob.com/images/logo_black.png" 或 @[@"http://www.mob.com/images/logo_black.png"]
+ *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
  *  @param url      网页路径/应用路径
  *  @param title    标题
  *  @param type     分享类型
@@ -35,18 +35,18 @@
  [特别说明:分享视频到QZone时,视频为网络视频,请传入视频网络URL地址;视频为本地视频的,请传入来源于手机系统相册的相关的Asset URL地址]
  *  @param audioFlashURL   分享音频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Audio时生效
  *  @param videoFlashURL   分享视频时缩略图播放源,仅平台子类型为TrochilusPlatformSubTypeQQFriend,且分享类型为Video时生效
- *  @param thumbImage      缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
- *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage
+ *  @param thumbImage      缩略图，可以为UIImage
+ *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
  QQ会采用首张图片，QZone则支持图片数组
  *  @param type            分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
  *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeQZone或者TrochilusPlatformSubTypeQQFriend其中一个
  */
-- (void)trochilus_SetupQQParamsByText:(NSString *)text
+- (void)trochilusSetQQParamsByText:(NSString *)text
                        title:(NSString *)title
                          url:(NSString *)url
                audioFlashURL:(NSString *)audioFlashURL
                videoFlashURL:(NSString *)videoFlashURL
-                  thumbImage:(id)thumbImage
+                  thumbImage:(UIImage *)thumbImage
                       images:(id)images
                         type:(TrochilusContentType)type
           forPlatformSubType:(TrochilusPlatformType)platformSubType;
@@ -57,8 +57,8 @@
  *  @param text         文本
  *  @param title        标题
  *  @param url          分享链接
- *  @param thumbImage   缩略图，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
- *  @param image        图片，可以为UIImage、NSString（图片路径）、NSURL（图片路径）
+ *  @param thumbImage   缩略图，可以为UIImage
+ *  @param image        图片，可以为UIImage
  *  @param musicFileURL 音乐文件链接地址
  *  @param extInfo      扩展信息
  *  @param fileData     文件数据，可以为NSData、UIImage、NSString、NSURL（文件路径）
@@ -135,34 +135,12 @@
  */
 - (void)trochilus_SetupSinaWeiboShareParamsByText:(NSString *)text
                                    title:(NSString *)title
-                                   image:(id)image
+                                   image:(UIImage *)image
                                      url:(NSString *)url
                                 latitude:(double)latitude
                                longitude:(double)longitude
                                 objectID:(NSString *)objectID
                                     type:(TrochilusContentType)type;
-
-- (NSString *)trochilus_text;
-- (NSString *)trochilus_title;
-- (NSString *)trochilus_url;
-- (NSString *)trochilus_mediaTagName;
-- (NSString *)trochilus_audioFlashURL;
-- (NSString *)trochilus_videoFlashURL;
-- (id )trochilus_thumbImage;
-- (id )trochilus_images;
-- (NSNumber *)trochilus_contentType;
-- (NSNumber *)trochilus_platformSubType;
-- (NSString *)trochilus_extInfo;
-- (id)trochilus_fileData;
-- (id)trochilus_emoticonData;
-- (NSString *)trochilus_sourceFileExtension;
-- (id)trochilus_sourceFileData;
-- (NSString *)trochilus_userName;
-- (NSString *)trochilus_path;
-- (NSString *)trochilus_descriptions;
-
-- (NSString *)trochilus_withShareTicket;
-- (NSNumber *)trochilus_miniProgramType;
 
 +(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url;
 

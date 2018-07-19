@@ -2,7 +2,7 @@
 //  UIImage+Trochilus.m
 //  Trochilus
 //
-//  Created by 王权伟 on 2018/6/27.
+//  Created by 王权伟 on 2018/7/17.
 //  Copyright © 2018年 王权伟. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 @implementation UIImage (Trochilus)
 
 + (UIImage *)compressImage:(UIImage *)image toByte:(NSUInteger)maxLength {
-    // Compress by quality
+    
     CGFloat compression = 1;
     NSData *data = UIImageJPEGRepresentation(image, compression);
     if (data.length < maxLength) return image;
@@ -43,10 +43,11 @@
         [resultImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
         resultImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        data = UIImageJPEGRepresentation(resultImage, 1);
+        data = UIImageJPEGRepresentation(resultImage, 1.f);
     }
     
     return resultImage;
+    
 }
 
 @end

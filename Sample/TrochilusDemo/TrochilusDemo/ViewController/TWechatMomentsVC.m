@@ -35,11 +35,23 @@
  */
 -(void)shareText
 {
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.text = @"222";
-    message.contentType = TrochilusContentTypeText;
     
-    [self shareWithParameters:message];
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"222"
+                                            title:nil
+                                              url:nil
+                                     mediaTagName:nil
+                                    messageAction:nil
+                                       thumbImage:nil
+                                            image:nil
+                                     musicFileURL:nil
+                                          extInfo:nil
+                                         fileData:nil
+                                    fileExtension:nil
+                                     emoticonData:nil
+                                             type:TrochilusContentTypeText];
+    
+    [self shareWithParameters:parameters];
 }
 
 /**
@@ -48,54 +60,88 @@
 - (void)shareImage
 {
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.text = @"Share SDK";
-    message.image = [UIImage imageNamed:@"COD13"];
-    message.contentType = TrochilusContentTypeImage;
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"222"
+                                            title:nil
+                                              url:nil
+                                     mediaTagName:nil
+                                    messageAction:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
+                                     musicFileURL:nil
+                                          extInfo:nil
+                                         fileData:nil
+                                    fileExtension:nil
+                                     emoticonData:nil
+                                             type:TrochilusContentTypeImage];
     
-    [self shareWithParameters:message];
+    [self shareWithParameters:parameters];
 }
 
 - (void)shareLink
 {
     
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"Share SDK";
-    message.text = @"Share SDK Link Desc";
-    message.url = @"https://www.mob.com";
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.contentType = TrochilusContentTypeWebPage;
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"222"
+                                            title:nil
+                                              url:@"https://www.baidu.com"
+                                     mediaTagName:@"aaa"
+                                    messageAction:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
+                                     musicFileURL:nil
+                                          extInfo:nil
+                                         fileData:nil
+                                    fileExtension:nil
+                                     emoticonData:nil
+                                             type:TrochilusContentTypeWebPage];
     
-    [self shareWithParameters:message];
+    [self shareWithParameters:parameters];
 }
 
 - (void)shareAudio
 {
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"一无所有";
-    message.text = @"崔健";
-    message.image = [UIImage imageNamed:@"COD13"];
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.url = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
-    message.mediaUrl = @"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT";
-    message.mediaTagName = @"aaa";
-    message.contentType = TrochilusContentTypeAudio;
     
-    [self shareWithParameters:message];
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"崔健"
+                                            title:@"一无所有"
+                                              url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
+                                     mediaTagName:@"aaa"
+                                    messageAction:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
+                                     musicFileURL:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
+                                          extInfo:nil
+                                         fileData:nil
+                                    fileExtension:nil
+                                     emoticonData:nil
+                                             type:TrochilusContentTypeAudio];
+    
+    [self shareWithParameters:parameters];
 }
 
 - (void)shareVideo
 {
-    TrochilusMessageObject * message = [TrochilusMessageObject messageObject];
-    message.title = @"乔布斯";
-    message.text = @"视频";
-    message.url = @"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html";
-    message.thumbImage = [UIImage imageNamed:@"COD13"];
-    message.contentType = TrochilusContentTypeVideo;
-    [self shareWithParameters:message];
+    
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    [parameters trochilus_SetupWeChatParamsByText:@"视频"
+                                            title:@"乔布斯"
+                                              url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
+                                     mediaTagName:nil
+                                    messageAction:nil
+                                       thumbImage:nil
+                                            image:[UIImage imageNamed:@"COD13"]
+                                     musicFileURL:nil
+                                          extInfo:nil
+                                         fileData:nil
+                                    fileExtension:nil
+                                     emoticonData:nil
+                                             type:TrochilusContentTypeVideo];
+    
+    [self shareWithParameters:parameters];
 }
 
-- (void)shareWithParameters:(TrochilusMessageObject *)parameters
+- (void)shareWithParameters:(NSMutableDictionary *)parameters
 {
     if(parameters == nil){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""

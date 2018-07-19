@@ -18,7 +18,7 @@
  *  @param authType       授权方式。值可以是：TAuthTypeSSO、TAuthTypeWeb、TAuthTypeBoth，分别代表SSO、网页授权、SSO＋网页授权。
  *  @param useTIM         是否优先使用TIM进行授权及分享
  */
-- (void)trochilus_SetupQQByAppId:(NSString *)appId
+- (void)trochilusSetQQByAppId:(NSString *)appId
                           appKey:(NSString *)appKey
                         authType:(NSString *)authType
                           useTIM:(BOOL)useTIM;
@@ -29,7 +29,7 @@
  *  @param appId      应用标识
  *  @param appSecret  应用密钥
  */
-- (void)trochilus_SetupWeChatByAppId:(NSString *)appId
+- (void)trochilusSetWeChatByAppId:(NSString *)appId
                            appSecret:(NSString *)appSecret;
 
 /**
@@ -40,7 +40,7 @@
  *  @param redirectUri  回调地址
  *  @param authType     授权方式。值可以是：TAuthTypeSSO、TAuthTypeWeb、TAuthTypeBoth，分别代表SSO、网页授权、SSO＋网页授权。
  */
-- (void)trochilus_SetupSinaWeiboByAppKey:(NSString *)appKey
+- (void)trochilusSetSinaWeiboByAppKey:(NSString *)appKey
                                appSecret:(NSString *)appSecret
                              redirectUri:(NSString *)redirectUri
                                 authType:(NSString *)authType;

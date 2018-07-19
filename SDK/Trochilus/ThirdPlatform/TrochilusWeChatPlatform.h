@@ -12,7 +12,9 @@
 
 @interface TrochilusWeChatPlatform : NSObject
 
-+(instancetype)sharedInstance;
++ (instancetype)sharedInstance;
+
++ (void)registerWithParameters:(NSDictionary *)parameters;
 
 /**
  判断是否安装了微信
@@ -30,7 +32,7 @@
  @return 构造好用于提交给微信的字符串
  */
 + (NSString *)shareWithPlatformType:(TrochilusPlatformType)platformType
-                          parameter:(NSDictionary *)parameter
+                          parameter:(NSMutableDictionary *)parameter
                      onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler;
 
 /**
