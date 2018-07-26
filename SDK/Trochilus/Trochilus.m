@@ -8,10 +8,6 @@
 
 #import "Trochilus.h"
 #import <UIKit/UIKit.h>
-#import "TrochilusQQPlatform.h"
-#import "TrochilusWeChatPlatform.h"
-#import "TrochilusSinaWeiBoPlatform.h"
-#import "TrochilusAliPayPlatform.h"
 #import "TrochilusSysDefine.h"
 
 #import "NSMutableDictionary+TrochilusShare.h"
@@ -61,13 +57,9 @@ static NSMutableDictionary * key;
             
             SEL selector = NSSelectorFromString(@"registerWithParameters:");
             
-            NSMethodSignature * methodSignature = [class methodSignatureForSelector:selector];
-            
-            NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
-            [invocation setTarget:class];
-            [invocation setSelector:selector];
-            [invocation setArgument:&dic atIndex:2];
-            [invocation invoke];
+            [self safePerformSelector:selector
+                                class:class
+                         platformType:TrochilusPlatformTypeUnknown, dic, nil];
             
         }
     }
@@ -82,7 +74,9 @@ static NSMutableDictionary * key;
  @param parameters 分享平台参数
  @param stateChangedHandler 分享状态变更回调处理
  */
-+ (void)shareWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
++ (void)shareWithPlatformType:(TrochilusPlatformType)platformType
+                   parameters:(NSMutableDictionary *)parameters
+               onStateChanged:(TrochilusStateChangedHandler)stateChangedHandler {
     
     NSString *platformTypeName = [NSString stringWithFormat:@"PlatformType_%zi",platformType];
     NSString *platformName = [[NSBundle bundleForClass:[self class]] localizedStringForKey:platformTypeName value:platformTypeName table:@"Trochilus_Localizable"];
@@ -90,14 +84,9 @@ static NSMutableDictionary * key;
     Class platformClass = NSClassFromString(PLATFORMNAME(platformName));
     
     SEL selMethod = NSSelectorFromString(@"shareWithPlatformType:parameter:onStateChanged:");
-    IMP imp = [platformClass methodForSelector:selMethod];
-    NSString *(*func)(id,SEL,TrochilusPlatformType,NSDictionary*,TrochilusStateChangedHandler) = (void *)imp;
     
-    NSString * shareUrl = @"";
+    NSString * shareUrl = [self safePerformSelector:selMethod class:platformClass platformType:platformType,parameters,stateChangedHandler, nil];
     
-    if ([platformClass respondsToSelector:selMethod]) {
-        shareUrl = platformClass? func(platformClass,selMethod,platformType,parameters,stateChangedHandler): @"";
-    }
     [Trochilus sendToURL:shareUrl];
 }
 
@@ -118,13 +107,9 @@ static NSMutableDictionary * key;
     
     Class platformClass = NSClassFromString([NSString stringWithFormat:@"Trochilus%@Platform",platformName]);
     
-    SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"authorizeWith%@PlatformSettings:onStateChanged:",platformName]);
-    IMP imp = [platformClass methodForSelector:selMethod];
-    NSString *(*func)(id,SEL,NSDictionary *,TrochilusAuthorizeStateChangedHandler) = (void *)imp;
-    NSString * authorizeUrl = @"";
-    if ([platformClass respondsToSelector:selMethod]) {
-        authorizeUrl = platformClass? func(platformClass,selMethod,settings,stateChangedHandler): nil;
-    }
+    SEL selMethod = NSSelectorFromString(@"authorizeWithPlatformSettings:onStateChanged:");
+    
+    NSString * authorizeUrl = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,settings,stateChangedHandler, nil];
     
     [Trochilus sendToURL:authorizeUrl];
 }
@@ -138,15 +123,21 @@ static NSMutableDictionary * key;
  */
 + (void)wechatPayWithParameters:(id)parameters onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
-    NSString * wechatPayInfo;
     
     //    if ([parameters isKindOfClass:[NSString class]]) {
     //        wechatPayInfo = [TWeChatPlatform payToWechatOrderString:parameters
     //                                                 onStateChanged:stateChangedHandler];
     //    }
     //    else if ([parameters isKindOfClass:[NSDictionary class]]) {
-    wechatPayInfo = [TrochilusWeChatPlatform payToWechatParameters:parameters
-                                            onStateChanged:stateChangedHandler];
+    
+    Class platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
+    SEL selMethod = NSSelectorFromString(@"payToWechatParameters:onStateChanged:");
+    
+    NSString * wechatPayInfo = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,parameters,stateChangedHandler, nil];
+
+    
+//    wechatPayInfo = [TrochilusWeChatPlatform payToWechatParameters:parameters
+//                                            onStateChanged:stateChangedHandler];
     //    }
     
     [Trochilus sendToURL:wechatPayInfo];
@@ -161,7 +152,10 @@ static NSMutableDictionary * key;
  */
 + (void)aLiPayWithUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
-    NSString * aliPayInfo = [TrochilusAliPayPlatform payWithUrlScheme:urlScheme orderString:orderString onStateChanged:stateChangedHandler];
+    Class platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
+    SEL selMethod = NSSelectorFromString(@"payWithUrlScheme:orderString:onStateChanged:");
+    
+    NSString * aliPayInfo = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,urlScheme,orderString,stateChangedHandler, nil];
     
     [Trochilus sendToURL:aliPayInfo];
 }
@@ -174,7 +168,10 @@ static NSMutableDictionary * key;
  */
 + (void)aliTipWithUrl:(NSString *)url {
     
-    NSString * awardInfo = [TrochilusAliPayPlatform tipWithUrl:url];
+    Class platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
+    SEL selMethod = NSSelectorFromString(@"tipWithUrl:");
+    
+    NSString * awardInfo = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];;
     
     [Trochilus sendToURL:awardInfo];
 }
@@ -191,18 +188,29 @@ static NSMutableDictionary * key;
 #pragma mark- 第三方平台回调
 + (BOOL)handleURL:(NSURL *)url {
     
+    Class platformClass;
+    SEL selMethod;
+    
     if ([url.scheme hasPrefix:@"QQ"] || [url.scheme hasPrefix:@"tencent"]) {
         //QQ 为分享 tencent为QQ登录
-        return [TrochilusQQPlatform handleUrlWithQQ:url];
+        platformClass = NSClassFromString(@"TrochilusQQPlatform");
+        selMethod = NSSelectorFromString(@"handleUrlWithQQ:");
+        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
     }
     else if ([url.scheme hasPrefix:@"wx"]) {
-        return [TrochilusWeChatPlatform handleUrlWithWeChat:url];
+        platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
+        selMethod = NSSelectorFromString(@"handleUrlWithWeChat:");
+        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
     }
     else if ([url.scheme hasPrefix:@"wb"]) {
-        return [TrochilusSinaWeiBoPlatform handleUrlWithSinaWeiBo:url];
+        platformClass = NSClassFromString(@"TrochilusSinaWeiBoPlatform");
+        selMethod = NSSelectorFromString(@"handleUrlWithSinaWeiBo:");
+        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
     }
     else if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
-        return [TrochilusAliPayPlatform handleUrlWithAliPay:url];
+        platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
+        selMethod = NSSelectorFromString(@"handleUrlWithAliPay:");
+        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
     }
     return NO;
 }
@@ -216,12 +224,90 @@ static NSMutableDictionary * key;
     Class platformClass = NSClassFromString([NSString stringWithFormat:@"Trochilus%@Platform",platformName]);
     
     SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"is%@Installed",platformName]);
-    IMP imp = [platformClass methodForSelector:selMethod];
-    BOOL (*func)(id,SEL) = (void *)imp;
-    BOOL isInstalled = platformClass? func(platformClass,selMethod): NO;
+    
+    BOOL isInstalled = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown, nil];
+    
     return isInstalled;
 }
 
+#pragma mark 万能跳转
++ (id)safePerformSelector:(SEL)action class:(Class)target platformType:(TrochilusPlatformType)platformType, ... NS_REQUIRES_NIL_TERMINATION
+{
+    NSMethodSignature * methodSignature = [target methodSignatureForSelector:action];
+    if(methodSignature == nil) {
+        return nil;
+    }
+    
+    const char* retType = [methodSignature methodReturnType];
+    
+    NSInteger i = 2;
+    
+    NSInvocation * invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+    [invocation setSelector:action];
+    [invocation setTarget:target];
+    
+    //- (void)setArgument:(void *)argumentLocation atIndex:(NSInteger)idx
+    //参数顺序要与实际方法参数顺序一致
+    
+    if (platformType != TrochilusPlatformTypeUnknown) {
+        [invocation setArgument:&platformType atIndex:i];
+        i = i + 1;
+    }
+    
+    // 定义一个指向个数可变的参数列表指针；
+    va_list args;
+    // 用于存放取出的参数
+    id arg;
+    // 初始化变量刚定义的va_list变量，这个宏的第二个参数是第一个可变参数的前一个参数，是一个固定的参数
+    //va_argtype绝对不能为以下类型：
+    //——char、signed char、unsigned char
+    //——short、unsigned short
+    //——signed short、short int、signed short int、unsigned short int
+    //——float
+    va_start(args, platformType);
+    // 遍历全部参数 va_arg返回可变的参数(a_arg的第二个参数是你要返回的参数的类型)
+    while ((arg = va_arg(args, id))) {
+        [invocation setArgument:&arg atIndex:i];
+        i = i + 1;
+    }
+    
+    //防止参数被释放
+//    [invocation retainArguments];
+    [invocation invoke];
+    
+    // 清空参数列表，并置参数指针args无效
+    va_end(args);
+    
+    if (strcmp(retType, @encode(void)) == 0) {
+        return nil;
+    }
+    else if (strcmp(retType, @encode(NSInteger)) == 0) {
+        NSInteger result = 0;
+        [invocation getReturnValue:&result];
+        return @(result);
+    }
+    else if (strcmp(retType, @encode(BOOL)) == 0) {
+        BOOL result = 0;
+        [invocation getReturnValue:&result];
+        return @(result);
+    }
+    else if (strcmp(retType, @encode(CGFloat)) == 0) {
+        CGFloat result = 0;
+        [invocation getReturnValue:&result];
+        return @(result);
+    }
+    else if (strcmp(retType, @encode(NSUInteger)) == 0) {
+        NSUInteger result = 0;
+        [invocation getReturnValue:&result];
+        return @(result);
+    }
+    else {
+        //防止被释放
+        __autoreleasing id result;
+        [invocation getReturnValue:&result];
+        return result;
+    }
+}
 @end
 
 

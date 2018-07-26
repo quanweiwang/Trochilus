@@ -571,7 +571,7 @@ static TrochilusWeChatPlatform * _instance = nil;
 }
 
 #pragma mark- 授权登录
-+ (NSMutableString *)authorizeWithWeChatPlatformSettings:(NSDictionary *)settings
++ (NSMutableString *)authorizeWithPlatformSettings:(NSDictionary *)settings
                                           onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusWeChatPlatform sharedInstance].appId length] == 0) {

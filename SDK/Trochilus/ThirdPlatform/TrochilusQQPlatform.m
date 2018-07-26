@@ -164,8 +164,8 @@ static TrochilusQQPlatform * _instance = nil;
 }
 
 #pragma mark- 授权登录
-+ (NSMutableString *)authorizeWithQQPlatformSettings:(NSDictionary *)settings
-                                      onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
++ (NSMutableString *)authorizeWithPlatformSettings:(NSDictionary *)settings
+                                    onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusQQPlatform sharedInstance].appId length] == 0) {
         
@@ -342,7 +342,7 @@ static TrochilusQQPlatform * _instance = nil;
         }
         else if (ret[@"ret"]&&[ret[@"ret"] intValue]==0) {
             //授权成功
-            __block TrochilusUser * userInfo = [[TrochilusUser alloc] init];
+            TrochilusUser * userInfo = [[TrochilusUser alloc] init];
             userInfo.accessToken = ret[@"access_token"];
             userInfo.openid = ret[@"openid"];
             

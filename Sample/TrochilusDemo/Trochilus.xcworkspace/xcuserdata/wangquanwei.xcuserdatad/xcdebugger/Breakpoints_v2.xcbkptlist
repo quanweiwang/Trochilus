@@ -4,69 +4,6 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../SDK/Trochilus/ThirdPlatform/TrochilusWeChatPlatform.m"
-            timestampString = "553700592.181157"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
-            landmarkName = "TrochilusWeChatPlatform"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__56+[TrochilusWeChatPlatform getOpenIdToCode:appId:secret:]_block_invoke_2"
-                  moduleName = "Trochilus"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wangquanwei/Documents/data/Trochilus/SDK/Trochilus/ThirdPlatform/TrochilusWeChatPlatform.m"
-                  timestampString = "553700592.386557"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "670"
-                  endingLineNumber = "670"
-                  offsetFromSymbolStart = "616">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__56+[TrochilusWeChatPlatform getOpenIdToCode:appId:secret:]_block_invoke_3"
-                  moduleName = "Trochilus"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wangquanwei/Documents/data/Trochilus/SDK/Trochilus/ThirdPlatform/TrochilusWeChatPlatform.m"
-                  timestampString = "553700592.3901139"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "670"
-                  endingLineNumber = "670"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.295"
-                  moduleName = "Trochilus"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wangquanwei/Documents/data/Trochilus/SDK/Trochilus/ThirdPlatform/TrochilusWeChatPlatform.m"
-                  timestampString = "553700592.3936549"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "670"
-                  endingLineNumber = "670"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"

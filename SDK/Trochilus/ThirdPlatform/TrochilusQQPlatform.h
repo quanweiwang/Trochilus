@@ -46,7 +46,7 @@
  *   Scopes:http://wiki.open.qq.com/wiki/%E3%80%90QQ%E7%99%BB%E5%BD%95%E3%80%91API%E6%96%87%E6%A1%A3
  *  @param stateChangedHandler 授权状态变更回调处理
  */
-+ (NSMutableString *)authorizeWithQQPlatformSettings:(NSDictionary *)settings
++ (NSMutableString *)authorizeWithPlatformSettings:(NSDictionary *)settings
                                       onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler;
 
 
