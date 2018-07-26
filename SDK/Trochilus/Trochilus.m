@@ -225,9 +225,9 @@ static NSMutableDictionary * key;
     
     SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"is%@Installed",platformName]);
     
-    BOOL isInstalled = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown, nil];
+    NSNumber * isInstalled = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown, nil];
     
-    return isInstalled;
+    return [isInstalled boolValue];
 }
 
 #pragma mark 万能跳转
