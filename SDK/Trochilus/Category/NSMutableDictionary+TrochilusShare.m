@@ -20,7 +20,7 @@
  *  @param title    标题
  *  @param type     分享类型
  */
-- (void)trochilus_SetupShareParamsByText:(NSString *)text
+- (void)trochilusSetShareParamsByText:(NSString *)text
                          images:(id)images
                             url:(NSURL *)url
                           title:(NSString *)title
@@ -130,7 +130,7 @@
  *  分享视频时：
  *  设置type为TrochilusContentTypeVideo，并设置text、title、url参数
  */
-- (void)trochilus_SetupWeChatParamsByText:(NSString *)text
+- (void)trochilusSetWeChatParamsByText:(NSString *)text
                                     title:(NSString *)title
                                       url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
@@ -172,7 +172,7 @@
  @param withShareTicket 是否使用带 shareTicket 的转发
  @param programType 分享小程序的版本（0-正式，1-开发，2-体验）
  */
-- (void)trochilus_SetupWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
+- (void)trochilusSetWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
                                                        userName:(NSString *)userName
                                                            path:(NSString *)path
                                                           title:(NSString *)title
@@ -209,7 +209,7 @@
  *  @param objectID  对象ID，标识系统内内容唯一性，应传入系统中分享内容的唯一标识，没有时可以传入nil
  *  @param type      分享类型，仅支持Text、Image、WebPage（客户端分享时）类型
  */
-- (void)trochilus_SetupSinaWeiboShareParamsByText:(NSString *)text
+- (void)trochilusSetSinaWeiboShareParamsByText:(NSString *)text
                                    title:(NSString *)title
                                    image:(UIImage *)image
                                      url:(NSString *)url
@@ -228,27 +228,6 @@
     [self setValue:objectID forKey:@"objectID"];
     [self setValue:@(type) forKey:@"contentType"];
     
-}
-
-+(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url {
-    
-    
-    NSString * urlString = [[url query] isEqualToString:@""] ? [url absoluteString] : [url query];
-    
-    //QQ 网页授权返回url格式有# 所以要处理下
-    //auth://www.qq.com?#access_token=68656BB22C0699511CE047EAF2624619&expires_in=7776000&openid=039015BD8F609BD51FFF4B820B50FC50&pay_token=BC389EC1E6B05EFB82A9AA996217826E&state=test&ret=0&pf=openmobile_ios&pfkey=aa3cb964950d309e47ad8c751123f11f&auth_time=1499929922100&page_type=1
-    urlString = [urlString stringByReplacingOccurrencesOfString:@"auth://www.qq.com?#" withString:@""];
-    
-    NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
-    
-    NSArray *urlComponents = [urlString componentsSeparatedByString:@"&"];
-    
-    for (NSString *keyValuePair in urlComponents)
-    {
-        NSRange range=[keyValuePair rangeOfString:@"="];
-        [queryStringDictionary setObject:range.length>0?[keyValuePair substringFromIndex:range.location+1]:@"" forKey:(range.length?[keyValuePair substringToIndex:range.location]:keyValuePair)];
-    }
-    return queryStringDictionary;
 }
 
 - (NSArray *)saveImages:(id)images isThumbImage:(BOOL)isThumbImage {

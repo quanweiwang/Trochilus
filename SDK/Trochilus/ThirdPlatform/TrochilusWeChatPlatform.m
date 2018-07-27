@@ -13,10 +13,12 @@
 #import "TrochilusWeChatPlatform.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
+#import "TrochilusNetWorking.h"
 
 #import "UIPasteboard+Trochilus.h"
 #import "NSMutableDictionary+TrochilusShare.h"
 #import "UIImage+Trochilus.h"
+#import "NSMutableDictionary+Trochilus.h"
 
 @interface TrochilusWeChatPlatform ()
 
@@ -184,7 +186,7 @@ static TrochilusWeChatPlatform * _instance = nil;
             return nil;
         }
         
-        [UIPasteboard trochilus_setPasteboard:@"content" value:@{[TrochilusWeChatPlatform sharedInstance].appId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
+        [UIPasteboard trochilusSetPasteboard:@"content" value:@{[TrochilusWeChatPlatform sharedInstance].appId : wechatDic} encoding:TrochilusPboardEncodingPropertyListSerialization];
         
         return [NSString stringWithFormat:@"weixin://app/%@/sendreq/?supportcontentfromwx=8191",[TrochilusWeChatPlatform sharedInstance].appId];
     
@@ -571,7 +573,7 @@ static TrochilusWeChatPlatform * _instance = nil;
 }
 
 #pragma mark- 授权登录
-+ (NSMutableString *)authorizeWithPlatformSettings:(NSDictionary *)settings
++ (NSMutableString *)authorizeWithPlatformSettings:(NSString *)settings
                                           onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusWeChatPlatform sharedInstance].appId length] == 0) {
@@ -596,12 +598,9 @@ static TrochilusWeChatPlatform * _instance = nil;
     if ([TrochilusWeChatPlatform isWeChatInstalled]) {
         
         //获取setting参数 用户有配置就用用户的，没配置就默认
-        NSString * scopes = @"snsapi_userinfo";
-        if (settings && settings[@"TAuthSettingKeyScopes"] != nil) {
-            if ([settings[@"TAuthSettingKeyScopes"] isKindOfClass:[NSArray class]]) {
-                //如果格式不对也不处理，使用默认
-                scopes = [(NSArray *)settings[@"TAuthSettingKeyScopes"] componentsJoinedByString:@","];
-            }
+        NSString * scopes;
+        if ([settings length] == 0) {
+            scopes = @"snsapi_userinfo";
         }
         
         //    weixin://app/wx4868b35061f87885/auth/?scope=snsapi_userinfo&state=1499220438
@@ -632,107 +631,68 @@ static TrochilusWeChatPlatform * _instance = nil;
     
     NSString * url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",appId,secret,code];
     
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    request.HTTPMethod = @"Get";
-    request.timeoutInterval = 20.5f;
-    request.URL = [NSURL URLWithString:url];
-    
-    NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [TrochilusNetWorking getWithUrl:url success:^(id  _Nonnull responseObj) {
         
-        if (error == nil) {
-            
-            NSDictionary * userInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            
-            if (userInfo[@"errcode"] != nil) {
-                //失败
-                NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAuthorizeFail userInfo:userInfo];
-                
-                [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
-                
-            }
-            else {
-                
-                TrochilusUser * user = [[TrochilusUser alloc] init];
-                user.accessToken = userInfo[@"access_token"];
-                user.unionId = userInfo[@"unionid"];
-                user.uid = userInfo[@"unionid"];
-                user.openid = userInfo[@"openid"];
-                user.refreshToken = userInfo[@"refresh_token"];
-                
-                [TrochilusWeChatPlatform geTrochilusUserInfoToWechatAccessToken:user.accessToken openid:user.openid completion:^(NSDictionary *userInfoDic) {
-                    
-                    user.originalResponse = userInfoDic;
-                    user.name = userInfoDic[@"nickname"];
-                    user.iconurl = userInfoDic[@"headimgurl"];
-                    user.unionGender = [userInfoDic[@"sex"] integerValue] == 1 ? @"男" : @"女";
-                    user.gender = [NSString stringWithFormat:@"%ld",[userInfoDic[@"sex"] integerValue]];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:user error:nil];
-                    });
-                }];
-            }
-            
-            NSLog(@"%@",userInfo);
+        if (responseObj[@"errcode"]) {
+            //失败
+            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAuthorizeFail userInfo:responseObj];
+
+            [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
             
         }
         else {
             
-            //授权失败
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
-            [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
-            
+            [TrochilusWeChatPlatform getUserInfoToWechatAccessToken:responseObj[@"access_token"] openid:responseObj[@"openid"]];
         }
         
+    } failure:^(NSError * _Nonnull error) {
+        
+        //授权失败
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
+        [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
+        
     }];
-    [task resume];
     
 }
 
 //获取微信用户信息
-+ (void)geTrochilusUserInfoToWechatAccessToken:(NSString *)accessToken openid:(NSString *)openid completion:(void (^ __nullable)(NSDictionary * userInfoDic))completion {
++ (void)getUserInfoToWechatAccessToken:(NSString *)accessToken openid:(NSString *)openid {
     
     //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
     NSString * url = [NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@&lang=zh_CN",accessToken,openid];
     
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    request.HTTPMethod = @"Get";
-    request.timeoutInterval = 20.5f;
-    request.URL = [NSURL URLWithString:url];
-    
-    NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if (error == nil) {
-            
-            NSDictionary * userInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            
-            if (userInfo[@"errcode"] != nil) {
-                //失败
-                
-                NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:userInfo];
-                [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
-                
-            }
-            else{
-                //成功
-                
-                if (completion) {
-                    completion(userInfo);
-                }
-                
-            }
-        }
-        else {
+    [TrochilusNetWorking getWithUrl:url success:^(id  _Nonnull responseObj) {
+       
+        if (responseObj[@"errcode"]) {
             //失败
             
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
+            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:responseObj];
             [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
             
         }
+        else{
+            //成功
+            TrochilusUser * user = [[TrochilusUser alloc] init];
+            user.accessToken = accessToken;
+            user.unionId = responseObj[@"unionid"];
+            user.uid = responseObj[@"unionid"];
+            user.openid = responseObj[@"openid"];
+            user.refreshToken = responseObj[@"refresh_token"];
+            user.originalResponse = responseObj;
+            user.name = responseObj[@"nickname"];
+            user.iconurl = responseObj[@"headimgurl"];
+            user.unionGender = [responseObj[@"sex"] integerValue] == 1 ? @"男" : @"女";
+            user.gender = [NSString stringWithFormat:@"%ld",[responseObj[@"sex"] integerValue]];
+            
+            [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:user error:nil];
+        }
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
+        [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
         
     }];
-    [task resume];
     
 }
 
@@ -802,14 +762,23 @@ static TrochilusWeChatPlatform * _instance = nil;
         
         if ([url.absoluteString rangeOfString:@"://oauth"].location != NSNotFound) {
             //微信登录
-            NSDictionary * wechat = [NSMutableDictionary trochilus_dictionaryWithUrl:url];
+            NSDictionary * wechat = [NSMutableDictionary trochilusDictionaryWithUrl:url];
             
-            [TrochilusWeChatPlatform getOpenIdToCode:wechat[@"code"] appId:[TrochilusWeChatPlatform sharedInstance].appId secret:[TrochilusWeChatPlatform sharedInstance].appSecret];
+            if ([wechat[@"ErrCode"] integerValue] == 0) {
+                //用户同意
+                [TrochilusWeChatPlatform getOpenIdToCode:wechat[@"code"] appId:[TrochilusWeChatPlatform sharedInstance].appId secret:[TrochilusWeChatPlatform sharedInstance].appSecret];
+            }
+            else if ([wechat[@"ErrCode"] integerValue] == -4) {
+                //用户拒绝授权
+            }
+            else if ([wechat[@"ErrCode"] integerValue] == -2) {
+                //用户取消
+            }
             
         }
         else if ([url.absoluteString rangeOfString:@"://pay/"].location != NSNotFound) {
             //微信支付
-            NSDictionary * wechat = [NSMutableDictionary trochilus_dictionaryWithUrl:url];
+            NSDictionary * wechat = [NSMutableDictionary trochilusDictionaryWithUrl:url];
             if ([wechat[@"ret"] integerValue] == 0) {
                 //支付成功
                 if ([TrochilusWeChatPlatform sharedInstance].payStateChangedHandler) {

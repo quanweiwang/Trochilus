@@ -16,7 +16,7 @@
  @param string base64编码前的字符串
  @return base64编码后的字符串
  */
-+ (NSString *)trochilus_base64Encode:(NSString *)string;
++ (NSString *)trochilusBase64Encode:(NSString *)string;
 
 /**
  还原base64编码的字符串
@@ -24,15 +24,15 @@
  @param string base64编码的字符串
  @return base64编码前的字符串
  */
-+ (NSString *)trochilus_base64Decode:(NSString *)string;
++ (NSString *)trochilusBase64Decode:(NSString *)string;
 
-+ (NSString *)trochilus_urlDecode:(NSString*)input;
++ (NSString *)trochilusUrlDecode:(NSString*)input;
 
 /**
  获取设备型号
 
  @return 例如 iphone8,2
  */
-+ (NSString*)trochilus_deviceModel;
++ (NSString*)trochilusDeviceModel;
 
 @end

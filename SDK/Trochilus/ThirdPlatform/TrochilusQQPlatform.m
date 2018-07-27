@@ -19,6 +19,7 @@
 #import "TrochilusUser.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
+#import "TrochilusNetWorking.h"
 
 @interface TrochilusQQPlatform ()
 
@@ -118,7 +119,7 @@ static TrochilusQQPlatform * _instance = nil;
         else {
             qqInfo = [[NSMutableString alloc] initWithString:@"mqqapi://share/to_fri?thirdAppDisplayName="];
         }
-        [qqInfo appendString:[NSString trochilus_base64Encode:kCFBundleDisplayName]];
+        [qqInfo appendString:[NSString trochilusBase64Encode:kCFBundleDisplayName]];
         [qqInfo appendString:@"&shareType=0"];
         [qqInfo appendFormat:@"&file_type=%@",file_type];
         [qqInfo appendFormat:@"&callback_name=%@",[NSString stringWithFormat:@"QQ%08llx",[[TrochilusQQPlatform sharedInstance].appId longLongValue]]];
@@ -246,7 +247,7 @@ static TrochilusQQPlatform * _instance = nil;
                                           @"status_version" : systemVersionArray[0]
                                           };
         
-        [UIPasteboard trochilus_setPasteboard:pasteboardKey value:qqAuthorizeDic encoding:TrochilusPboardEncodingKeyedArchiver];
+        [UIPasteboard trochilusSetPasteboard:pasteboardKey value:qqAuthorizeDic encoding:TrochilusPboardEncodingKeyedArchiver];
         
         return qqAuthorize;
     }
@@ -267,39 +268,38 @@ static TrochilusQQPlatform * _instance = nil;
 }
 
 //获取QQ用户信息
-+ (void)geTrochilusUserInfoToQQAccessToken:(NSString *)accessToken oauthConsumerKey:(NSString *)oauthConsumerKey openid:(NSString *)openid completion:(void (^ __nullable)(NSDictionary *))completion {
++ (void)getUserInfoToQQAccessToken:(NSString *)accessToken
+                  oauthConsumerKey:(NSString *)oauthConsumerKey
+                            openid:(NSString *)openid {
     
     //用户信息
     //https://graph.qq.com/user/get_user_info?access_token=CFFAB99218D0B19A89CCFE0D8B547267&oauth_consumer_key=100371282&openid=5E8B2C0C051A6B48F8665CF811756930
     
     NSString * url = [NSString stringWithFormat:@"https://graph.qq.com/user/get_user_info?access_token=%@&oauth_consumer_key=%@&openid=%@",accessToken,oauthConsumerKey,openid];
     
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    request.HTTPMethod = @"Get";
-    request.URL = [NSURL URLWithString:url];
-    request.timeoutInterval = 20.5f;
-    
-    NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [TrochilusNetWorking getWithUrl:url success:^(id  _Nonnull responseObj) {
         
-        if (error == nil) {
-            
-            NSDictionary * userInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            
-            if (completion) {
-                completion(userInfo);
-            }
-            
-        }
-        else {
-            
-            NSError *err = [TrochilusError errorWithCode:TrochilusErrorCodeQQAuthorizeFail userInfo:error.userInfo];
-            
-            [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
-        }
+        //获取用户信息
+        TrochilusUser * userInfo = [[TrochilusUser alloc] init];
+        userInfo.accessToken = accessToken;
+        userInfo.openid = openid;
+        userInfo.originalResponse = responseObj;
+        userInfo.name = responseObj[@"nickname"];
+        userInfo.iconurl = responseObj[@"figureurl_qq_2"];
+        userInfo.unionGender = responseObj[@"gender"];
+        userInfo.gender = [responseObj[@"gender"] isEqualToString:@"男"] ? @"M" : @"F";
+
+        [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:userInfo error:nil];
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSError *err = [TrochilusError errorWithCode:TrochilusErrorCodeQQAuthorizeFail userInfo:error.userInfo];
+
+        [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
+        
         
     }];
     
-    [task resume];
 }
 
 #pragma mark- 回调
@@ -308,9 +308,9 @@ static TrochilusQQPlatform * _instance = nil;
     
     if ([url.scheme hasPrefix:@"QQ"]) {
         //分享
-        NSDictionary *dic=[NSMutableDictionary trochilus_dictionaryWithUrl:url];
+        NSDictionary *dic=[NSMutableDictionary trochilusDictionaryWithUrl:url];
         if (dic[@"error_description"]) {
-            [dic setValue:[NSString trochilus_base64Decode:dic[@"error_description"]] forKey:@"error_description"];
+            [dic setValue:[NSString trochilusBase64Decode:dic[@"error_description"]] forKey:@"error_description"];
         }
         
         if ([dic[@"error"] intValue] == -4) {
@@ -334,7 +334,7 @@ static TrochilusQQPlatform * _instance = nil;
         //QQ登录
         NSString * authorizeKey = [NSString stringWithFormat:@"com.tencent.tencent%@",[TrochilusQQPlatform sharedInstance].appId];
 
-        NSDictionary * ret = [UIPasteboard trochilus_getPasteboard:authorizeKey encoding:TrochilusPboardEncodingKeyedArchiver];
+        NSDictionary * ret = [UIPasteboard trochilusGetPasteboard:authorizeKey encoding:TrochilusPboardEncodingKeyedArchiver];
         
         if (ret[@"user_cancelled"] && [ret[@"user_cancelled"] boolValue] == YES) {
             //取消授权
@@ -342,33 +342,10 @@ static TrochilusQQPlatform * _instance = nil;
         }
         else if (ret[@"ret"]&&[ret[@"ret"] intValue]==0) {
             //授权成功
-            TrochilusUser * userInfo = [[TrochilusUser alloc] init];
-            userInfo.accessToken = ret[@"access_token"];
-            userInfo.openid = ret[@"openid"];
             
             //获取用户信息
-            [TrochilusQQPlatform geTrochilusUserInfoToQQAccessToken:userInfo.accessToken oauthConsumerKey:[TrochilusQQPlatform sharedInstance].appId openid:userInfo.openid completion:^(NSDictionary * user) {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    userInfo.originalResponse = user;
-                    userInfo.name = user[@"nickname"];
-                    userInfo.iconurl = user[@"figureurl_qq_2"];
-                    userInfo.unionGender = user[@"gender"];
-                    userInfo.gender = [user[@"gender"] isEqualToString:@"男"] ? @"M" : @"F";
-                    
-                    [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:userInfo error:nil];
-                    
-                });
-                
-            }];
-            
-        }
-        else {
-            //授权失败
-            NSError *err= [TrochilusError errorWithCode:TrochilusErrorCodeQQAuthorizeFail userInfo:ret];
-            
-            [TrochilusQQPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
+            [TrochilusQQPlatform getUserInfoToQQAccessToken:ret[@"access_token"]
+                                           oauthConsumerKey:[TrochilusQQPlatform sharedInstance].appId openid:ret[@"openid"]];
         }
         
         return YES;
@@ -464,11 +441,11 @@ static TrochilusQQPlatform * _instance = nil;
     
     if (platformType == TrochilusPlatformSubTypeQQFriend) {
         
-        return [NSString stringWithFormat:@"&file_data=%@",[NSString trochilus_base64Encode:text]];
+        return [NSString stringWithFormat:@"&file_data=%@",[NSString trochilusBase64Encode:text]];
     }
     else if (platformType == TrochilusPlatformSubTypeQZone) {
         
-        return [NSString stringWithFormat:@"&title=%@&objectlocation=pasteboard",[NSString trochilus_base64Encode:text]];
+        return [NSString stringWithFormat:@"&title=%@&objectlocation=pasteboard",[NSString trochilusBase64Encode:text]];
     }
     
     return @"";
@@ -487,15 +464,15 @@ static TrochilusQQPlatform * _instance = nil;
         data=@{@"file_data":imageData,
                @"previewimagedata":thumbImgData};
         
-        [UIPasteboard trochilus_setPasteboard:@"com.tencent.mqq.api.apiLargeData" value:data encoding:TrochilusPboardEncodingKeyedArchiver];
-        return [NSString stringWithFormat:@"&description=%@&title=%@&objectlocation=pasteboard",[NSString trochilus_base64Encode:parameters[@"text"]],[NSString trochilus_base64Encode:parameters[@"title"]]];
+        [UIPasteboard trochilusSetPasteboard:@"com.tencent.mqq.api.apiLargeData" value:data encoding:TrochilusPboardEncodingKeyedArchiver];
+        return [NSString stringWithFormat:@"&description=%@&title=%@&objectlocation=pasteboard",[NSString trochilusBase64Encode:parameters[@"text"]],[NSString trochilusBase64Encode:parameters[@"title"]]];
         
     }
     else if (platformType == TrochilusPlatformSubTypeQZone) {
         
         data = @{@"image_data_list" : parameters[@"images"] };
         
-        [UIPasteboard trochilus_setPasteboard:@"com.tencent.mqq.api.apiLargeData" value:data encoding:TrochilusPboardEncodingKeyedArchiver];
+        [UIPasteboard trochilusSetPasteboard:@"com.tencent.mqq.api.apiLargeData" value:data encoding:TrochilusPboardEncodingKeyedArchiver];
         
         return @"&objectlocation=pasteboard";
     }
@@ -514,9 +491,9 @@ static TrochilusQQPlatform * _instance = nil;
         data=@{@"previewimagedata":thumbImgData};
         
         return [NSString stringWithFormat:@"&description=%@&title=%@&url=%@&objectlocation=pasteboard",
-                [NSString trochilus_base64Encode:parameters[@"text"]],
-                [NSString trochilus_base64Encode:parameters[@"title"]],
-                [NSString trochilus_base64Encode:parameters[@"url"]]];
+                [NSString trochilusBase64Encode:parameters[@"text"]],
+                [NSString trochilusBase64Encode:parameters[@"title"]],
+                [NSString trochilusBase64Encode:parameters[@"url"]]];
     }
     
     return @"";
@@ -525,7 +502,7 @@ static TrochilusQQPlatform * _instance = nil;
 + (NSString *)shareVideoWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters {
     
     if (platformType == TrochilusPlatformSubTypeQZone) {
-        return [NSString stringWithFormat:@"&video_assetURL=%@&objectlocation=pasteboard",[NSString trochilus_base64Encode:parameters[@"url"]]];
+        return [NSString stringWithFormat:@"&video_assetURL=%@&objectlocation=pasteboard",[NSString trochilusBase64Encode:parameters[@"url"]]];
     }
     
     return @"";

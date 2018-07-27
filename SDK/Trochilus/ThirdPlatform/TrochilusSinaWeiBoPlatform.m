@@ -433,7 +433,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         if ([transferObject[@"statusCode"] integerValue] == 0) {
             //授权成功
             //本地保存授权过期时间 如果取不到授权过期时间那么启动授权 新浪给的时间与本地时间差8小时 需要转换
-            NSDate * localDate = [NSDate trochilus_localDateWithGMTDate:transferObject[@"expirationDate"]];
+            NSDate * localDate = [NSDate trochilusLocalDateWithGMTDate:transferObject[@"expirationDate"]];
             [[NSUserDefaults standardUserDefaults] setObject:localDate forKey:@"SinaWeiBo_expirationDate"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             

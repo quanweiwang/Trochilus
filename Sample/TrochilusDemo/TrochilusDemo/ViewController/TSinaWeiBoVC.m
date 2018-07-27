@@ -100,7 +100,7 @@
     //通用参数设置 文字中必须有绑定域下的URL链接
     //绑定域在新浪开放平台“我的应用 － 应用信息 － 基本应用信息编辑 － 安全域名”里设置。
     //平台定制
-    [parameters trochilus_SetupSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
                                                     title:nil
                                                     image:nil
                                                       url:nil
@@ -120,7 +120,7 @@
     //通用参数设置 文字中必须有绑定域下的URL链接
     //绑定域在新浪开放平台“我的应用 － 应用信息 － 基本应用信息编辑 － 安全域名”里设置。
     //平台定制
-    [parameters trochilus_SetupSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
                                                     title:nil
                                                     image:[UIImage imageNamed:@"COD13"]
                                                       url:nil
@@ -136,7 +136,7 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     //通用参数设置
     //2017年6月30日后需申请高级权限
-    [parameters trochilus_SetupShareParamsByText:@"Share SDK"
+    [parameters trochilusSetShareParamsByText:@"Share SDK"
                                           images:nil
                                              url:nil
                                            title:nil
@@ -159,7 +159,7 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     //通用参数设置
     //2017年6月30日后需申请高级权限
-    [parameters trochilus_SetupShareParamsByText:@"Share SDK"
+    [parameters trochilusSetShareParamsByText:@"Share SDK"
                                           images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
                                              url:nil
                                            title:nil
@@ -180,7 +180,7 @@
 - (void)shareTextToAPP
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupShareParamsByText:@"Share SDK"
+    [parameters trochilusSetShareParamsByText:@"Share SDK"
                                           images:nil
                                              url:nil
                                            title:nil
@@ -201,7 +201,7 @@
 - (void)shareImageToAPP
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupShareParamsByText:@"Share SDK"
+    [parameters trochilusSetShareParamsByText:@"Share SDK"
                                           images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
                                              url:nil
                                            title:nil
@@ -230,7 +230,7 @@
     //                                      type:TContentTypeWebPage];
     //    [parameters TEnableUseClientShare];
     //平台定制
-    [parameters trochilus_SetupSinaWeiboShareParamsByText:@"Share SDK Link Desc"
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK Link Desc"
                                                     title:@"MOB"
                                                     image:[UIImage imageNamed:@"COD13.jpg"]
                                                       url:@"http://www.mob.com"

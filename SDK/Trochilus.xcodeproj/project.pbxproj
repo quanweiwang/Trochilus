@@ -43,6 +43,8 @@
 		D67C429020DE5BFA0024D0C2 /* NSMutableDictionary+TrochilusInit.m in Sources */ = {isa = PBXBuildFile; fileRef = D67C427E20DE5BFA0024D0C2 /* NSMutableDictionary+TrochilusInit.m */; };
 		D67C429120DE5BFA0024D0C2 /* UIPasteboard+Trochilus.m in Sources */ = {isa = PBXBuildFile; fileRef = D67C427F20DE5BFA0024D0C2 /* UIPasteboard+Trochilus.m */; };
 		D6CA1D8720FDE0770092E86C /* UIImage+Trochilus.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CA1D8620FDE0770092E86C /* UIImage+Trochilus.m */; };
+		D6F5E0CB210B3F8D009F6A28 /* TrochilusNetWorking.h in Headers */ = {isa = PBXBuildFile; fileRef = D6F5E0C9210B3F8D009F6A28 /* TrochilusNetWorking.h */; };
+		D6F5E0CC210B3F8D009F6A28 /* TrochilusNetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F5E0CA210B3F8D009F6A28 /* TrochilusNetWorking.m */; };
 		D79835C520E3692100008F58 /* UIImage+Trochilus.h in Headers */ = {isa = PBXBuildFile; fileRef = D79835C320E3692100008F58 /* UIImage+Trochilus.h */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		D67C427F20DE5BFA0024D0C2 /* UIPasteboard+Trochilus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIPasteboard+Trochilus.m"; sourceTree = "<group>"; };
 		D67C429620DE65630024D0C2 /* TrochilusSysDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrochilusSysDefine.h; sourceTree = "<group>"; };
 		D6CA1D8620FDE0770092E86C /* UIImage+Trochilus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Trochilus.m"; sourceTree = "<group>"; };
+		D6F5E0C9210B3F8D009F6A28 /* TrochilusNetWorking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrochilusNetWorking.h; sourceTree = "<group>"; };
+		D6F5E0CA210B3F8D009F6A28 /* TrochilusNetWorking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrochilusNetWorking.m; sourceTree = "<group>"; };
 		D79835C320E3692100008F58 /* UIImage+Trochilus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Trochilus.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +143,8 @@
 		D67C423320DE561A0024D0C2 /* Trochilus */ = {
 			isa = PBXGroup;
 			children = (
+				D6F5E0C9210B3F8D009F6A28 /* TrochilusNetWorking.h */,
+				D6F5E0CA210B3F8D009F6A28 /* TrochilusNetWorking.m */,
 				D67C426B20DE5BB20024D0C2 /* TrochilusError.h */,
 				D67C426A20DE5BB10024D0C2 /* TrochilusError.m */,
 				D67C425120DE5A140024D0C2 /* TrochilusUser.h */,
@@ -216,6 +222,7 @@
 				D67C428F20DE5BFA0024D0C2 /* NSMutableDictionary+TrochilusPay.h in Headers */,
 				D67C428620DE5BFA0024D0C2 /* UIPasteboard+Trochilus.h in Headers */,
 				D67C425320DE5A140024D0C2 /* TrochilusUser.h in Headers */,
+				D6F5E0CB210B3F8D009F6A28 /* TrochilusNetWorking.h in Headers */,
 				D67C426D20DE5BB20024D0C2 /* TrochilusError.h in Headers */,
 				D659EFF620DF3D9200B9AA8B /* TrochilusTypeDefine.h in Headers */,
 				D659EFF520DF3D9200B9AA8B /* TrochilusSysDefine.h in Headers */,
@@ -341,6 +348,7 @@
 				D67C425420DE5A140024D0C2 /* TrochilusUser.m in Sources */,
 				D67C425920DE5A7B0024D0C2 /* NSString+Trochilus.m in Sources */,
 				D67C426520DE5B920024D0C2 /* TrochilusWeChatPlatform.m in Sources */,
+				D6F5E0CC210B3F8D009F6A28 /* TrochilusNetWorking.m in Sources */,
 				D667D01720FCB564008A9B01 /* Trochilus+Runtime.m in Sources */,
 				D67C428E20DE5BFA0024D0C2 /* NSMutableDictionary+TrochilusPay.m in Sources */,
 				D67C428320DE5BFA0024D0C2 /* NSDate+Trochilus.m in Sources */,

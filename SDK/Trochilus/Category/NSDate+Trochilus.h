@@ -16,6 +16,6 @@
  @param GMTDate 格林尼治时
  @return 本地时间
  */
-+ (NSDate *)trochilus_localDateWithGMTDate:(NSDate *)GMTDate;
++ (NSDate *)trochilusLocalDateWithGMTDate:(NSDate *)GMTDate;
 
 @end

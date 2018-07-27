@@ -11,7 +11,7 @@
 
 @implementation NSString (Trochilus)
 
-+ (NSString *)trochilus_base64Encode:(NSString *)string {
++ (NSString *)trochilusBase64Encode:(NSString *)string {
     
     NSString * base64String = @"";
     if (string) {
@@ -20,15 +20,15 @@
     return base64String;
 }
 
-+ (NSString *)trochilus_base64Decode:(NSString *)string {
++ (NSString *)trochilusBase64Decode:(NSString *)string {
     return [[NSString alloc ] initWithData:[[NSData alloc] initWithBase64EncodedString:string options:0] encoding:NSUTF8StringEncoding];
 }
 
-+ (NSString *)trochilus_urlDecode:(NSString*)input {
++ (NSString *)trochilusUrlDecode:(NSString*)input {
     return [[input stringByReplacingOccurrencesOfString:@"+" withString:@" "]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
-+ (NSString*)trochilus_deviceModel {
++ (NSString*)trochilusDeviceModel {
     struct utsname systemInfo;
     
     uname(&systemInfo);

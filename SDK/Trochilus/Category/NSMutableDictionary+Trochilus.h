@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSError *)nonEmptyWithAttribute:(NSArray *)attributes;
 
++ (NSMutableDictionary *)trochilusDictionaryWithUrl:(NSURL*)url;
+
 @end
 
 NS_ASSUME_NONNULL_END

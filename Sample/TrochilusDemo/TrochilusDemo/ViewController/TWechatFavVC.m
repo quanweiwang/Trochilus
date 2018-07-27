@@ -95,7 +95,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
@@ -119,7 +119,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
@@ -140,7 +140,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:nil
                                               url:@"https://www.baidu.com"
                                      mediaTagName:@"aaa"
@@ -161,7 +161,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"崔健"
+    [parameters trochilusSetWeChatParamsByText:@"崔健"
                                             title:@"一无所有"
                                               url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
                                      mediaTagName:@"aaa"
@@ -182,7 +182,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"视频"
+    [parameters trochilusSetWeChatParamsByText:@"视频"
                                             title:@"乔布斯"
                                               url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
                                      mediaTagName:nil
@@ -202,7 +202,7 @@
 - (void)shareFile
 {
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:nil
+    [parameters trochilusSetWeChatParamsByText:nil
                                             title:nil
                                               url:nil
                                      mediaTagName:nil

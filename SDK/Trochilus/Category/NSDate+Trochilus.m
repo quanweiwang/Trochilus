@@ -10,7 +10,7 @@
 
 @implementation NSDate (Trochilus)
 
-+ (NSDate *)trochilus_localDateWithGMTDate:(NSDate *)GMTDate
++ (NSDate *)trochilusLocalDateWithGMTDate:(NSDate *)GMTDate
 {
     //设置源日期时区
     NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];//或GMT

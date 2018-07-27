@@ -132,7 +132,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                      title:nil
                                        url:nil
                               mediaTagName:nil
@@ -156,7 +156,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
@@ -177,7 +177,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:nil
                                               url:@"https://www.baidu.com"
                                      mediaTagName:@"aaa"
@@ -198,7 +198,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"崔健"
+    [parameters trochilusSetWeChatParamsByText:@"崔健"
                                             title:@"一无所有"
                                               url:@"http://i.y.qq.com/v8/playsong.html?hostuin=0&songid=&songmid=002x5Jje3eUkXT&_wv=1&source=qq&appshare=iphone&media_mid=002x5Jje3eUkXT"
                                      mediaTagName:@"aaa"
@@ -219,7 +219,7 @@
 {
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"视频"
+    [parameters trochilusSetWeChatParamsByText:@"视频"
                                             title:@"乔布斯"
                                               url:@"http://v.youku.com/v_show/id_XNTUxNDY1NDY4.html"
                                      mediaTagName:nil
@@ -239,7 +239,7 @@
 - (void)shareApp
 {
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:@"222"
+    [parameters trochilusSetWeChatParamsByText:@"222"
                                             title:@"App消息"
                                               url:@"http://www.mob.com"
                                      mediaTagName:nil
@@ -259,7 +259,7 @@
 - (void)shareEmoticon
 {
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:nil
+    [parameters trochilusSetWeChatParamsByText:nil
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
@@ -279,7 +279,7 @@
 - (void)shareFile
 {
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
-    [parameters trochilus_SetupWeChatParamsByText:nil
+    [parameters trochilusSetWeChatParamsByText:nil
                                             title:nil
                                               url:nil
                                      mediaTagName:nil
@@ -303,7 +303,7 @@
     NSString * thumbImageStr = [[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"];
     UIImage * thumbImage = [UIImage imageWithContentsOfFile:thumbImageStr];
     
-    [parameters trochilus_SetupWeChatMiniProgramShareParamsByWebpageUrl:@"http://www.mob.com"
+    [parameters trochilusSetWeChatMiniProgramShareParamsByWebpageUrl:@"http://www.mob.com"
                                                                userName:@"gh_d43f693ca31f"
                                                                    path:@"/page/API/pages/share/share"
                                                                   title:@"MiniProgram"
@@ -360,7 +360,7 @@
     //weixin://app/wx822295c9333f22d8/pay/?nonceStr=Ijs2foLuSi8sHEYS&package=Sign%3DWXPay&partnerId=1236691302&prepayId=wx20170711135104183fad0d3b0405256507&timeStamp=1499752264&sign=A8350D3407446ABE65DD25F8BB786B9F&signType=SHA1
     
     NSMutableDictionary * wechatPay = [NSMutableDictionary dictionary];
-    [wechatPay trochilus_payWithWechatPartnerId:@"1374443602"
+    [wechatPay trochilusPayWithWechatPartnerId:@"1374443602"
                              prepayId:@"wx20171103162205656805fbde0807352087"
                                 appId:@"wx259627eb5f9f6cf4"
                              nonceStr:@"URpSOgEHqcJbnqyC"

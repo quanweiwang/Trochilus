@@ -25,7 +25,7 @@
 #define kCFBundleIdentifier [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
 
 //设备型号
-#define kModel [NSString trochilus_deviceModel]
+#define kModel [NSString trochilusDeviceModel]
 
 #define kSystemVersion [[UIDevice currentDevice] systemVersion]
 

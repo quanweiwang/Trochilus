@@ -7,11 +7,7 @@
 //
 
 #import "Trochilus.h"
-#import <UIKit/UIKit.h>
 #import "TrochilusSysDefine.h"
-
-#import "NSMutableDictionary+TrochilusShare.h"
-
 
 @interface Trochilus ()
 
@@ -19,18 +15,7 @@
 
 @implementation Trochilus
 
-static Trochilus * _instance = nil;
 static NSMutableDictionary * keys;
-
-#pragma mark- 单例模式
-+ (instancetype)sharedInstance {
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[self alloc] init];
-    });
-    return _instance;
-}
 
 /**
  *  初始化Trochilus应用
@@ -111,7 +96,7 @@ static NSMutableDictionary * keys;
     
     SEL selMethod = NSSelectorFromString(@"authorizeWithPlatformSettings:onStateChanged:");
     
-    NSString * authorizeUrl = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,settings,stateChangedHandler, nil];
+    NSString * authorizeUrl = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,settings == nil? @"" : settings,stateChangedHandler, nil];
     
     [Trochilus sendToURL:authorizeUrl];
 }
@@ -203,27 +188,6 @@ static NSMutableDictionary * keys;
 
     }
     
-//    if ([url.scheme hasPrefix:@"QQ"] || [url.scheme hasPrefix:@"tencent"]) {
-//        //QQ 为分享 tencent为QQ登录
-//        platformClass = NSClassFromString(@"TrochilusQQPlatform");
-//        selMethod = NSSelectorFromString(@"handleUrlWithQQ:");
-//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-//    }
-//    else if ([url.scheme hasPrefix:@"wx"]) {
-//        platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
-//        selMethod = NSSelectorFromString(@"handleUrlWithWeChat:");
-//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-//    }
-//    else if ([url.scheme hasPrefix:@"wb"]) {
-//        platformClass = NSClassFromString(@"TrochilusSinaWeiBoPlatform");
-//        selMethod = NSSelectorFromString(@"handleUrlWithSinaWeiBo:");
-//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-//    }
-//    else if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
-//        platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
-//        selMethod = NSSelectorFromString(@"handleUrlWithAliPay:");
-//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-//    }
     return NO;
 }
 
@@ -271,7 +235,7 @@ static NSMutableDictionary * keys;
     // 用于存放取出的参数
     id arg;
     // 初始化变量刚定义的va_list变量，这个宏的第二个参数是第一个可变参数的前一个参数，是一个固定的参数
-    //va_argtype绝对不能为以下类型：
+    //va_arg type绝对不能为以下类型：
     //——char、signed char、unsigned char
     //——short、unsigned short
     //——signed short、short int、signed short int、unsigned short int

@@ -10,35 +10,29 @@
 
 @implementation NSMutableDictionary (TrochilusPay)
 
-- (void)trochilus_payWithWechatPartnerId:(NSString *)partnerId prepayId:(NSString *)prepayId appId:(NSString *)appid nonceStr:(NSString *)nonceStr timeStamp:(NSString *)timeStamp package:(NSString *)package sign:(NSString *)sign {
+- (void)trochilusPayWithWechatPartnerId:(NSString *)partnerId
+                               prepayId:(NSString *)prepayId
+                                  appId:(NSString *)appid
+                               nonceStr:(NSString *)nonceStr
+                              timeStamp:(NSString *)timeStamp
+                                package:(NSString *)package
+                                   sign:(NSString *)sign {
     
-    if (partnerId) {
-        [self setObject:partnerId forKey:@"partnerId"];
-    }
     
-    if (prepayId) {
-        [self setObject:prepayId forKey:@"prepayId"];
-    }
+    [self setValue:partnerId forKey:@"partnerId"];
+
+    [self setValue:prepayId forKey:@"prepayId"];
+
+    [self setValue:nonceStr forKey:@"nonceStr"];
+
+    [self setValue:timeStamp forKey:@"timeStamp"];
+
+    [self setValue:package forKey:@"package"];
+
+    [self setValue:sign forKey:@"sign"];
     
-    if (nonceStr) {
-        [self setObject:nonceStr forKey:@"nonceStr"];
-    }
+    [self setValue:appid forKey:@"appId"];
     
-    if (timeStamp) {
-        [self setObject:timeStamp forKey:@"timeStamp"];
-    }
-    
-    if (package) {
-        [self setObject:package forKey:@"package"];
-    }
-    
-    if (sign) {
-        [self setObject:sign forKey:@"sign"];
-    }
-    
-    if (appid) {
-        [self setObject:appid forKey:@"appId"];
-    }
 }
 
 @end

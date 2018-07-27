@@ -16,7 +16,7 @@
 #define kQQAppId @"100371282"
 #define kQQAppKey @"aed9b0303e3ed1e27bae87c33761161d"
 
-#define kWeChatAppId @"wx2b2472cf1fb9c149"
-#define kWeChatAppSecret @"740b9f51b564d849cdec6df94a641e7b"
+#define kWeChatAppId @"wx4868b35061f87885"
+#define kWeChatAppSecret @"64020361b8ec4c99936c0e3999a9f249"
 
 #endif /* TrochilusDemoMacro_h */

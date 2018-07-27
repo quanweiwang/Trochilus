@@ -20,7 +20,7 @@
  *  @param title    标题
  *  @param type     分享类型
  */
-- (void)trochilus_SetupShareParamsByText:(NSString *)text
+- (void)trochilusSetShareParamsByText:(NSString *)text
                          images:(id)images
                             url:(NSURL *)url
                           title:(NSString *)title
@@ -83,7 +83,7 @@
  *  分享视频时：
  *  设置type为TrochilusContentTypeVideo，并设置text、title、url参数
  */
-- (void)trochilus_SetupWeChatParamsByText:(NSString *)text
+- (void)trochilusSetWeChatParamsByText:(NSString *)text
                                     title:(NSString *)title
                                       url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
@@ -110,7 +110,7 @@
  @param withShareTicket 是否使用带 shareTicket 的转发
  @param programType 分享小程序的版本（0-正式，1-开发，2-体验）
  */
-- (void)trochilus_SetupWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
+- (void)trochilusSetWeChatMiniProgramShareParamsByWebpageUrl:(NSString *)webpageUrl
                                                        userName:(NSString *)userName
                                                            path:(NSString *)path
                                                           title:(NSString *)title
@@ -133,7 +133,7 @@
  *  @param objectID  对象ID，标识系统内内容唯一性，应传入系统中分享内容的唯一标识，没有时可以传入nil
  *  @param type      分享类型，仅支持Text、Image、WebPage（客户端分享时）类型
  */
-- (void)trochilus_SetupSinaWeiboShareParamsByText:(NSString *)text
+- (void)trochilusSetSinaWeiboShareParamsByText:(NSString *)text
                                    title:(NSString *)title
                                    image:(UIImage *)image
                                      url:(NSString *)url
@@ -142,7 +142,7 @@
                                 objectID:(NSString *)objectID
                                     type:(TrochilusContentType)type;
 
-+(NSMutableDictionary *)trochilus_dictionaryWithUrl:(NSURL*)url;
+
 
 
 @end

@@ -11,8 +11,8 @@
 
 @interface UIPasteboard (Trochilus)
 
-+ (void)trochilus_setPasteboard:(NSString*)key value:(NSDictionary*)value encoding:(TrochilusPboardEncoding)encoding;
++ (void)trochilusSetPasteboard:(NSString*)key value:(NSDictionary*)value encoding:(TrochilusPboardEncoding)encoding;
 
-+ (NSDictionary *)trochilus_getPasteboard:(NSString*)key encoding:(TrochilusPboardEncoding)encoding;
++ (NSDictionary *)trochilusGetPasteboard:(NSString*)key encoding:(TrochilusPboardEncoding)encoding;
 
 @end

@@ -121,7 +121,7 @@ static TrochilusAliPayPlatform * _instance = nil;
     
     if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
         NSError *err;
-        NSDictionary *ret=[NSJSONSerialization JSONObjectWithData:[[NSString trochilus_urlDecode:url.query]dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&err];
+        NSDictionary *ret=[NSJSONSerialization JSONObjectWithData:[[NSString trochilusUrlDecode:url.query]dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&err];
         
         if (err||ret[@"memo"]==[NSNull null]||[ret[@"memo"][@"ResultStatus"] intValue]!=9000) {
             //支付失败
