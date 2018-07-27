@@ -20,6 +20,7 @@
 @implementation Trochilus
 
 static Trochilus * _instance = nil;
+static NSMutableDictionary * keys;
 
 #pragma mark- 单例模式
 + (instancetype)sharedInstance {
@@ -40,9 +41,11 @@ static Trochilus * _instance = nil;
 + (void)registerPlatforms:(NSArray *)thirdPlatforms
           onConfiguration:(TrochilusConfigurationHandler)configurationHandler {
     
-    NSMutableDictionary * keys = [NSMutableDictionary dictionary];
-    
     if (configurationHandler) {
+        
+        if (!keys) {
+            keys = [NSMutableDictionary dictionary];
+        }
         
         for (NSNumber * platformType in thirdPlatforms) {
             configurationHandler([platformType integerValue],keys);
@@ -187,30 +190,40 @@ static Trochilus * _instance = nil;
 #pragma mark- 第三方平台回调
 + (BOOL)handleURL:(NSURL *)url {
     
-    Class platformClass;
-    SEL selMethod;
+    for (NSString * key in keys.allKeys) {
+        
+        Class platformClass = NSClassFromString(PLATFORMNAME(key));
+        SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"handleUrlWith%@:",key]);
+        
+        NSNumber * returnValue = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
+        
+        if ([returnValue boolValue]) {
+            return [returnValue boolValue];
+        }
+
+    }
     
-    if ([url.scheme hasPrefix:@"QQ"] || [url.scheme hasPrefix:@"tencent"]) {
-        //QQ 为分享 tencent为QQ登录
-        platformClass = NSClassFromString(@"TrochilusQQPlatform");
-        selMethod = NSSelectorFromString(@"handleUrlWithQQ:");
-        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-    }
-    else if ([url.scheme hasPrefix:@"wx"]) {
-        platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
-        selMethod = NSSelectorFromString(@"handleUrlWithWeChat:");
-        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-    }
-    else if ([url.scheme hasPrefix:@"wb"]) {
-        platformClass = NSClassFromString(@"TrochilusSinaWeiBoPlatform");
-        selMethod = NSSelectorFromString(@"handleUrlWithSinaWeiBo:");
-        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-    }
-    else if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
-        platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
-        selMethod = NSSelectorFromString(@"handleUrlWithAliPay:");
-        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
-    }
+//    if ([url.scheme hasPrefix:@"QQ"] || [url.scheme hasPrefix:@"tencent"]) {
+//        //QQ 为分享 tencent为QQ登录
+//        platformClass = NSClassFromString(@"TrochilusQQPlatform");
+//        selMethod = NSSelectorFromString(@"handleUrlWithQQ:");
+//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
+//    }
+//    else if ([url.scheme hasPrefix:@"wx"]) {
+//        platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
+//        selMethod = NSSelectorFromString(@"handleUrlWithWeChat:");
+//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
+//    }
+//    else if ([url.scheme hasPrefix:@"wb"]) {
+//        platformClass = NSClassFromString(@"TrochilusSinaWeiBoPlatform");
+//        selMethod = NSSelectorFromString(@"handleUrlWithSinaWeiBo:");
+//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
+//    }
+//    else if ([url.absoluteString rangeOfString:@"//safepay/"].location != NSNotFound) {
+//        platformClass = NSClassFromString(@"TrochilusAliPayPlatform");
+//        selMethod = NSSelectorFromString(@"handleUrlWithAliPay:");
+//        return [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,url, nil];
+//    }
     return NO;
 }
 
