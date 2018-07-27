@@ -20,7 +20,6 @@
 @implementation Trochilus
 
 static Trochilus * _instance = nil;
-static NSMutableDictionary * key;
 
 #pragma mark- 单例模式
 + (instancetype)sharedInstance {
