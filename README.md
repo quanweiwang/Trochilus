@@ -162,13 +162,13 @@ NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
 
 //微博分享
 [parameters trochilusSetSinaWeiboShareParamsByText:@"Trochilus"
-                                                 title:nil
-                                                 image:nil
-                                                   url:nil
-                                              latitude:0
-                                             longitude:0
-                                              objectID:nil
-                                                  type:TrochilusContentTypeText];
+                                             title:nil
+                                             image:nil
+                                               url:nil
+                                          latitude:0
+                                         longitude:0
+                                          objectID:nil
+                                              type:TrochilusContentTypeText];
 //分享
 [Trochilus shareWithPlatformType:{分享平台} parameters:parameters onStateChanged:^(TrochilusResponseState state, NSDictionary *userData, NSError *error) {
         
