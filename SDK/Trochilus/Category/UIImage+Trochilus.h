@@ -21,6 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (UIImage *)compressImage:(UIImage *)image toByte:(NSUInteger)maxLength;
 
++ (NSData *)trochilusDataWithImage:(UIImage *)image;
+
++ (NSArray *)trochilusDataArrayWithImages:(id)images;
+
++ (NSData *)trochilusDataWithThumbImage:(UIImage *)thumbImage;
+
++ (NSData *)trochilusDataWithHDThumbImage:(UIImage *)hdThumbImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@
 
 @implementation Trochilus
 
-static NSMutableDictionary * keys;
+static NSMutableSet * platformSet;
 
 /**
  *  初始化Trochilus应用
@@ -28,8 +28,10 @@ static NSMutableDictionary * keys;
     
     if (configurationHandler) {
         
-        if (!keys) {
-            keys = [NSMutableDictionary dictionary];
+        NSMutableDictionary * keys = [NSMutableDictionary dictionary];
+        
+        if (!platformSet) {
+            platformSet = [NSMutableSet set];
         }
         
         for (NSNumber * platformType in thirdPlatforms) {
@@ -37,6 +39,8 @@ static NSMutableDictionary * keys;
         }
         
         for (NSString * key in keys.allKeys) {
+            
+            [platformSet addObject:key];
             
             NSDictionary * dic = keys[key];
             
@@ -163,7 +167,7 @@ static NSMutableDictionary * keys;
 #pragma mark- 第三方平台回调
 + (BOOL)handleURL:(NSURL *)url {
     
-    for (NSString * key in keys.allKeys) {
+    for (NSString * key in platformSet) {
         
         Class platformClass = NSClassFromString(PLATFORMNAME(key));
         SEL selMethod = NSSelectorFromString([NSString stringWithFormat:@"handleUrlWith%@:",key]);

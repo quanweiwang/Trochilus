@@ -88,8 +88,8 @@
                                       url:(NSString *)url
                              mediaTagName:(NSString *)mediaTagName
                             messageAction:(NSString *)messageAction
-                               thumbImage:(id)thumbImage
-                                    image:(id)image
+                               thumbImage:(UIImage *)thumbImage
+                                    image:(UIImage *)image
                              musicFileURL:(NSString *)musicFileURL
                                   extInfo:(NSString *)extInfo
                                  fileData:(id)fileData
@@ -116,7 +116,7 @@
                                                           title:(NSString *)title
                                                     description:(NSString *)description
                                                      thumbImage:(UIImage *)thumbImage
-                                                    hdImageData:(UIImage *)hdImageData
+                                                    hdThumImage:(UIImage *)hdThumImage
                                                 withShareTicket:(BOOL)withShareTicket
                                                     contentType:(TrochilusContentType)contentType
                                                 miniProgramType:(TrochilusMiniProgramType)programType;

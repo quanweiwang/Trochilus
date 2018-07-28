@@ -6,11 +6,9 @@
 //  Copyright © 2017年 王权伟. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "TrochilusWeChatPlatform.h"
 #import "TrochilusUser.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import "TrochilusWeChatPlatform.h"
+//#import <AssetsLibrary/AssetsLibrary.h>
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
 #import "TrochilusNetWorking.h"
@@ -105,8 +103,8 @@ static TrochilusWeChatPlatform * _instance = nil;
         }
         else if (contentType == TrochilusContentTypeImage && parameters[@"emoticonData"] == nil) {
             //图片
-            wechatDic = [TrochilusWeChatPlatform shareWithImage:parameters[@"image"][0]
-                                                     thumbImage:parameters[@"thumbImage"][0]
+            wechatDic = [TrochilusWeChatPlatform shareWithImage:parameters[@"image"]
+                                                     thumbImage:parameters[@"thumbImage"]
                                                    emoticonData:nil
                                                shareDescription:parameters[@"text"]
                                                    platformType:platformType];
@@ -117,8 +115,8 @@ static TrochilusWeChatPlatform * _instance = nil;
                                                   mediaTagName:parameters[@"mediaTagName"]
                                                          title:parameters[@"title"]
                                               shareDescription:parameters[@"text"]
-                                                         image:parameters[@"image"][0]
-                                                    thumbImage:parameters[@"thumbImage"][0]
+                                                         image:parameters[@"image"]
+                                                    thumbImage:parameters[@"thumbImage"]
                                                   platformType:platformType];
             
         }
@@ -127,8 +125,8 @@ static TrochilusWeChatPlatform * _instance = nil;
             wechatDic = [TrochilusWeChatPlatform shareWithAudioUrl:parameters[@"url"]
                                                              title:parameters[@"title"]
                                                   shareDescription:parameters[@"text"]
-                                                            images:parameters[@"image"][0]
-                                                        thumbImage:parameters[@"thumbImage"][0]
+                                                            images:parameters[@"image"]
+                                                        thumbImage:parameters[@"thumbImage"]
                                                       platformType:platformType];
         }
         else if (contentType == TrochilusContentTypeVideo) {
@@ -136,8 +134,8 @@ static TrochilusWeChatPlatform * _instance = nil;
             wechatDic = [TrochilusWeChatPlatform shareWithVideoUrl:parameters[@"url"]
                                                              title:parameters[@"title"]
                                                   shareDescription:parameters[@"text"]
-                                                            images:parameters[@"image"][0]
-                                                        thumbImage:parameters[@"thumbImage"][0]
+                                                            images:parameters[@"image"]
+                                                        thumbImage:parameters[@"thumbImage"]
                                                       platformType:platformType];
         }
         else if (contentType == TrochilusContentTypeApp) {
@@ -145,8 +143,8 @@ static TrochilusWeChatPlatform * _instance = nil;
             wechatDic = [TrochilusWeChatPlatform shareWithApp:parameters[@"url"]
                                                         title:parameters[@"title"]
                                              shareDescription:parameters[@"text"]
-                                                       images:parameters[@"image"][0]
-                                                   thumbImage:parameters[@"thumbImage"][0]
+                                                       images:parameters[@"image"]
+                                                   thumbImage:parameters[@"thumbImage"]
                                                       extInfo:parameters[@"extInfo"]
                                                      fileData:parameters[@"fileData"]
                                                 messageAction:parameters[@"messageAction"]
@@ -155,7 +153,7 @@ static TrochilusWeChatPlatform * _instance = nil;
         }
         else if (contentType == TrochilusContentTypeImage && parameters[@"emoticonData"]) {
             //表情图片
-            NSData * thumbImageData = parameters[@"thumbImage"][0];
+            NSData * thumbImageData = parameters[@"thumbImage"];
             
             wechatDic = [TrochilusWeChatPlatform shareWithImage:nil
                                                      thumbImage:thumbImageData
@@ -169,8 +167,8 @@ static TrochilusWeChatPlatform * _instance = nil;
             wechatDic = [TrochilusWeChatPlatform shareWithSourceFileData:parameters[@"fileData"]
                                                                    title:parameters[@"title"]
                                                         shareDescription:parameters[@"text"]
-                                                                  images:parameters[@"image"][0]
-                                                              thumbImage:parameters[@"thumbImage"][0]
+                                                                  images:parameters[@"image"]
+                                                              thumbImage:parameters[@"thumbImage"]
                                                      sourceFileExtension:parameters[@"fileExtension"]
                                                             platformType:platformType];
             
@@ -206,6 +204,8 @@ static TrochilusWeChatPlatform * _instance = nil;
 //文本分享
 + (NSDictionary *)shareWithText:(NSString *)text platformType:(TrochilusPlatformType)platformType {
     
+    
+    
     NSString * scene = [TrochilusWeChatPlatform sceneWtihPlatformType:platformType];
     
     NSDictionary * wechatDic =  @{@"command" : @"1020",
@@ -223,15 +223,6 @@ static TrochilusWeChatPlatform * _instance = nil;
                     emoticonData:(id)emoticonData
                 shareDescription:(NSString *)shareDescription
                     platformType:(TrochilusPlatformType)platformType {
-    
-//    2018-07-18 19:45:20.634595+0800 SDKSample[900:155778] result---1
-//    2018-07-18 19:45:20.634900+0800 SDKSample[900:155778] sdkver---1.8.2
-//    2018-07-18 19:45:20.635055+0800 SDKSample[900:155778] objectType---8
-//    2018-07-18 19:45:20.635198+0800 SDKSample[900:155778] scene---0
-//    2018-07-18 19:45:20.635540+0800 SDKSample[900:155778] miniprogramType---0
-//    2018-07-18 19:45:20.635725+0800 SDKSample[900:155778] withShareTicket---0
-//    2018-07-18 19:45:20.635870+0800 SDKSample[900:155778] command---1010
-//    2018-07-18 19:45:20.635978+0800 SDKSample[900:155778] returnFromApp---0
     
     NSString * scene = [TrochilusWeChatPlatform sceneWtihPlatformType:platformType];
     
@@ -427,6 +418,21 @@ static TrochilusWeChatPlatform * _instance = nil;
 //小程序分享
 + (NSDictionary *)shareMiniProgramWithParameter:(NSMutableDictionary *)parameters {
     
+//    SDKSample[10543:2635740] description---小程序Desc
+//    2018-07-28 10:12:18.902734+0800 SDKSample[10543:2635740] hdThumbData---
+//    2018-07-28 10:12:18.951378+0800 SDKSample[10543:2635740] appBrandUserName---gh_d43f693ca31f
+//    2018-07-28 10:12:18.951444+0800 SDKSample[10543:2635740] objectType---36
+//    2018-07-28 10:12:18.951481+0800 SDKSample[10543:2635740] scene---0
+//    2018-07-28 10:12:18.951499+0800 SDKSample[10543:2635740] appBrandPath---
+//    2018-07-28 10:12:18.951534+0800 SDKSample[10543:2635740] title---小程序title
+//    2018-07-28 10:12:18.951614+0800 SDKSample[10543:2635740] mediaUrl---https://www.baidu.com
+//    2018-07-28 10:12:18.951664+0800 SDKSample[10543:2635740] sdkver---1.8.2
+//    2018-07-28 10:12:18.951725+0800 SDKSample[10543:2635740] command---1010
+//    2018-07-28 10:12:18.951761+0800 SDKSample[10543:2635740] result---1
+//    2018-07-28 10:12:18.951824+0800 SDKSample[10543:2635740] withShareTicket---1
+//    2018-07-28 10:12:18.951852+0800 SDKSample[10543:2635740] returnFromApp---0
+//    2018-07-28 10:12:18.951892+0800 SDKSample[10543:2635740] miniprogramType---0
+    
     //    TrochilusMessageObject * message = [parameter objectForKey:@"TrochilusMessageObject"];
     
     NSString * title = parameters[@"title"];
@@ -439,10 +445,12 @@ static TrochilusWeChatPlatform * _instance = nil;
     
     NSString * withShareTicket = [parameters[@"withShareTicket"] boolValue] == YES ? @"1" : @"0";
     
-    NSNumber * programType = parameters[@"miniProgramType"];
+    NSNumber * programType = parameters[@"programType"];
     
     //网址（6.5.6以下版本微信会自动转化为分享链接 必填）
-    NSString * webpageUrl = parameters[@"url"];
+    NSString * webpageUrl = parameters[@"webpageUrl"];
+    
+    NSData * hdThumbData = parameters[@"hdThumImage"];
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
     
@@ -459,6 +467,7 @@ static TrochilusWeChatPlatform * _instance = nil;
     [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
     [wechatDic setValue:@"1" forKey:@"result"];
     [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:hdThumbData forKey:@"hdThumbData"];
     
     return [wechatDic copy];
 

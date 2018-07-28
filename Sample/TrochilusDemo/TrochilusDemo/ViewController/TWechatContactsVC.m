@@ -309,7 +309,7 @@
                                                                   title:@"MiniProgram"
                                                             description:@"test MiniProgram"
                                                              thumbImage:thumbImage
-                                                            hdImageData:thumbImage
+                                                            hdThumImage:thumbImage
                                                         withShareTicket:YES
                                                             contentType:TrochilusContentTypeMiniProgram
                                                         miniProgramType:TrochilusMiniProgramTypeRelease];

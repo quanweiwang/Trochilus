@@ -93,7 +93,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
         else if (contentType == TrochilusContentTypeImage) {
             //图片 分享 貌似只能分享一张图片
             
-            NSData * imageData = parameters[@"image"][0];
+            NSData * imageData = parameters[@"image"];
             
             NSDictionary * imageDataDic = @{@"imageData" : imageData};
             message = @{@"__class" : @"WBMessageObject",
@@ -108,7 +108,7 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
             NSString * timeIntervalStr = [NSString stringWithFormat:@"%ld",(long)timeInterval];
             //缩略图
             
-            NSData * thumbnailData = parameters[@"thumbImage"][0];
+            NSData * thumbnailData = parameters[@"thumbImage"];
             
             NSDictionary * mediaObject = @{@"__class" : @"WBWebpageObject",
                                            @"description" : parameters[@"text"],

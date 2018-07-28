@@ -7,7 +7,6 @@
 //
 
 #import "TrochilusQQPlatform.h"
-#import <UIKit/UIKit.h>
 
 #import "NSMutableDictionary+TrochilusShare.h"
 #import "NSMutableDictionary+Trochilus.h"
@@ -456,7 +455,7 @@ static TrochilusQQPlatform * _instance = nil;
         
         NSData * imageData = parameters[@"images"][0];
         
-        NSData * thumbImgData = parameters[@"thumbImage"][0];
+        NSData * thumbImgData = parameters[@"thumbImage"];
         
         data=@{@"file_data":imageData,
                @"previewimagedata":thumbImgData};
@@ -483,7 +482,7 @@ static TrochilusQQPlatform * _instance = nil;
     
     if (platformType == TrochilusPlatformSubTypeQQFriend || platformType == TrochilusPlatformSubTypeQZone) {
     
-        NSData * thumbImgData = parameters[@"thumbImage"][0];
+        NSData * thumbImgData = parameters[@"thumbImage"];
         
         data=@{@"previewimagedata":thumbImgData};
         

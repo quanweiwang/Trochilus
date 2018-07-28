@@ -80,14 +80,20 @@
     
     //缩略图，可以为UIImage
     if (thumbImage == nil) {
-        [self setValue:[self saveImages:images isThumbImage:YES] forKey:@"thumbImage"];
+        
+        if ([images isKindOfClass:[NSArray class]]) {
+            [self setValue:[UIImage trochilusDataWithThumbImage:images[0]] forKey:@"thumbImage"];
+        }
+        else {
+            [self setValue:[UIImage trochilusDataWithThumbImage:images] forKey:@"thumbImage"];
+        }
     }
     else {
-        [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+        [self setValue:[UIImage trochilusDataWithThumbImage:thumbImage] forKey:@"thumbImage"];
     }
     //图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage QQ会采用首张图片，QZone则支持图片数组
     
-    [self setValue:[self saveImages:images isThumbImage:NO] forKey:@"images"];
+    [self setValue:[UIImage trochilusDataArrayWithImages:images] forKey:@"images"];
     
     //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
     [self setValue:@(type) forKey:@"contentType"];
@@ -136,7 +142,7 @@
                              mediaTagName:(NSString *)mediaTagName
                             messageAction:(NSString *)messageAction
                                thumbImage:(UIImage *)thumbImage
-                                    image:(id)image
+                                    image:(UIImage *)image
                              musicFileURL:(NSString *)musicFileURL
                                   extInfo:(NSString *)extInfo
                                  fileData:(id)fileData
@@ -150,12 +156,12 @@
     [self setValue:mediaTagName forKey:@"mediaTagName"];
     [self setValue:messageAction forKey:@"messageAction"];
     if (thumbImage == nil) {
-        [self setValue:[self saveImages:image isThumbImage:YES] forKey:@"thumbImage"];
+        [self setValue:[UIImage trochilusDataWithThumbImage:image] forKey:@"thumbImage"];
     }
     else {
-        [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+        [self setValue:[UIImage trochilusDataWithThumbImage:thumbImage] forKey:@"thumbImage"];
     }
-    [self setValue:[self saveImages:image isThumbImage:NO] forKey:@"image"];
+    [self setValue:[UIImage trochilusDataWithImage:image] forKey:@"image"];
     [self setValue:musicFileURL forKey:@"musicFileURL"];
     [self setValue:extInfo forKey:@"extInfo"];
     [self setValue:fileData forKey:@"fileData"];
@@ -183,7 +189,7 @@
                                                           title:(NSString *)title
                                                     description:(NSString *)description
                                                      thumbImage:(UIImage *)thumbImage
-                                                    hdImageData:(UIImage *)hdImageData
+                                                    hdThumImage:(UIImage *)hdThumImage
                                                 withShareTicket:(BOOL)withShareTicket
                                                     contentType:(TrochilusContentType)contentType
                                                 miniProgramType:(TrochilusMiniProgramType)programType {
@@ -193,8 +199,8 @@
     [self setValue:path forKey:@"path"];
     [self setValue:title forKey:@"title"];
     [self setValue:description forKey:@"description"];
-    [self setValue:thumbImage forKey:@"thumbImage"];
-    [self setValue:hdImageData forKey:@"hdImageData"];
+    [self setValue:[UIImage trochilusDataWithThumbImage:thumbImage] forKey:@"thumbImage"];
+    [self setValue:[UIImage trochilusDataWithHDThumbImage:hdThumImage] forKey:@"hdThumImage"];
     [self setValue:@(withShareTicket) forKey:@"withShareTicket"];
     [self setValue:@(contentType) forKey:@"contentType"];
     [self setValue:@(programType) forKey:@"programType"];
@@ -225,58 +231,14 @@
     
     [self setValue:text forKey:@"text"];
     [self setValue:title forKey:@"title"];
-    [self setValue:[self saveImages:image isThumbImage:NO] forKey:@"image"];
-    [self setValue:[self saveImages:image isThumbImage:YES] forKey:@"thumbImage"];
+    [self setValue:[UIImage trochilusDataWithImage:image] forKey:@"image"];
+    [self setValue:[UIImage trochilusDataWithThumbImage:image] forKey:@"thumbImage"];
     [self setValue:url forKey:@"url"];
     [self setValue:@(latitude) forKey:@"latitude"];
     [self setValue:@(longitude) forKey:@"longitude"];
     [self setValue:objectID forKey:@"objectID"];
     [self setValue:@(type) forKey:@"contentType"];
     
-}
-
-- (NSArray *)saveImages:(id)images isThumbImage:(BOOL)isThumbImage {
-    
-    NSMutableArray * array = [NSMutableArray array];
-    
-    if ([images isKindOfClass:[NSArray class]]) {
-        
-        if (isThumbImage) {
-            
-            NSData * imageData = UIImageJPEGRepresentation([UIImage compressImage:images[0] toByte:32768], 1.f);
-            [array addObject:imageData];
-        }
-        else {
-            for (id image in images) {
-                
-                @autoreleasepool {
-                    if ([image isKindOfClass:[UIImage class]]) {
-                        NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
-                        [array addObject:imageData];
-                    }
-                }
-            }
-        }
-        
-        return [array copy];
-    }
-    else if ([images isKindOfClass:[UIImage class]]) {
-        
-        if (isThumbImage) {
-            //压缩图
-            UIImage * compressImage = [UIImage compressImage:images toByte:32768];
-            NSData * imageData = UIImageJPEGRepresentation(compressImage, 1.f);
-            [array addObject:imageData];
-        }
-        else {
-            NSData * imageData = UIImageJPEGRepresentation(images, 1.f);
-            [array addObject:imageData];
-        }
-    
-        return [array copy];
-    }
-    
-    return nil;
 }
 
 @end

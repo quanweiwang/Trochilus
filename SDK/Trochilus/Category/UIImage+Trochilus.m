@@ -50,4 +50,52 @@
     
 }
 
++ (NSData *)trochilusDataWithImage:(UIImage *)image {
+    
+    return UIImageJPEGRepresentation(image, 1.f);
+}
+
++ (NSArray *)trochilusDataArrayWithImages:(id)images {
+    
+    NSMutableArray * array = [NSMutableArray array];
+    
+    if ([images isKindOfClass:[NSArray class]]) {
+        
+        for (id image in images) {
+            
+            @autoreleasepool {
+                if ([image isKindOfClass:[UIImage class]]) {
+                    NSData * imageData = UIImageJPEGRepresentation(image, 1.f);
+                    if (imageData) {
+                        [array addObject:imageData];
+                    }
+                    
+                }
+            }
+        }
+    }
+    else {
+        NSData * imageData = UIImageJPEGRepresentation(images, 1.f);
+        if (imageData) {
+            [array addObject:imageData];
+        }
+    }
+    
+    return array;
+}
+
++ (NSData *)trochilusDataWithThumbImage:(UIImage *)thumbImage {
+    
+    UIImage * image = [self compressImage:thumbImage toByte:32768];
+    
+    return UIImageJPEGRepresentation(image, 1.f);
+}
+
++ (NSData *)trochilusDataWithHDThumbImage:(UIImage *)hdThumbImage {
+    
+    UIImage * image = [self compressImage:hdThumbImage toByte:131072];
+    
+    return UIImageJPEGRepresentation(image, 1.f);
+}
+
 @end
