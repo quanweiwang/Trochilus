@@ -368,7 +368,7 @@
                               package:@"Sign=WXPay"
                                  sign:@"797EE32700174351922D9CDADBCB70B8"];
     
-    [Trochilus wechatPayWithParameters:wechatPay onStateChanged:^(TrochilusResponseState state, TrochilusUser *user, NSError *error) {
+    [Trochilus wechatPayWithParameters:wechatPay onStateChanged:^(TrochilusResponseState state,NSError *error) {
         if (state == TrochilusResponseStateFail) {
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"支付失败\n%@",error] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];

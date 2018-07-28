@@ -110,22 +110,10 @@ static NSMutableDictionary * keys;
  */
 + (void)wechatPayWithParameters:(id)parameters onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
-    
-    //    if ([parameters isKindOfClass:[NSString class]]) {
-    //        wechatPayInfo = [TWeChatPlatform payToWechatOrderString:parameters
-    //                                                 onStateChanged:stateChangedHandler];
-    //    }
-    //    else if ([parameters isKindOfClass:[NSDictionary class]]) {
-    
     Class platformClass = NSClassFromString(@"TrochilusWeChatPlatform");
     SEL selMethod = NSSelectorFromString(@"payToWechatParameters:onStateChanged:");
     
     NSString * wechatPayInfo = [self safePerformSelector:selMethod class:platformClass platformType:TrochilusPlatformTypeUnknown,parameters,stateChangedHandler, nil];
-
-    
-//    wechatPayInfo = [TrochilusWeChatPlatform payToWechatParameters:parameters
-//                                            onStateChanged:stateChangedHandler];
-    //    }
     
     [Trochilus sendToURL:wechatPayInfo];
 }

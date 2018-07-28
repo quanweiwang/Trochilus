@@ -162,7 +162,7 @@ static TrochilusAliPayPlatform * _instance = nil;
 + (void)payResponseWithState:(TrochilusResponseState)responseState error:(NSError *)error {
     
     if ([TrochilusAliPayPlatform sharedInstance].payStateChangedHandler) {
-        [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(responseState, nil, error);
+        [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler(responseState, error);
     }
     
     [TrochilusAliPayPlatform sharedInstance].payStateChangedHandler = nil;

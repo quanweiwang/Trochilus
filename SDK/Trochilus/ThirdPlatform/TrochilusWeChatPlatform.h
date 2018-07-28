@@ -52,7 +52,7 @@
  @return 支付字符串
  @param stateChangedHandler 支付状态变更回调处理
  */
-+ (NSString *)payToWechatParameters:(NSDictionary *)parameters
++ (NSString *)payToWechatParameters:(id)parameters
                      onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler;
 
 /**

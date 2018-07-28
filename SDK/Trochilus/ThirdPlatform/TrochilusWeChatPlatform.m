@@ -697,58 +697,36 @@ static TrochilusWeChatPlatform * _instance = nil;
 }
 
 #pragma mark- 微信支付
-+ (NSString *)payToWechatParameters:(NSDictionary *)parameters onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
-    
-    if ([[TrochilusWeChatPlatform sharedInstance].appId length] == 0) {
-        
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAppIdNotFound];
-        
-        stateChangedHandler(TrochilusResponseStateFail,nil,error);
-        
-        return nil;
-    }
-    else if ([[TrochilusWeChatPlatform sharedInstance].appSecret length] == 0) {
-        
-        NSError * error = [TrochilusError errorWithCode:TrochilusErrorCodeWechatAppSecretNotFound];
-        
-        stateChangedHandler(TrochilusResponseStateFail,nil,error);
-        
-        return nil;
-    }
-    
-    if (stateChangedHandler) {
-        [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler = stateChangedHandler;
-    }
-    
-    //生成URLscheme
-    //    NSString *str = [NSString stringWithFormat:@"weixin://app/%@/pay/?nonceStr=%@&package=Sign%%3DWXPay&partnerId=%@&prepayId=%@&timeStamp=%@&sign=%@&signType=SHA1",appid,nonceStr,partnerId,prepayId,[NSString stringWithFormat:@"%d",[timeStamp intValue] ],sign];
++ (NSString *)payToWechatParameters:(id)parameters
+                     onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler {
     
     if ([TrochilusWeChatPlatform isWeChatInstalled]) {
-        NSString * partnerId = parameters[@"partnerId"];
-        NSString * prepayId = parameters[@"prepayId"];
-        NSString * nonceStr = parameters[@"nonceStr"];
-        NSString * timeStamp = parameters[@"timeStamp"];
         
-        //    NSString * package = parameters[@"package"];
-        NSString * sign = parameters[@"sign"];
-        
-        //判断是否有appid，如果字典里有appid使用字典里的，没有就看看是否有注册
-        NSString * appId = parameters[@"appId"];
-        if (appId == nil && [TrochilusWeChatPlatform sharedInstance].appId == nil) {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请注册微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-            
-            return @"";
+        if (stateChangedHandler) {
+            [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler = stateChangedHandler;
         }
-        NSString * wechatPayInfo = [NSString stringWithFormat:@"weixin://app/%@/pay/?nonceStr=%@&package=Sign%%3DWXPay&partnerId=%@&prepayId=%@&timeStamp=%@&sign=%@&signType=SHA1",[TrochilusWeChatPlatform sharedInstance].appId,nonceStr,partnerId,prepayId,timeStamp,sign];
         
-        return wechatPayInfo;
+        if ([parameters isKindOfClass:[NSString class]]) {
+            
+            return [NSString stringWithFormat:@"weixin://app/%@/pay/?%@",[TrochilusWeChatPlatform sharedInstance].appId,parameters];
+        }
+        else {
+            
+            NSString * partnerId = parameters[@"partnerId"];
+            NSString * prepayId = parameters[@"prepayId"];
+            NSString * nonceStr = parameters[@"nonceStr"];
+            NSString * timeStamp = parameters[@"timeStamp"];
+            NSString * sign = parameters[@"sign"];
+            
+            NSString * wechatPayInfo = [NSString stringWithFormat:@"weixin://app/%@/pay/?nonceStr=%@&package=Sign%%3DWXPay&partnerId=%@&prepayId=%@&timeStamp=%@&sign=%@&signType=SHA1",[TrochilusWeChatPlatform sharedInstance].appId,nonceStr,partnerId,prepayId,timeStamp,sign];
+    
+            return wechatPayInfo;
+        }
     }
     else {
-        if (stateChangedHandler) {
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-        }
+        
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboUninstalled];
+        [TrochilusWeChatPlatform shareResponseWithState:TrochilusResponseStateFail error:err];
     }
     
     return nil;
@@ -770,9 +748,11 @@ static TrochilusWeChatPlatform * _instance = nil;
             }
             else if ([wechat[@"ErrCode"] integerValue] == -4) {
                 //用户拒绝授权
+                [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateCancel userInfo:nil error:nil];
             }
             else if ([wechat[@"ErrCode"] integerValue] == -2) {
                 //用户取消
+                [TrochilusWeChatPlatform authorizeResponseWithState:TrochilusResponseStateCancel userInfo:nil error:nil];
             }
             
         }
@@ -781,31 +761,29 @@ static TrochilusWeChatPlatform * _instance = nil;
             NSDictionary * wechat = [NSMutableDictionary trochilusDictionaryWithUrl:url];
             if ([wechat[@"ret"] integerValue] == 0) {
                 //支付成功
-                if ([TrochilusWeChatPlatform sharedInstance].payStateChangedHandler) {
-                    [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateSuccess, nil, nil);
-                }
+                
+                [TrochilusWeChatPlatform payResponseWithState:TrochilusResponseStateSuccess error:nil];
+                
             }else if ([wechat[@"ret"] integerValue] == -2){
                 //用户点击取消并返回
-                if ([TrochilusWeChatPlatform sharedInstance].payStateChangedHandler) {
-                    [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateCancel, nil, nil);
-                }
+                
+                [TrochilusWeChatPlatform payResponseWithState:TrochilusResponseStateCancel error:nil];
             }
             else {
                 //支付失败
-                if ([TrochilusWeChatPlatform sharedInstance].payStateChangedHandler) {
-                    
-                    NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatPayFail userInfo:wechat];
-                    [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler(TrochilusResponseStateFail, nil, err);
-                }
+                
+                NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWechatPayFail userInfo:wechat];
+                
+                [TrochilusWeChatPlatform payResponseWithState:TrochilusResponseStateFail error:err];
                 
             }
-            [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler = nil;
+            
         }
         else {
             //分享
             //获取剪切板内容
             UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
-            NSLog(@"%@",pasteboard.pasteboardTypes);
+//            NSLog(@"%@",pasteboard.pasteboardTypes);
             //微信分享
             //            {
             //                wx4868b35061f87885 =     {
@@ -822,7 +800,7 @@ static TrochilusWeChatPlatform * _instance = nil;
             
             //微信的NSData序列号方式为NSPropertyListSerialization
             NSDictionary * wechatInfo = [NSPropertyListSerialization propertyListWithData:wechatData options:0 format:NULL error:nil];
-            NSLog(@"%@",wechatInfo);
+//            NSLog(@"%@",wechatInfo);
             
             //获取微信返回值
             NSDictionary * wechatResponse = wechatInfo[[TrochilusWeChatPlatform sharedInstance].appId];
@@ -864,11 +842,8 @@ static TrochilusWeChatPlatform * _instance = nil;
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5/*延迟执行时间*/ * NSEC_PER_SEC));
     dispatch_after(delayTime, dispatch_get_main_queue(), ^{
         //延迟0.5s执行
-        if (self.payStateChangedHandler) {
-            //调用自己的服务器去查询支付结果
-            self.payStateChangedHandler(TrochilusResponseStatePayWait, nil, nil);
-            self.payStateChangedHandler = nil;
-        }
+        
+        [TrochilusWeChatPlatform payResponseWithState:TrochilusResponseStatePayWait error:nil];
     });
     
 }
@@ -892,6 +867,15 @@ static TrochilusWeChatPlatform * _instance = nil;
     }
     
     [TrochilusWeChatPlatform sharedInstance].authorizestateChangedHandler = nil;
+}
+
++ (void)payResponseWithState:(TrochilusResponseState)responseState error:(NSError *)error {
+    
+    if ([TrochilusWeChatPlatform sharedInstance].payStateChangedHandler) {
+        [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler(responseState,error);
+    }
+    
+    [TrochilusWeChatPlatform sharedInstance].payStateChangedHandler = nil;
 }
 
 #pragma mark- 判断scene值

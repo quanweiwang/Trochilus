@@ -165,7 +165,7 @@ static TrochilusQQPlatform * _instance = nil;
 }
 
 #pragma mark- 授权登录
-+ (NSMutableString *)authorizeWithPlatformSettings:(NSDictionary *)settings
++ (NSMutableString *)authorizeWithPlatformSettings:(NSString *)settings
                                     onStateChanged:(TrochilusAuthorizeStateChangedHandler)stateChangedHandler {
     
     if ([[TrochilusQQPlatform sharedInstance].appId length] == 0) {
@@ -202,12 +202,9 @@ static TrochilusQQPlatform * _instance = nil;
 //    }
     
     //获取setting参数 用户有配置就用用户的，没配置就默认
-    NSString * scopes = @"get_user_info";
-    if (settings && settings[@"TAuthSettingKeyScopes"] != nil) {
-        if ([settings[@"TAuthSettingKeyScopes"] isKindOfClass:[NSArray class]]) {
-            //如果格式不对也不处理，使用默认
-            scopes = [(NSArray *)settings[@"TAuthSettingKeyScopes"] componentsJoinedByString:@","];
-        }
+    NSString * scopes;
+    if ([scopes length] == 0) {
+        scopes = @"get_user_info";
     }
     
     //授权类型 客户端 or 网页

@@ -380,10 +380,9 @@ typedef void(^TrochilusAuthorizeStateChangedHandler) (TrochilusResponseState sta
  *  支付状态变化回调处理器
  *
  *  @param state      状态
- *  @param user       授权用户信息，当且仅当state为TrochilusResponseStateSuccess时返回
  *  @param error      错误信息，当且仅当state为TrochilusResponseStateFail时返回
  */
-typedef void(^TrochilusPayStateChangedHandler) (TrochilusResponseState state, TrochilusUser *user, NSError *error);
+typedef void(^TrochilusPayStateChangedHandler) (TrochilusResponseState state,NSError *error);
 
 
 #endif /* TrochilusTypeDefine_h */
