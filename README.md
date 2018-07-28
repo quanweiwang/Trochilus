@@ -124,13 +124,13 @@ NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
 
 //QQ好友分享
 [parameters trochilusSetQQParamsByText:@"Trochilus"
-                                     title:nil
-                                       url:nil
-                             audioFlashURL:nil
-                             videoFlashURL:nil
-                                thumbImage:nil
-                                    images:nil
-                                      type:self.type];
+                                 title:nil
+                                   url:nil
+                         audioFlashURL:nil
+                         videoFlashURL:nil
+                            thumbImage:nil
+                                images:nil
+                                  type:self.type];
                            
 //微信好友分享
 [parameters trochilusSetWeChatParamsByText:@"Trochilus"
@@ -315,16 +315,14 @@ NSString * orderString = {由服务器返回构造好的支付字符串};
 ```
 
 ### 适配iOS9+系统
-1、http  
-问题:  
+1、http 问题:  
 在iOS9下，系统默认会拦截对http协议接口的访问，因此无法获取http协议接口的数据。对Trochilus来说，可能无法获取用户信息。  
 解决方法:  
 在项目的info.plist中添加一个Key：App Transport Security Settings，类型为字典类型。然后给它添加一个Key：Allow Arbitrary Loads，类型为Boolean类型，值为YES。
 
 ![](http://ojgg6fpio.bkt.clouddn.com/Trochilus1.png)  
 
-2、白名单  
-问题：  
+2、白名单 问题：  
 在iOS 9下涉及到平台客户端跳转，系统会自动到项目info.plist下检测是否设置平台Scheme。对于需要配置的平台，如果没有配置，就无法正常跳转平台客户端。因此要支持客户端的分享和授权等，需要配置Scheme名单。  
 解决方法:  
 在项目的info.plist中添加一LSApplicationQueriesSchemes，类型为Array。然后给它添加一个需要支持的项目，类型为字符串类型。
