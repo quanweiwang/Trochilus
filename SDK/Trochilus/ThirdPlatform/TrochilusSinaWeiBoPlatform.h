@@ -6,7 +6,7 @@
 //  Copyright © 2017年 王权伟. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "TrochilusTypeDefine.h"
 
 @interface TrochilusSinaWeiBoPlatform : NSObject

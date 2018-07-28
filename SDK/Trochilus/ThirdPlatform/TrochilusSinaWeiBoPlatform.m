@@ -7,17 +7,15 @@
 //
 
 #import "TrochilusSinaWeiBoPlatform.h"
-#import <UIKit/UIKit.h>
-//#import <AssetsLibrary/AssetsLibrary.h>
 
 #import "UIImage+Trochilus.h"
 #import "NSDate+Trochilus.h"
 #import "NSMutableDictionary+TrochilusShare.h"
 
 #import "TrochilusUser.h"
-//#import "TWebViewVC.h"
 #import "TrochilusError.h"
 #import "TrochilusSysDefine.h"
+#import "TrochilusNetWorking.h"
 
 @interface TrochilusSinaWeiBoPlatform()
 
@@ -331,36 +329,29 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
 }
 
 //获取用户信息
-+ (void)geTrochilusUserInfoToSinaWeiBo:(NSString *)userID accessToken:(NSString *)accessToken completion:(void (^ __nullable)(NSDictionary * userInfoDic ))completion {
++ (void)getUserInfoToUid:(NSString *)userID accessToken:(NSString *)accessToken {
     
     NSString *url = [NSString stringWithFormat:@"https://api.weibo.com/2/users/show.json?uid=%@&access_token=%@",userID,accessToken];
     
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    request.HTTPMethod = @"Get";
-    request.timeoutInterval = 20.5f;
-    request.URL = [NSURL URLWithString:url];
-    
-    NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [TrochilusNetWorking getWithUrl:url success:^(id  _Nonnull responseObj) {
         
-        if (error) {
-            
-            //授权失败
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
-            [TrochilusSinaWeiBoPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
-            
-        }
-        else {
-            
-            //授权成功
-            NSDictionary * userInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            if (completion) {
-                completion(userInfo);
-            }
-            
-        }
+        TrochilusUser * user = [[TrochilusUser alloc] init];
+        user.accessToken = accessToken;
+        user.uid = userID;
+        user.unionId = userID;
+        user.iconurl = responseObj[@"avatar_large"];
+        user.name = responseObj[@"name"];
+        user.unionGender = [responseObj[@"gender"] isEqualToString:@"m"] ? @"男" : @"女";
+        user.gender = responseObj[@"gender"];
         
+        [TrochilusSinaWeiBoPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:user error:nil];
+        
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeWeiboAuthorizeFail userInfo:error.userInfo];
+        [TrochilusSinaWeiBoPlatform authorizeResponseWithState:TrochilusResponseStateFail userInfo:nil error:err];
     }];
-    [task resume];
+    
 }
 
 ////获取 token 网页授权时用到
@@ -443,20 +434,8 @@ static TrochilusSinaWeiBoPlatform * _instance = nil;
             user.uid = transferObject[@"userID"];
             user.unionId = transferObject[@"userID"];
             
-            [self geTrochilusUserInfoToSinaWeiBo:user.uid
-                             accessToken:user.accessToken
-                              completion:^(NSDictionary *userInfoDic) {
-                                  
-                                  user.iconurl = userInfoDic[@"avatar_large"];
-                                  user.name = userInfoDic[@"name"];
-                                  user.unionGender = [userInfoDic[@"gender"] isEqualToString:@"m"] ? @"男" : @"女";
-                                  user.gender = userInfoDic[@"gender"];
-                                  
-                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                      [TrochilusSinaWeiBoPlatform authorizeResponseWithState:TrochilusResponseStateSuccess userInfo:user error:nil];
-                                  });
-                                  
-                              }];
+            [TrochilusSinaWeiBoPlatform getUserInfoToUid:transferObject[@"userID"] accessToken:transferObject[@"accessToken"]];
+            
         }
         else if ([transferObject[@"statusCode"] integerValue] == -1) {
             //用户取消授权
