@@ -247,22 +247,16 @@ static TrochilusWeChatPlatform * _instance = nil;
     }
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:objectType forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    
-    if (imageData) {
-        [wechatDic setObject:imageData forKey:@"fileData"];
-    }
-    
-    if (thumbImage) {
-        [wechatDic setObject:thumbImage forKey:@"thumbData"];
-    }
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:objectType forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:imageData forKey:@"fileData"];
+    [wechatDic setValue:thumbImage forKey:@"thumbData"];
     
     return wechatDic;
 }
@@ -282,35 +276,19 @@ static TrochilusWeChatPlatform * _instance = nil;
     NSData * thumbData = thumbImage;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:@"5" forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    
-    
-    if (shareDescription != nil) {
-        [wechatDic setObject:shareDescription forKey:@"description"];
-    }
-    
-    if (thumbData != nil) {
-        [wechatDic setObject:thumbData forKey:@"thumbData"];
-    }
-    
-    if (title != nil) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (mediaTagName != nil) {
-        [wechatDic setObject:mediaTagName forKey:@"mediaTagName"];
-    }
-    
-    if (url != nil) {
-        [wechatDic setObject:url forKey:@"mediaUrl"];
-    }
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"5" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:shareDescription forKey:@"description"];
+    [wechatDic setValue:thumbData forKey:@"thumbData"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:mediaTagName forKey:@"mediaTagName"];
+    [wechatDic setValue:url forKey:@"mediaUrl"];
     
     return [wechatDic copy];
 }
@@ -328,34 +306,20 @@ static TrochilusWeChatPlatform * _instance = nil;
     NSData * thumbData = thumbImage;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"3" forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    
-    if (shareDescription) {
-        [wechatDic setObject:shareDescription forKey:@"description"];
-    }
-    
-    if (title) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (audioUrl) {
-        [wechatDic setObject:audioUrl forKey:@"mediaUrl"];
-    }
+    [wechatDic setValue:@"3" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:shareDescription forKey:@"description"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:audioUrl forKey:@"mediaUrl"];
 #warning mediaDataUrl 什么鬼???
-    if (audioUrl) {
-        [wechatDic setObject:audioUrl forKey:@"mediaDataUrl"];
-    }
-    
-    if (thumbData) {
-        [wechatDic setObject:thumbData forKey:@"thumbData"];
-    }
+    [wechatDic setValue:audioUrl forKey:@"mediaDataUrl"];
+    [wechatDic setValue:thumbData forKey:@"thumbData"];
     
     return wechatDic;
 }
@@ -374,30 +338,18 @@ static TrochilusWeChatPlatform * _instance = nil;
     NSData * thumbData = thumbImage;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"4" forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    
-    if (shareDescription) {
-        [wechatDic setObject:shareDescription forKey:@"description"];
-    }
-    
-    if (title) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (videoUrl) {
-        [wechatDic setObject:videoUrl forKey:@"mediaUrl"];
-    }
-    
-    if (thumbData) {
-        [wechatDic setObject:thumbData forKey:@"thumbData"];
-    }
+    [wechatDic setValue:@"4" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:shareDescription forKey:@"description"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:videoUrl forKey:@"mediaUrl"];
+    [wechatDic setValue:thumbData forKey:@"thumbData"];
     
     return wechatDic;
 }
@@ -418,47 +370,23 @@ static TrochilusWeChatPlatform * _instance = nil;
     NSData * thumbData = thumbImage;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"7" forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    
-    if (shareDescription) {
-        [wechatDic setObject:shareDescription forKey:@"description"];
-    }
-    
-    if (extInfo) {
-        [wechatDic setObject:extInfo forKey:@"extInfo"];
-    }
-    
-    if (messageAction) {
-        [wechatDic setObject:messageAction forKey:@"messageAction"];
-    }
-    
-    if (title) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (appUrl) {
-        [wechatDic setObject:appUrl forKey:@"mediaUrl"];
-    }
-    
-    if (thumbData) {
-        [wechatDic setObject:thumbData forKey:@"thumbData"];
-    }
-    
-    if (extInfo) {
-        [wechatDic setObject:extInfo forKey:@"messageExt"];
-    }
-    
-    if (fileData) {
-        [wechatDic setObject:fileData forKey:@"fileData"];
-    }
-    
+    [wechatDic setValue:@"7" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:shareDescription forKey:@"description"];
+    [wechatDic setValue:extInfo forKey:@"extInfo"];
+    [wechatDic setValue:messageAction forKey:@"messageAction"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:appUrl forKey:@"mediaUrl"];
+    [wechatDic setValue:thumbData forKey:@"thumbData"];
+    [wechatDic setValue:extInfo forKey:@"messageExt"];
+    [wechatDic setValue:fileData forKey:@"fileData"];
+
     return wechatDic;
     
 }
@@ -478,34 +406,19 @@ static TrochilusWeChatPlatform * _instance = nil;
     NSData * thumbData = thumbImage;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
-    [wechatDic setObject:@"6" forKey:@"objectType"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
-    [wechatDic setObject:scene forKey:@"scene"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"0" forKey:@"withShareTicket"];
-    [wechatDic setObject:@(0) forKey:@"miniprogramType"];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    
-    if (shareDescription) {
-        [wechatDic setObject:shareDescription forKey:@"description"];
-    }
-    
-    if (sourceFileData) {
-        [wechatDic setObject:sourceFileData forKey:@"fileData"];
-    }
-    
-    if (title) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (sourceFileExtension) {
-        [wechatDic setObject:sourceFileExtension forKey:@"fileExt"];
-    }
-    
-    if (thumbData) {
-        [wechatDic setObject:thumbData forKey:@"thumbData"];
-    }
+    [wechatDic setValue:@"6" forKey:@"objectType"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:scene forKey:@"scene"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"0" forKey:@"withShareTicket"];
+    [wechatDic setValue:@(0) forKey:@"miniprogramType"];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:shareDescription forKey:@"description"];
+    [wechatDic setValue:sourceFileData forKey:@"fileData"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:sourceFileExtension forKey:@"fileExt"];
+    [wechatDic setValue:thumbData forKey:@"thumbData"];
     
     return wechatDic;
     
@@ -533,40 +446,19 @@ static TrochilusWeChatPlatform * _instance = nil;
     
     NSMutableDictionary * wechatDic = [NSMutableDictionary dictionary];
     
-    if (title != nil) {
-        [wechatDic setObject:title forKey:@"title"];
-    }
-    
-    if (miniProgramDescription != nil) {
-        [wechatDic setObject:miniProgramDescription forKey:@"description"];
-    }
-    
-    if (path != nil) {
-        [wechatDic setObject:path forKey:@"appBrandPath"];
-    }
-    
-    if (userName != nil) {
-        [wechatDic setObject:userName forKey:@"appBrandUserName"];
-    }
-    
-    if (withShareTicket != nil) {
-        [wechatDic setObject:withShareTicket forKey:@"withShareTicket"];
-    }
-    
-    if (programType != nil) {
-        [wechatDic setObject:programType forKey:@"miniprogramType"];
-    }
-    
-    if (webpageUrl != nil) {
-        [wechatDic setObject:webpageUrl forKey:@"mediaUrl"];
-    }
-    
-    [wechatDic setObject:@"36" forKey:@"objectType"];
-    [wechatDic setObject:@"0" forKey:@"scene"];
-    [wechatDic setObject:@"1010" forKey:@"command"];
-    [wechatDic setObject:kWeChatSDKVer forKey:@"sdkver"];
-    [wechatDic setObject:@"1" forKey:@"result"];
-    [wechatDic setObject:@"0" forKey:@"returnFromApp"];
+    [wechatDic setValue:title forKey:@"title"];
+    [wechatDic setValue:miniProgramDescription forKey:@"description"];
+    [wechatDic setValue:path forKey:@"appBrandPath"];
+    [wechatDic setValue:userName forKey:@"appBrandUserName"];
+    [wechatDic setValue:withShareTicket forKey:@"withShareTicket"];
+    [wechatDic setValue:programType forKey:@"miniprogramType"];
+    [wechatDic setValue:webpageUrl forKey:@"mediaUrl"];
+    [wechatDic setValue:@"36" forKey:@"objectType"];
+    [wechatDic setValue:@"0" forKey:@"scene"];
+    [wechatDic setValue:@"1010" forKey:@"command"];
+    [wechatDic setValue:kWeChatSDKVer forKey:@"sdkver"];
+    [wechatDic setValue:@"1" forKey:@"result"];
+    [wechatDic setValue:@"0" forKey:@"returnFromApp"];
     
     return [wechatDic copy];
 

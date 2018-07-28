@@ -149,7 +149,12 @@
     [self setValue:url forKey:@"url"];
     [self setValue:mediaTagName forKey:@"mediaTagName"];
     [self setValue:messageAction forKey:@"messageAction"];
-    [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+    if (thumbImage == nil) {
+        [self setValue:[self saveImages:image isThumbImage:YES] forKey:@"thumbImage"];
+    }
+    else {
+        [self setValue:[self saveImages:thumbImage isThumbImage:YES] forKey:@"thumbImage"];
+    }
     [self setValue:[self saveImages:image isThumbImage:NO] forKey:@"image"];
     [self setValue:musicFileURL forKey:@"musicFileURL"];
     [self setValue:extInfo forKey:@"extInfo"];
