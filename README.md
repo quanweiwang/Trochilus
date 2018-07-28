@@ -89,8 +89,7 @@ libz.tbd~~
                 
                 [appInfo trochilusSetSinaWeiboByAppKey:kSinaWeiboAppKey
                                              appSecret:kSinaWeiboAppSecret
-                                           redirectUri:kSinaWeiboRedirectUri
-                                                 ];
+                                           redirectUri:kSinaWeiboRedirectUri];
                 
                 break;
             case TrochilusPlatformTypeQQ:
