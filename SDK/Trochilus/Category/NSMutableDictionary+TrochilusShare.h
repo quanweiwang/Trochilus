@@ -11,20 +11,21 @@
 
 @interface NSMutableDictionary (TrochilusShare)
 
-/**
- *  设置分享参数 通用分享
- *
- *  @param text     文本
- *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
- *  @param url      网页路径/应用路径
- *  @param title    标题
- *  @param type     分享类型
- */
-- (void)trochilusSetShareParamsByText:(NSString *)text
-                         images:(id)images
-                            url:(NSURL *)url
-                          title:(NSString *)title
-                           type:(TrochilusContentType)type;
+///**
+// *  设置分享参数 通用分享
+// *
+// *  @param text     文本
+// *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
+// *  @param url      网页路径/应用路径
+// *  @param title    标题
+// *  @param type     分享类型
+// */
+//- (void)trochilusSetShareParamsByText:(NSString *)text
+//                               images:(id)images
+//                                  url:(NSURL *)url
+//                                title:(NSString *)title
+//                                 type:(TrochilusContentType)type
+//                         platformType:(TrochilusPlatformType)platformType;
 
 /**
  *  设置QQ分享参数
@@ -39,7 +40,6 @@
  *  @param images          图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
  QQ会采用首张图片，QZone则支持图片数组
  *  @param type            分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
- *  @param platformSubType 平台子类型，只能传入TrochilusPlatformSubTypeQZone或者TrochilusPlatformSubTypeQQFriend其中一个
  */
 - (void)trochilusSetQQParamsByText:(NSString *)text
                        title:(NSString *)title
@@ -48,8 +48,7 @@
                videoFlashURL:(NSString *)videoFlashURL
                   thumbImage:(UIImage *)thumbImage
                       images:(id)images
-                        type:(TrochilusContentType)type
-          forPlatformSubType:(TrochilusPlatformType)platformSubType;
+                        type:(TrochilusContentType)type;
 
 /**
  *  设置微信分享参数
@@ -106,7 +105,7 @@
  @param title 标题
  @param description 详细说明
  @param thumbImage 缩略图 （必填）, 旧版微信客户端（6.5.8及以下版本）小程序类型消息卡片使用小图卡片样式 要求图片数据小于32k
- @param hdImageData 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
+ @param hdThumImage 高清缩略图，建议长宽比是 5:4 ,6.5.9及以上版本微信客户端小程序类型分享使用 要求图片数据小于128k
  @param withShareTicket 是否使用带 shareTicket 的转发
  @param programType 分享小程序的版本（0-正式，1-开发，2-体验）
  */

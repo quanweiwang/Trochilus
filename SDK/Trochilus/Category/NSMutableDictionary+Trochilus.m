@@ -11,26 +11,12 @@
 
 @implementation NSMutableDictionary (Trochilus)
 
-- (NSError *)nonEmptyWithAttribute:(NSArray *)attributes {
-    
-    NSDictionary * errDic;
-    
-    if ([self valueForKey:@"title"] == nil && [self valueForKey:@"text"] == nil) {
-        
-    }
-    
-    if ([self valueForKey:@"thumbImage"]) {
-        
-    }
+- (NSError *)trochilusNonEmptyWithAttribute:(NSArray *)attributes {
     
     for (NSString * attribute in attributes) {
         
-        if (![self valueForKey:attribute]) {
-            errDic = @{
-                       NSLocalizedDescriptionKey : [NSString stringWithFormat:@"%@不能为空",attribute],
-                       NSLocalizedRecoverySuggestionErrorKey : [NSString stringWithFormat:@"请填写%@",attribute]
-                       };
-            return [TrochilusError errorWithCode:TrochilusErrorCodeParameter userInfo:errDic];
+        if ([self valueForKey:attribute] == nil) {
+            
         }
         
     }

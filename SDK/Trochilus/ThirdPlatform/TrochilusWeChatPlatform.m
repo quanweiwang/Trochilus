@@ -418,23 +418,6 @@ static TrochilusWeChatPlatform * _instance = nil;
 //小程序分享
 + (NSDictionary *)shareMiniProgramWithParameter:(NSMutableDictionary *)parameters {
     
-//    SDKSample[10543:2635740] description---小程序Desc
-//    2018-07-28 10:12:18.902734+0800 SDKSample[10543:2635740] hdThumbData---
-//    2018-07-28 10:12:18.951378+0800 SDKSample[10543:2635740] appBrandUserName---gh_d43f693ca31f
-//    2018-07-28 10:12:18.951444+0800 SDKSample[10543:2635740] objectType---36
-//    2018-07-28 10:12:18.951481+0800 SDKSample[10543:2635740] scene---0
-//    2018-07-28 10:12:18.951499+0800 SDKSample[10543:2635740] appBrandPath---
-//    2018-07-28 10:12:18.951534+0800 SDKSample[10543:2635740] title---小程序title
-//    2018-07-28 10:12:18.951614+0800 SDKSample[10543:2635740] mediaUrl---https://www.baidu.com
-//    2018-07-28 10:12:18.951664+0800 SDKSample[10543:2635740] sdkver---1.8.2
-//    2018-07-28 10:12:18.951725+0800 SDKSample[10543:2635740] command---1010
-//    2018-07-28 10:12:18.951761+0800 SDKSample[10543:2635740] result---1
-//    2018-07-28 10:12:18.951824+0800 SDKSample[10543:2635740] withShareTicket---1
-//    2018-07-28 10:12:18.951852+0800 SDKSample[10543:2635740] returnFromApp---0
-//    2018-07-28 10:12:18.951892+0800 SDKSample[10543:2635740] miniprogramType---0
-    
-    //    TrochilusMessageObject * message = [parameter objectForKey:@"TrochilusMessageObject"];
-    
     NSString * title = parameters[@"title"];
     
     NSString * miniProgramDescription = parameters[@"text"];

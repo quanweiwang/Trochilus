@@ -83,14 +83,13 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"222"
-                                        title:nil
-                                          url:nil
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:nil
-                                       images:nil
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQZone];
+                                     title:nil
+                                       url:nil
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:nil
+                                    images:nil
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
 }
@@ -100,18 +99,17 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"222"
-                                        title:nil
-                                          url:nil
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:nil
-                                       images:@[[UIImage imageNamed:@"COD13"],
-                                                [UIImage imageNamed:@"COD13"],
-                                                [UIImage imageNamed:@"COD13"],
-                                                [UIImage imageNamed:@"COD13"],
-                                                ]
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQZone];
+                                     title:nil
+                                       url:nil
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:nil
+                                    images:@[[UIImage imageNamed:@"COD13"],
+                                            [UIImage imageNamed:@"COD13"],
+                                            [UIImage imageNamed:@"COD13"],
+                                            [UIImage imageNamed:@"COD13"],
+                                            ]
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
 }
@@ -121,14 +119,13 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"Link Desc"
-                                        title:@"Title"
-                                          url:@"http://www.hao123.com"
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:[UIImage imageNamed:@"COD13"] //链接使用缩略图
-                                       images:nil
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQZone];
+                                     title:@"Title"
+                                       url:@"http://www.hao123.com"
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:[UIImage imageNamed:@"COD13"] //链接使用缩略图
+                                    images:nil
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
     
@@ -145,14 +142,13 @@
         //iPad版本QQ 暂时未支持此功能
         //通用参数设置
         [parameters trochilusSetQQParamsByText:nil
-                                            title:@"Title"
-                                              url:assetURL.absoluteString
-                                    audioFlashURL:nil
-                                    videoFlashURL:nil
-                                       thumbImage:nil
-                                           images:nil
-                                             type:self.type
-                               forPlatformSubType:TrochilusPlatformSubTypeQZone];
+                                         title:@"Title"
+                                           url:assetURL.absoluteString
+                                 audioFlashURL:nil
+                                 videoFlashURL:nil
+                                    thumbImage:nil
+                                        images:nil
+                                          type:self.type];
         
         [weakSelf shareWithParameters:parameters];
     }];

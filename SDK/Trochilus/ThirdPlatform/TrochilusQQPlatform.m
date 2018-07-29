@@ -151,12 +151,10 @@ static TrochilusQQPlatform * _instance = nil;
     }
     else {
         
-        if (stateChangedHandler) {
-            
-            NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeQQUninstalled];
-            stateChangedHandler(TrochilusResponseStateFail,nil,err);
-            
-        }
+        NSError * err = [TrochilusError errorWithCode:TrochilusErrorCodeQQUninstalled];
+        
+        [TrochilusQQPlatform shareResponseWithState:TrochilusResponseStateFail error:err];
+
     }
     
     return  nil;
@@ -431,6 +429,7 @@ static TrochilusQQPlatform * _instance = nil;
     return @"";
 }
 
+//文字分享
 + (NSString *)shareTextWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters {
     
     NSString * text = parameters[@"text"] == nil ? parameters[@"title"] :  parameters[@"text"];
@@ -447,6 +446,7 @@ static TrochilusQQPlatform * _instance = nil;
     return @"";
 }
 
+//图片分享
 + (NSString *)shareImageWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters {
     
     NSDictionary *data = nil;
@@ -476,6 +476,7 @@ static TrochilusQQPlatform * _instance = nil;
     return @"";
 }
 
+//链接分享
 + (NSString *)shareNewsWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters {
     
     NSDictionary *data = nil;
@@ -495,6 +496,7 @@ static TrochilusQQPlatform * _instance = nil;
     return @"";
 }
 
+//视频分享
 + (NSString *)shareVideoWithPlatformType:(TrochilusPlatformType)platformType parameters:(NSMutableDictionary *)parameters {
     
     if (platformType == TrochilusPlatformSubTypeQZone) {
@@ -503,5 +505,6 @@ static TrochilusQQPlatform * _instance = nil;
     
     return @"";
 }
+
 @end
 

@@ -100,14 +100,14 @@
     //通用参数设置 文字中必须有绑定域下的URL链接
     //绑定域在新浪开放平台“我的应用 － 应用信息 － 基本应用信息编辑 － 安全域名”里设置。
     //平台定制
-    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
-                                                    title:nil
-                                                    image:nil
-                                                      url:nil
-                                                 latitude:0
-                                                longitude:0
-                                                 objectID:nil
-                                                     type:TrochilusContentTypeText];
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"王权伟の博客 http://www.wangquanwei.com/"
+                                                 title:nil
+                                                 image:nil
+                                                   url:nil
+                                              latitude:0
+                                             longitude:0
+                                              objectID:nil
+                                                  type:TrochilusContentTypeText];
     [self shareWithParameters:parameters];
 }
 
@@ -120,14 +120,14 @@
     //通用参数设置 文字中必须有绑定域下的URL链接
     //绑定域在新浪开放平台“我的应用 － 应用信息 － 基本应用信息编辑 － 安全域名”里设置。
     //平台定制
-    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
-                                                    title:nil
-                                                    image:[UIImage imageNamed:@"COD13"]
-                                                      url:nil
-                                                 latitude:0
-                                                longitude:0
-                                                 objectID:nil
-                                                     type:TrochilusContentTypeImage];
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"http://www.wangquanwei.com/"
+                                                 title:nil
+                                                 image:[UIImage imageNamed:@"COD13"]
+                                                   url:nil
+                                              latitude:0
+                                             longitude:0
+                                              objectID:nil
+                                                  type:TrochilusContentTypeImage];
     [self shareWithParameters:parameters];
 }
 
@@ -136,21 +136,12 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     //通用参数设置
     //2017年6月30日后需申请高级权限
-    [parameters trochilusSetShareParamsByText:@"Share SDK"
-                                          images:nil
-                                             url:nil
-                                           title:nil
-                                            type:TrochilusContentTypeText];
-    //    [parameters TEnableAdvancedInterfaceShare];
-    //平台定制
-    //    [parameters TSetupSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
-    //                                              title:nil
-    //                                              image:nil
-    //                                                url:nil
-    //                                           latitude:nil
-    //                                          longitude:nil
-    //                                           objectID:nil
-    //                                               type:TContentTypeText];
+    [parameters trochilusSetShareParamsByText:@"http://www.wangquanwei.com/"
+                                       images:nil
+                                          url:nil
+                                        title:nil
+                                         type:TrochilusContentTypeText];
+    
     [self shareWithParameters:parameters];
 }
 
@@ -159,11 +150,11 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     //通用参数设置
     //2017年6月30日后需申请高级权限
-    [parameters trochilusSetShareParamsByText:@"Share SDK"
-                                          images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
-                                             url:nil
-                                           title:nil
-                                            type:TrochilusContentTypeImage];
+    [parameters trochilusSetShareParamsByText:@"http://www.wangquanwei.com/"
+                                       images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
+                                          url:nil
+                                        title:nil
+                                         type:TrochilusContentTypeImage];
     //    [parameters TEnableAdvancedInterfaceShare];
     //平台定制
     //    [parameters TSetupSinaWeiboShareParamsByText:nil
@@ -180,64 +171,39 @@
 - (void)shareTextToAPP
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters trochilusSetShareParamsByText:@"Share SDK"
-                                          images:nil
-                                             url:nil
-                                           title:nil
-                                            type:TrochilusContentTypeText];
-    //    [parameters TEnableUseClientShare];
-    //平台定制
-    //    [parameters TSetupSinaWeiboShareParamsByText:@"Share SDK http://www.mob.com/"
-    //                                              title:nil
-    //                                              image:nil
-    //                                                url:nil
-    //                                           latitude:0
-    //                                          longitude:0
-    //                                           objectID:nil
-    //                                               type:TContentTypeText];
+    [parameters trochilusSetShareParamsByText:@"http://www.wangquanwei.com/"
+                                       images:nil
+                                          url:nil
+                                        title:nil
+                                         type:TrochilusContentTypeText];
+    
     [self shareWithParameters:parameters];
 }
 
 - (void)shareImageToAPP
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters trochilusSetShareParamsByText:@"Share SDK"
-                                          images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
-                                             url:nil
-                                           title:nil
-                                            type:TrochilusContentTypeImage];
-    //    [parameters TEnableUseClientShare];
-    //平台定制
-    //    [parameters TSetupSinaWeiboShareParamsByText:@"Share SDK"
-    //                                              title:nil
-    //                                              image:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
-    //                                                url:nil
-    //                                           latitude:0
-    //                                          longitude:0
-    //                                           objectID:nil
-    //                                               type:TContentTypeImage];
+    [parameters trochilusSetShareParamsByText:@"http://www.wangquanwei.com/"
+                                       images:[[NSBundle mainBundle] pathForResource:@"COD13" ofType:@"jpg"]
+                                          url:nil
+                                        title:nil
+                                         type:TrochilusContentTypeImage];
+    
     [self shareWithParameters:parameters];
 }
 
 - (void)shareLinkToAPP
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    //通用参数设置
-    //    [parameters TSetupShareParamsByText:@"Share SDK Link Desc"
-    //                                    images:[UIImage imageNamed:@"COD13.jpg"]
-    //                                       url:[NSURL URLWithString:@"http://www.mob.com"]
-    //                                     title:@"MOB"
-    //                                      type:TContentTypeWebPage];
-    //    [parameters TEnableUseClientShare];
-    //平台定制
-    [parameters trochilusSetSinaWeiboShareParamsByText:@"Share SDK Link Desc"
-                                                    title:@"MOB"
-                                                    image:[UIImage imageNamed:@"COD13.jpg"]
-                                                      url:@"http://www.mob.com"
-                                                 latitude:0
-                                                longitude:0
-                                                 objectID:nil
-                                                     type:TrochilusContentTypeWebPage];
+    
+    [parameters trochilusSetSinaWeiboShareParamsByText:@"http://www.wangquanwei.com/"
+                                                 title:@"Trochilus"
+                                                 image:[UIImage imageNamed:@"COD13.jpg"]
+                                                   url:@"http://www.wangquanwei.com/"
+                                              latitude:0
+                                             longitude:0
+                                              objectID:nil
+                                                  type:TrochilusContentTypeWebPage];
     
     [self shareWithParameters:parameters];
 }

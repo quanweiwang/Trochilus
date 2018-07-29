@@ -15,16 +15,17 @@
  *  设置分享参数
  *
  *  @param text     文本
- *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage、NSString（图片路径）、NSURL（图片路径）、TImage。如: @"http://www.mob.com/images/logo_black.png" 或 @[@"http://www.mob.com/images/logo_black.png"]
+ *  @param images   图片集合,传入参数可以为单张图片信息，也可以为一个NSArray，数组元素可以为UIImage
  *  @param url      网页路径/应用路径
  *  @param title    标题
  *  @param type     分享类型
  */
 - (void)trochilusSetShareParamsByText:(NSString *)text
-                         images:(id)images
-                            url:(NSURL *)url
-                          title:(NSString *)title
-                           type:(TrochilusContentType)type {
+                               images:(id)images
+                                  url:(NSURL *)url
+                                title:(NSString *)title
+                                 type:(TrochilusContentType)type
+                         platformType:(TrochilusPlatformType)platformType {
     
     [self setValue:text forKey:@"text"];
     [self setValue:images forKey:@"images"];
@@ -56,8 +57,7 @@
                      videoFlashURL:(NSString *)videoFlashURL
                         thumbImage:(UIImage *)thumbImage
                             images:(id)images
-                              type:(TrochilusContentType)type
-                forPlatformSubType:(TrochilusPlatformType)platformSubType {
+                              type:(TrochilusContentType)type {
     
     //文本
     [self setValue:text forKey:@"text"];
@@ -98,7 +98,6 @@
     //分享类型, 仅支持Text、Image、WebPage、Audio、Video类型
     [self setValue:@(type) forKey:@"contentType"];
     
-    [self setValue:@(platformSubType) forKey:@"platformSubType"];
     
 }
 

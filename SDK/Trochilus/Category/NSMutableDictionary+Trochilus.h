@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSMutableDictionary (Trochilus)
 
-- (NSError *)nonEmptyWithAttribute:(NSArray *)attributes;
+- (NSError *)trochilusNonEmptyWithAttribute:(NSArray *)attributes;
 
 + (NSMutableDictionary *)trochilusDictionaryWithUrl:(NSURL*)url;
 

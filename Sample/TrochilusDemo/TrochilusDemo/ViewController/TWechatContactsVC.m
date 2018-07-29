@@ -369,9 +369,32 @@
                                  sign:@"797EE32700174351922D9CDADBCB70B8"];
     
     [Trochilus wechatPayWithParameters:wechatPay onStateChanged:^(TrochilusResponseState state,NSError *error) {
-        if (state == TrochilusResponseStateFail) {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"支付失败\n%@",error] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+        
+        switch (state) {
+            case TrochilusResponseStateSuccess: {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"支付成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+                break;
+            case TrochilusResponseStateFail: {
+                
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"支付失败\n%@",error] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+                break;
+            case TrochilusResponseStateCancel: {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用户取消" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+                break;
+            case TrochilusResponseStatePayWait: {
+                
+                //iOS9 or later 左上角返回app时 返回TrochilusResponseStatePayWait状态，客户端需要自己去服务器查询是否支付成功
+                
+                break;
+            }
+            default:
+                break;
         }
 
     }];

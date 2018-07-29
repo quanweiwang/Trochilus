@@ -59,7 +59,7 @@
  @param orderString 支付参数 服务器拼接好
  @param stateChangedHandler 支付状态变更回调处理
  */
-+ (void)aLiPayWithUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler;
++ (void)aliPayWithUrlScheme:(NSString *)urlScheme orderString:(NSString *)orderString onStateChanged:(TrochilusPayStateChangedHandler)stateChangedHandler;
 
 
 /**

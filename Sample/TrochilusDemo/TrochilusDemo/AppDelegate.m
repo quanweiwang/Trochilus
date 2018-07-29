@@ -32,22 +32,21 @@
             case TrochilusPlatformTypeSinaWeibo:
                 
                 [appInfo trochilusSetSinaWeiboByAppKey:kSinaWeiboAppKey
-                                                appSecret:kSinaWeiboAppSecret
-                                              redirectUri:kSinaWeiboRedirectUri
-                                                 authType:@""];
+                                             appSecret:kSinaWeiboAppSecret
+                                           redirectUri:kSinaWeiboRedirectUri
+                                                 ];
                 
                 break;
             case TrochilusPlatformTypeQQ:
                 
                 [appInfo trochilusSetQQByAppId:kQQAppId
-                                           appKey:kQQAppKey
-                                         authType:@""
-                                           useTIM:NO];
+                                        appKey:kQQAppKey
+                                        useTIM:NO];
                 break;
             case TrochilusPlatformTypeWechat:
                 
                 [appInfo trochilusSetWeChatByAppId:kWeChatAppId
-                                            appSecret:kWeChatAppSecret];
+                                         appSecret:kWeChatAppSecret];
                 
                 break;
             default:

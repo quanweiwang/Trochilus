@@ -100,14 +100,13 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"222"
-                                        title:nil
-                                          url:nil
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:nil
-                                       images:nil
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQQFriend];
+                                     title:nil
+                                       url:nil
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:nil
+                                    images:nil
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
 }
@@ -117,14 +116,13 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"222"
-                                        title:nil
-                                          url:nil
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:nil
-                                       images:[UIImage imageNamed:@"COD13"]
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQQFriend];
+                                     title:nil
+                                       url:nil
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:nil
+                                    images:[UIImage imageNamed:@"COD13"]
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
 }
@@ -134,14 +132,13 @@
     
     NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
     [parameters trochilusSetQQParamsByText:@"Link Desc"
-                                        title:@"Title"
-                                          url:@"http://www.hao123.com"
-                                audioFlashURL:nil
-                                videoFlashURL:nil
-                                   thumbImage:[UIImage imageNamed:@"COD13"] //链接使用缩略图
-                                       images:nil
-                                         type:self.type
-                           forPlatformSubType:TrochilusPlatformSubTypeQQFriend];
+                                     title:@"Title"
+                                       url:@"http://www.hao123.com"
+                             audioFlashURL:nil
+                             videoFlashURL:nil
+                                thumbImage:[UIImage imageNamed:@"COD13"] //链接使用缩略图
+                                    images:nil
+                                      type:self.type];
     
     [self shareWithParameters:parameters];
     
